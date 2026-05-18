@@ -1,0 +1,8 @@
+{
+  "parent": "hephaestus:block/template/io",
+  "textures": {
+    "drain": "hephaestus:block/smeltery/io/drain_front_inactive",
+    "bricks": "hephaestus:block/smeltery/seared/bricks",
+    "back": "hephaestus:block/smeltery/io/back"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:rods/brass"
+  },
+  "result": {
+    "amount": 45,
+    "id": "hephaestus:molten_brass"
+  },
+  "temperature": 650,
+  "time": 50
+}

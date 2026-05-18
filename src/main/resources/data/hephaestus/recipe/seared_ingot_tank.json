@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BBB",
+    "GGG",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:seared_bricks"
+    },
+    "G": {
+      "tag": "c:glass_blocks"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_ingot_tank",
+    "count": 1
+  }
+}

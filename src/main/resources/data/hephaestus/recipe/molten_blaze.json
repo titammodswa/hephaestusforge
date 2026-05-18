@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "item": "minecraft:blaze_rod"
+  },
+  "result": {
+    "amount": 250,
+    "id": "hephaestus:molten_blaze"
+  },
+  "temperature": 650,
+  "time": 100
+}

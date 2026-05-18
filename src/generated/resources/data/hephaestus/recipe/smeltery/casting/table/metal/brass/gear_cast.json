@@ -1,0 +1,15 @@
+{
+  "type": "hephaestus:casting_table",
+  "cast": {
+    "item": "hephaestus:gear_cast"
+  },
+  "cooling_time": 200,
+  "fluid": {
+    "amount": 360,
+    "id": "hephaestus:molten_brass"
+  },
+  "result": {
+    "count": 1,
+    "id": "alltheores:brass_gear"
+  }
+}

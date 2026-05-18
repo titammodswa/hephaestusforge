@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:ingots/iron"
+  },
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_iron"
+  },
+  "temperature": 800,
+  "time": 100
+}

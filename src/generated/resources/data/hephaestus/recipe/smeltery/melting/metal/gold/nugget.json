@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:nuggets/gold"
+  },
+  "result": {
+    "amount": 10,
+    "id": "hephaestus:molten_gold"
+  },
+  "temperature": 700,
+  "time": 33
+}

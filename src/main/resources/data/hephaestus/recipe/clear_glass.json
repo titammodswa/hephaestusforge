@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "id": "hephaestus:clear_glass",
+    "count": 4
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:casting_basin",
+  "input": {
+    "amount": 900,
+    "id": "hephaestus:molten_copper"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:copper_block"
+  },
+  "time": 200
+}

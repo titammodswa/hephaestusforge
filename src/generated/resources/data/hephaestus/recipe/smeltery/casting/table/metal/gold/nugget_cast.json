@@ -1,0 +1,15 @@
+{
+  "type": "hephaestus:casting_table",
+  "cast": {
+    "item": "hephaestus:nugget_cast"
+  },
+  "cooling_time": 33,
+  "fluid": {
+    "amount": 10,
+    "id": "hephaestus:molten_gold"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:gold_nugget"
+  }
+}

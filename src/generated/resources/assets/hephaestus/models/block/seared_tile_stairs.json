@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "hephaestus:block/smeltery/seared/tile",
+    "side": "hephaestus:block/smeltery/seared/tile",
+    "top": "hephaestus:block/smeltery/seared/tile"
+  }
+}

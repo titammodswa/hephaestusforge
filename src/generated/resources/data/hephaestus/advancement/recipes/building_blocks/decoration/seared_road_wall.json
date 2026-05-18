@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_seared_road": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hephaestus:seared_road"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hephaestus:decoration/seared_road_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_seared_road"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hephaestus:decoration/seared_road_wall"
+    ]
+  }
+}

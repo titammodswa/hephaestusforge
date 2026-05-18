@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:gems/quartz"
+  },
+  "result": {
+    "amount": 100,
+    "id": "hephaestus:molten_quartz"
+  },
+  "temperature": 800,
+  "time": 120
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "B B",
+    " A "
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:forge_brick"
+    },
+    "A": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_faucet",
+    "count": 1
+  }
+}

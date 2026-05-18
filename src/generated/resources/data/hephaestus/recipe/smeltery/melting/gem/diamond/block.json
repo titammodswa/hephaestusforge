@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:storage_blocks/diamond"
+  },
+  "result": {
+    "amount": 900,
+    "id": "hephaestus:molten_diamond"
+  },
+  "temperature": 1400,
+  "time": 240
+}

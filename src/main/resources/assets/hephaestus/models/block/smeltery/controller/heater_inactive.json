@@ -1,0 +1,10 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/orientable",
+	"textures": {
+		"top": "hephaestus:block/smeltery/seared/paver",
+		"particle": "hephaestus:block/smeltery/controller/heater_inactive",
+		"front": "hephaestus:block/smeltery/controller/heater_inactive"
+	}
+}

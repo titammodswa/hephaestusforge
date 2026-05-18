@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "hephaestus:block/smeltery/slab/paver/slab" },
+        "type=top": { "model": "hephaestus:block/smeltery/slab/paver/slab_top" },
+        "type=double": { "model": "hephaestus:block/smeltery/slab/paver/slab_double" }
+    }
+}

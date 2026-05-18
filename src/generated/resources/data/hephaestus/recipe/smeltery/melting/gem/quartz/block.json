@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "item": "minecraft:quartz_block"
+  },
+  "result": {
+    "amount": 900,
+    "id": "hephaestus:molten_quartz"
+  },
+  "temperature": 800,
+  "time": 240
+}

@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:nuggets/copper"
+  },
+  "result": {
+    "amount": 10,
+    "id": "hephaestus:molten_copper"
+  },
+  "temperature": 500,
+  "time": 33
+}

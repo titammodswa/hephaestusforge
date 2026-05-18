@@ -1,0 +1,6 @@
+{
+  "parent": "hephaestus:block/smeltery/fluid_cannon/base",
+  "textures": {
+    "top": "hephaestus:block/smeltery/fluid_cannon/top_nozzle"
+  }
+}

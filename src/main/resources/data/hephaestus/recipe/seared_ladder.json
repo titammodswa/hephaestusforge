@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "B B",
+    "BGB",
+    "B B"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:forge_brick"
+    },
+    "G": {
+      "item": "hephaestus:seared_fancy_bricks"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_ladder",
+    "count": 1
+  }
+}

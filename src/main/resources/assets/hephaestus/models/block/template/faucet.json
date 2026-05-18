@@ -1,0 +1,86 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"render_type": "minecraft:cutout",
+	"texture_size": [32, 32],
+	"textures": {
+		"2": "hephaestus:block/smeltery/casting/faucet",
+		"particle": "hephaestus:block/smeltery/seared/paver"
+	},
+	"elements": [
+		{
+			"name": "The bottom platform, facing south with the dark texture side",
+			"from": [4, 4, 10],
+			"to": [12, 6, 16],
+			"faces": {
+				"north": {"uv": [3, 3, 7, 4], "texture": "#2"},
+				"east": {"uv": [0, 3, 3, 4], "texture": "#2"},
+				"south": {"uv": [10, 3, 14, 4], "texture": "#2", "cullface": "south"},
+				"west": {"uv": [7, 3, 10, 4], "texture": "#2"},
+				"up": {"uv": [7, 3, 3, 0], "texture": "#2"},
+				"down": {"uv": [11, 0, 7, 3], "texture": "#2"}
+			}
+		},
+		{
+			"name": "Left side from front (east)",
+			"from": [10, 6, 10],
+			"to": [12, 10, 16],
+			"faces": {
+				"north": {"uv": [3, 7.5, 4, 9.5], "texture": "#2"},
+				"east": {"uv": [0, 7.5, 3, 9.5], "texture": "#2"},
+				"south": {"uv": [7, 7.5, 8, 9.5], "texture": "#2", "cullface": "south"},
+				"west": {"uv": [4, 7.5, 7, 9.5], "texture": "#2"},
+				"up": {"uv": [4, 7.5, 3, 4.5], "texture": "#2"}
+			}
+		},
+		{
+			"name": "Right side from front (west)",
+			"from": [4, 6, 10],
+			"to": [6, 10, 16],
+			"faces": {
+				"north": {"uv": [3, 7.5, 4, 9.5], "texture": "#2"},
+				"east": {"uv": [0, 7.5, 3, 9.5], "texture": "#2"},
+				"south": {"uv": [7, 7.5, 8, 9.5], "texture": "#2", "cullface": "south"},
+				"west": {"uv": [4, 7.5, 7, 9.5], "texture": "#2"},
+				"up": {"uv": [4, 7.5, 3, 4.5], "texture": "#2"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 3, 0.5],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 3, 0.5],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 135, 0],
+			"translation": [0, 0.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 135, 0],
+			"translation": [0, 0.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"translation": [0, 3, -1],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"translation": [3, -1, 0],
+			"scale": [0.9375, 0.9375, 0.9375]
+		},
+		"fixed": {
+			"translation": [0, 0, -1],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"comment": "Model is facing South (as in: the block it's connected to is south of it)"
+}

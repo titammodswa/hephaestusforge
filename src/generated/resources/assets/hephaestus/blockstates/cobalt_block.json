@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "hephaestus:block/cobalt_block"
+    }
+  }
+}

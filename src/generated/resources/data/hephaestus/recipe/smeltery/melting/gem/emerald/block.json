@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:storage_blocks/emerald"
+  },
+  "result": {
+    "amount": 900,
+    "id": "hephaestus:molten_emerald"
+  },
+  "temperature": 1200,
+  "time": 240
+}

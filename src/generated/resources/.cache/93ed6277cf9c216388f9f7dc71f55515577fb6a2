@@ -1,0 +1,13 @@
+// 1.21.1	2026-05-17T00:48:55.9389049	Tags for minecraft:block mod id hephaestus
+aabfe42c1ecd0ff086ade435e0c5ba38441280d6 data/c/tags/block/smeltery_floor.json
+588de50b3601dc8b85bf09babf102031fe2394d4 data/c/tags/block/smeltery_tanks.json
+899bb10a08ec565e85bd1508ac5439ddbcf6207a data/c/tags/block/smeltery_wall.json
+d576522f437705c1cf137e1f4252c5f9afd3e844 data/c/tags/block/storage_blocks.json
+45442aec3ad6727c52ddb2676a15ccc1eac834a6 data/c/tags/block/storage_blocks/cobalt.json
+4d4e95e56c130788ff5ea41009611171ac14427e data/c/tags/block/storage_blocks/raw_cobalt.json
+fa37f7ef48923048d3b258fca8079db28c716ffb data/c/tags/block/storage_blocks/steel.json
+1de9427f04ee8b68c16e208fbc9930586766bd1b data/minecraft/tags/block/mineable/pickaxe.json
+1de9427f04ee8b68c16e208fbc9930586766bd1b data/minecraft/tags/block/needs_stone_tool.json
+7d1fbe681f843cc5a3de9129ec215778619f01f0 data/minecraft/tags/block/slabs.json
+93bbff6b79e1583bacd7fe575f927435a99854f0 data/minecraft/tags/block/stairs.json
+dbe6d8920a242f9e1dc3a7f775a10f95e5579ef7 data/minecraft/tags/block/walls.json

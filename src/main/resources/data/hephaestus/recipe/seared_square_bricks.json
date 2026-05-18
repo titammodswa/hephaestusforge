@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BBB",
+    "BBB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:seared_paver"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_square_bricks",
+    "count": 9
+  }
+}

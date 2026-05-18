@@ -1,0 +1,9 @@
+{
+  "parent": "hephaestus:block/template/half_tank",
+  "textures": {
+    "top":    "hephaestus:block/smeltery/tank/gauge_top",
+    "side":   "hephaestus:block/smeltery/controller/melter_side",
+    "bottom": "hephaestus:block/smeltery/seared/bricks",
+    "inside": "hephaestus:block/smeltery/seared/bricks"
+  }
+}

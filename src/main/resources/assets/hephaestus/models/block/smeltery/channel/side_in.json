@@ -1,0 +1,7 @@
+{
+  "parent": "hephaestus:block/template/channel/side",
+  "textures": {
+    "texture": "hephaestus:block/smeltery/seared/stone",
+    "top":     "hephaestus:block/smeltery/channel_in"
+  }
+}

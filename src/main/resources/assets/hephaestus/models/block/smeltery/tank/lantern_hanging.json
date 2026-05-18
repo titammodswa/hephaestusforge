@@ -1,0 +1,6 @@
+{
+  "parent": "hephaestus:block/template/lantern_hanging",
+  "textures": {
+    "lantern": "hephaestus:block/smeltery/lantern"
+  }
+}

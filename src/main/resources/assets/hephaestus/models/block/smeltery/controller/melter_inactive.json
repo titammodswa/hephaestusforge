@@ -1,0 +1,6 @@
+{
+  "parent": "hephaestus:block/smeltery/controller/melter",
+  "textures": {
+    "front": "hephaestus:block/smeltery/controller/melter_inactive"
+  }
+}

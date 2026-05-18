@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "hephaestus:block/ores/raw_cobalt_block"
+  }
+}

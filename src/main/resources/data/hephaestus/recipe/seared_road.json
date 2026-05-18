@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "B",
+    "B"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:seared_bricks_slab"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_road",
+    "count": 1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "active=false,facing=north,in_structure=false": { "model": "hephaestus:block/smeltery/controller/smeltery_unformed" },
+    "active=true,facing=north,in_structure=false": { "model": "hephaestus:block/smeltery/controller/smeltery_unformed" },
+    "active=false,facing=south,in_structure=false": { "model": "hephaestus:block/smeltery/controller/smeltery_unformed", "y": 180 },
+    "active=true,facing=south,in_structure=false": { "model": "hephaestus:block/smeltery/controller/smeltery_unformed", "y": 180 },
+    "active=false,facing=west,in_structure=false": { "model": "hephaestus:block/smeltery/controller/smeltery_unformed", "y": 270 },
+    "active=true,facing=west,in_structure=false": { "model": "hephaestus:block/smeltery/controller/smeltery_unformed", "y": 270 },
+    "active=false,facing=east,in_structure=false": { "model": "hephaestus:block/smeltery/controller/smeltery_unformed", "y": 90 },
+    "active=true,facing=east,in_structure=false": { "model": "hephaestus:block/smeltery/controller/smeltery_unformed", "y": 90 },
+
+    "active=false,facing=north,in_structure=true": { "model": "hephaestus:block/smeltery/controller/smeltery_inactive" },
+    "active=false,facing=south,in_structure=true": { "model": "hephaestus:block/smeltery/controller/smeltery_inactive", "y": 180 },
+    "active=false,facing=west,in_structure=true":  { "model": "hephaestus:block/smeltery/controller/smeltery_inactive", "y": 270 },
+    "active=false,facing=east,in_structure=true":  { "model": "hephaestus:block/smeltery/controller/smeltery_inactive", "y": 90 },
+
+    "active=true,facing=north,in_structure=true": { "model": "hephaestus:block/smeltery/controller/smeltery_active" },
+    "active=true,facing=south,in_structure=true": { "model": "hephaestus:block/smeltery/controller/smeltery_active", "y": 180 },
+    "active=true,facing=west,in_structure=true":  { "model": "hephaestus:block/smeltery/controller/smeltery_active", "y": 270 },
+    "active=true,facing=east,in_structure=true":  { "model": "hephaestus:block/smeltery/controller/smeltery_active", "y": 90 }
+  }
+}

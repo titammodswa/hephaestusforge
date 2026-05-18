@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "hanging=false": { "model": "hephaestus:block/smeltery/tank/lantern" },
+    "hanging=true": { "model": "hephaestus:block/smeltery/tank/lantern_hanging" }
+  }
+}

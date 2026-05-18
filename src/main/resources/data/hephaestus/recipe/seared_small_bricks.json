@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BB",
+    "GG"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:seared_tile"
+    },
+    "G": {
+      "item": "hephaestus:seared_bricks"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_small_bricks",
+    "count": 4
+  }
+}

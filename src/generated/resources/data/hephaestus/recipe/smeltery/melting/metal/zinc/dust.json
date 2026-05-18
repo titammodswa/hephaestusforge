@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:dusts/zinc"
+  },
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_zinc"
+  },
+  "temperature": 500,
+  "time": 100
+}

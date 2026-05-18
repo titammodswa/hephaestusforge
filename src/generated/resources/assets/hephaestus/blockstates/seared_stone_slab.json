@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hephaestus:block/seared_stone_slab"
+    },
+    "type=double": {
+      "model": "hephaestus:block/seared_stone"
+    },
+    "type=top": {
+      "model": "hephaestus:block/seared_stone_slab_top"
+    }
+  }
+}

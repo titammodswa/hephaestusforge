@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "hephaestus:block/smeltery/table" },
+    "facing=south": { "model": "hephaestus:block/smeltery/table", "y": 180 },
+    "facing=west":  { "model": "hephaestus:block/smeltery/table", "y": 270 },
+    "facing=east":  { "model": "hephaestus:block/smeltery/table", "y":  90 }
+  }
+}

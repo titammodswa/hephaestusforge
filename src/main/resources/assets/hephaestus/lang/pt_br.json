@@ -1,0 +1,162 @@
+{
+  "itemGroup.hephaestus.tab": "Hephaestus Foundry",
+  "itemGroup.hephaestus": "Hephaestus Foundry",
+
+  "block.hephaestus.seared_stone": "Pedra Chamuscada",
+  "block.hephaestus.seared_stone_slab": "Laje de Pedra Chamuscada",
+  "block.hephaestus.seared_stone_stairs": "Escadas de Pedra Chamuscada",
+  "block.hephaestus.seared_stone_wall": "Muro de Pedra Chamuscada",
+
+  "block.hephaestus.seared_cobble": "Pedregulho Chamuscado",
+  "block.hephaestus.seared_cobble_slab": "Laje de Pedregulho Chamuscado",
+  "block.hephaestus.seared_cobble_stairs": "Escadas de Pedregulho Chamuscado",
+  "block.hephaestus.seared_cobble_wall": "Muro de Pedregulho Chamuscado",
+
+  "block.hephaestus.seared_paver": "Pavimento Chamuscado",
+  "block.hephaestus.seared_paver_slab": "Laje de Pavimento Chamuscado",
+  "block.hephaestus.seared_paver_stairs": "Escadas de Pavimento Chamuscado",
+  "block.hephaestus.seared_paver_wall": "Muro de Pavimento Chamuscado",
+
+  "block.hephaestus.seared_bricks": "Tijolos Chamuscados",
+  "block.hephaestus.seared_bricks_slab": "Laje de Tijolos Chamuscados",
+  "block.hephaestus.seared_bricks_stairs": "Escadas de Tijolos Chamuscados",
+  "block.hephaestus.seared_bricks_wall": "Muro de Tijolos Chamuscados",
+
+  "block.hephaestus.seared_cracked_bricks": "Tijolos Chamuscados Rachados",
+  "block.hephaestus.seared_cracked_bricks_slab": "Laje de Tijolos Chamuscados Rachados",
+  "block.hephaestus.seared_cracked_bricks_stairs": "Escadas de Tijolos Chamuscados Rachados",
+  "block.hephaestus.seared_cracked_bricks_wall": "Muro de Tijolos Chamuscados Rachados",
+
+  "block.hephaestus.seared_fancy_bricks": "Tijolos Chamuscados Trabalhados",
+  "block.hephaestus.seared_fancy_bricks_slab": "Laje de Tijolos Chamuscados Trabalhados",
+  "block.hephaestus.seared_fancy_bricks_stairs": "Escadas de Tijolos Chamuscados Trabalhados",
+  "block.hephaestus.seared_fancy_bricks_wall": "Muro de Tijolos Chamuscados Trabalhados",
+
+  "block.hephaestus.seared_triangle_bricks": "Tijolos Chamuscados Triangulares",
+  "block.hephaestus.seared_triangle_bricks_slab": "Laje de Tijolos Chamuscados Triangulares",
+  "block.hephaestus.seared_triangle_bricks_stairs": "Escadas de Tijolos Chamuscados Triangulares",
+  "block.hephaestus.seared_triangle_bricks_wall": "Muro de Tijolos Chamuscados Triangulares",
+
+  "block.hephaestus.seared_creeper": "Creeper Chamuscado",
+  "block.hephaestus.seared_creeper_slab": "Laje de Creeper Chamuscado",
+  "block.hephaestus.seared_creeper_stairs": "Escadas de Creeper Chamuscado",
+  "block.hephaestus.seared_creeper_wall": "Muro de Creeper Chamuscado",
+
+  "block.hephaestus.seared_road": "Estrada Chamuscada",
+  "block.hephaestus.seared_road_slab": "Laje de Estrada Chamuscada",
+  "block.hephaestus.seared_road_stairs": "Escadas de Estrada Chamuscada",
+  "block.hephaestus.seared_road_wall": "Muro de Estrada Chamuscada",
+
+  "block.hephaestus.seared_small_bricks": "Tijolos Chamuscados Pequenos",
+  "block.hephaestus.seared_small_bricks_slab": "Laje de Tijolos Chamuscados Pequenos",
+  "block.hephaestus.seared_small_bricks_stairs": "Escadas de Tijolos Chamuscados Pequenos",
+  "block.hephaestus.seared_small_bricks_wall": "Muro de Tijolos Chamuscados Pequenos",
+
+  "block.hephaestus.seared_square_bricks": "Tijolos Chamuscados Quadrados",
+  "block.hephaestus.seared_square_bricks_slab": "Laje de Tijolos Chamuscados Quadrados",
+  "block.hephaestus.seared_square_bricks_stairs": "Escadas de Tijolos Chamuscados Quadrados",
+  "block.hephaestus.seared_square_bricks_wall": "Muro de Tijolos Chamuscados Quadrados",
+
+  "block.hephaestus.seared_tile": "Azulejos Chamuscados",
+  "block.hephaestus.seared_tile_slab": "Laje de Azulejos Chamuscados",
+  "block.hephaestus.seared_tile_stairs": "Escadas de Azulejos Chamuscados",
+  "block.hephaestus.seared_tile_wall": "Muro de Azulejos Chamuscados",
+
+  "block.hephaestus.seared_ladder": "Escada Chamuscada",
+  "block.hephaestus.seared_glass": "Vidro Chamuscado",
+  "block.hephaestus.seared_tinted_glass": "Vidro Chamuscado Tingido",
+
+  "block.hephaestus.clear_glass": "Vidro Transparente",
+  "block.hephaestus.clear_tinted_glass": "Vidro Transparente Tingido",
+  "block.hephaestus.clear_stained_glass": "Vidro Transparente Colorido",
+
+  "block.hephaestus.seared_melter": "Derretedor Chamuscado",
+  "block.hephaestus.seared_heater": "Aquecedor Chamuscado",
+  "block.hephaestus.seared_table": "Mesa de Fundição Chamuscada",
+  "block.hephaestus.seared_basin": "Bacia de Fundição Chamuscada",
+  "block.hephaestus.seared_faucet": "Torneira Chamuscada",
+  "block.hephaestus.seared_channel": "Canal Chamuscado",
+
+  "block.hephaestus.seared_fuel_tank": "Tanque de Combustível Chamuscado",
+  "block.hephaestus.seared_fuel_gauge": "Medidor de Combustível Chamuscado",
+  "block.hephaestus.seared_ingot_tank": "Tanque de Lingotes Chamuscado",
+  "block.hephaestus.seared_ingot_gauge": "Medidor de Lingotes Chamuscado",
+  "block.hephaestus.seared_casting_tank": "Tanque de Fundição Chamuscado",
+  "block.hephaestus.seared_lamp": "Lâmpada Chamuscada",
+
+  "block.hephaestus.smeltery_controller": "Controlador da Fundição",
+  "block.hephaestus.seared_drain": "Dreno Chamuscado",
+  "block.hephaestus.seared_chute": "Calha Chamuscada",
+  "block.hephaestus.seared_duct": "Duto Chamuscado",
+
+  "item.hephaestus.blank_cast": "Molde Vazio",
+  "item.hephaestus.ingot_cast": "Molde de Lingote",
+  "item.hephaestus.nugget_cast": "Molde de Pepita",
+  "item.hephaestus.gem_cast": "Molde de Gema",
+  "item.hephaestus.coin_cast": "Molde de Moeda",
+  "item.hephaestus.gear_cast": "Molde de Engrenagem",
+  "item.hephaestus.plate_cast": "Molde de Placa",
+  "item.hephaestus.rod_cast": "Molde de Haste",
+
+  "item.hephaestus.cobalt_nugget": "Pepita de Cobalto",
+  "block.hephaestus.cobalt_block": "Bloco de Cobalto",
+  "block.hephaestus.raw_cobalt_block": "Bloco de Cobalto Bruto",
+  "item.hephaestus.forge_brick": "Tijolo de Forragem",
+  "item.hephaestus.raw_cobalt": "Cobalto Bruto",
+  "item.hephaestus.cobalt_ingot": "Lingote de Cobalto",
+  "item.hephaestus.cobalt_powder": "Pó de Cobalto",
+  "item.hephaestus.raw_steel": "Aço Bruto",
+  "item.hephaestus.steel_ingot": "Lingote de Aço",
+  "item.hephaestus.steel_powder": "Pó de Aço",
+  "item.hephaestus.steel_nugget": "Pepita de Aço",
+  "block.hephaestus.steel_block": "Bloco de Aço",
+
+  "fluid.hephaestus.molten_iron": "Ferro Derretido",
+  "item.hephaestus.molten_iron_bucket": "Balde de Ferro Derretido",
+  "block.hephaestus.molten_iron_block": "Ferro Derretido",
+
+  "fluid.hephaestus.molten_gold": "Ouro Derretido",
+  "item.hephaestus.molten_gold_bucket": "Balde de Ouro Derretido",
+  "block.hephaestus.molten_gold_block": "Ouro Derretido",
+
+  "fluid.hephaestus.molten_copper": "Cobre Derretido",
+  "item.hephaestus.molten_copper_bucket": "Balde de Cobre Derretido",
+  "block.hephaestus.molten_copper_block": "Cobre Derretido",
+
+  "fluid.hephaestus.molten_diamond": "Diamante Derretido",
+  "item.hephaestus.molten_diamond_bucket": "Balde de Diamante Derretido",
+  "block.hephaestus.molten_diamond_block": "Diamante Derretido",
+
+  "fluid.hephaestus.molten_emerald": "Esmeralda Derretida",
+  "item.hephaestus.molten_emerald_bucket": "Balde de Esmeralda Derretida",
+  "block.hephaestus.molten_emerald_block": "Esmeralda Derretida",
+
+  "fluid.hephaestus.molten_amethyst": "Ametista Derretida",
+  "item.hephaestus.molten_amethyst_bucket": "Balde de Ametista Derretida",
+  "block.hephaestus.molten_amethyst_block": "Ametista Derretida",
+
+  "fluid.hephaestus.molten_quartz": "Quartzo Derretido",
+  "item.hephaestus.molten_quartz_bucket": "Balde de Quartzo Derretido",
+  "block.hephaestus.molten_quartz_block": "Quartzo Derretido",
+
+  "fluid.hephaestus.molten_cobalt": "Cobalto Derretido",
+  "item.hephaestus.molten_cobalt_bucket": "Balde de Cobalto Derretido",
+  "block.hephaestus.molten_cobalt_block": "Cobalto Derretido",
+
+  "fluid.hephaestus.molten_steel": "Aço Derretido",
+  "item.hephaestus.molten_steel_bucket": "Balde de Aço Derretido",
+  "block.hephaestus.molten_steel_block": "Aço Derretido",
+
+  "fluid.hephaestus.molten_brass": "Brass Derretido",
+  "item.hephaestus.molten_brass_bucket": "Balde de Brass Derretido",
+  "block.hephaestus.molten_brass_block": "Brass Derretido",
+
+  "fluid.hephaestus.molten_zinc": "Zinco Derretido",
+  "item.hephaestus.molten_zinc_bucket": "Balde de Zinco Derretido",
+  "block.hephaestus.molten_zinc_block": "Zinco Derretido",
+
+  "fluid.hephaestus.molten_blaze": "Blaze Derretido",
+  "block.hephaestus.molten_blaze_block": "Blaze Derretido",
+  "item.hephaestus.molten_blaze_bucket": "Balde de Blaze Derretido",
+  "gui.hephaestus.tank.bucket.auto.title": "Modo Auto"
+}

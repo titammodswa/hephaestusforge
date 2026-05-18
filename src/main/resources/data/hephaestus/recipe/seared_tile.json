@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:seared_road"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_tile",
+    "count": 4
+  }
+}

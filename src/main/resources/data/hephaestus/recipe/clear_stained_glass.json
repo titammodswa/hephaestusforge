@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BBB",
+    "BGB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:clear_glass"
+    },
+    "G": {
+      "item": "minecraft:white_dye"
+    }
+  },
+  "result": {
+    "id": "hephaestus:clear_stained_glass",
+    "count": 8
+  }
+}

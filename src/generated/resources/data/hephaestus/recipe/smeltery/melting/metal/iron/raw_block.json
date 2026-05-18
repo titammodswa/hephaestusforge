@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:storage_blocks/raw_iron"
+  },
+  "result": {
+    "amount": 900,
+    "id": "hephaestus:molten_iron"
+  },
+  "temperature": 800,
+  "time": 250
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BGB",
+    "GBG",
+    "BGB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:forge_brick"
+    },
+    "G": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_cobble",
+    "count": 4
+  }
+}

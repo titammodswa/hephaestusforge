@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "": { "model": "hephaestus:block/clear_stained_glass_base" }
+  },
+  "athena:loader": "athena:ctm",
+  "ctm_textures": {
+    "center": "hephaestus:block/clear_stained_glass/udlr",
+    "empty": "hephaestus:block/clear_stained_glass/udlr",
+    "horizontal": "hephaestus:block/clear_stained_glass/lr",
+    "vertical": "hephaestus:block/clear_stained_glass/ud",
+    "particle": "hephaestus:block/clear_stained_glass"
+  }
+}

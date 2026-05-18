@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:forge_brick"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_bricks",
+    "count": 1
+  }
+}

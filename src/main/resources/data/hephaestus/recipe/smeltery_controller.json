@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BBB",
+    "CSH",
+    "BTB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:seared_bricks"
+    },
+    "C": {
+      "item": "hephaestus:seared_chute"
+    },
+    "H": {
+      "item": "hephaestus:seared_drain"
+    },
+    "T": {
+      "item": "hephaestus:seared_fuel_tank"
+    },
+    "S": {
+      "item": "minecraft:blast_furnace"
+    }
+  },
+  "result": {
+    "id": "hephaestus:smeltery_controller",
+    "count": 1
+  }
+}

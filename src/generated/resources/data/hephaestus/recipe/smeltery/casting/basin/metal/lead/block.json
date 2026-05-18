@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "alltheores"
+    }
+  ],
+  "type": "hephaestus:casting_basin",
+  "input": {
+    "amount": 900,
+    "id": "alltheores:molten_lead"
+  },
+  "result": {
+    "count": 1,
+    "id": "alltheores:lead_block"
+  },
+  "time": 200
+}

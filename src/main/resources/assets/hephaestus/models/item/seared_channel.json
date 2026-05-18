@@ -1,0 +1,7 @@
+{
+  "parent": "hephaestus:block/template/channel/inventory",
+  "textures": {
+    "particle": "hephaestus:block/smeltery/seared/stone",
+    "texture":  "hephaestus:block/smeltery/seared/stone"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:storage_blocks/copper"
+  },
+  "result": {
+    "amount": 900,
+    "id": "hephaestus:molten_copper"
+  },
+  "temperature": 500,
+  "time": 200
+}

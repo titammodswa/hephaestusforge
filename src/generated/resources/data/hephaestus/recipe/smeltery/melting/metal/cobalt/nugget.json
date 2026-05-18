@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:nuggets/cobalt"
+  },
+  "result": {
+    "amount": 10,
+    "id": "hephaestus:molten_cobalt"
+  },
+  "temperature": 1100,
+  "time": 33
+}

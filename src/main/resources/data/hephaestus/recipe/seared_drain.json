@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BBB",
+    "G G",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:forge_brick"
+    },
+    "G": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "result": {
+    "id": "hephaestus:seared_drain",
+    "count": 1
+  }
+}

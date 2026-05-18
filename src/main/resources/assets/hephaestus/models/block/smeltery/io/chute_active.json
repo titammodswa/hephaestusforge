@@ -1,0 +1,9 @@
+{
+  "parent": "hephaestus:block/template/chute",
+  "textures": {
+    "top": "hephaestus:block/smeltery/io/chute_top_active",
+    "back": "hephaestus:block/smeltery/io/back",
+    "bricks": "hephaestus:block/smeltery/seared/bricks",
+    "side": "hephaestus:block/smeltery/io/chute_side_active"
+  }
+}

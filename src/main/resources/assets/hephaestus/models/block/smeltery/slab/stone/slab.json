@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "hephaestus:block/smeltery/seared/stone",
+        "top": "hephaestus:block/smeltery/seared/stone",
+        "side": "hephaestus:block/smeltery/seared/stone"
+    }
+}

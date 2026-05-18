@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:storage_blocks/zinc"
+  },
+  "result": {
+    "amount": 900,
+    "id": "hephaestus:molten_zinc"
+  },
+  "temperature": 500,
+  "time": 200
+}

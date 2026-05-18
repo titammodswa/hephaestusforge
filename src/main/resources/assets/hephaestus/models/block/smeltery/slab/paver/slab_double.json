@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hephaestus:block/smeltery/seared/paver",
+    "side": "hephaestus:block/smeltery/seared/paver_slab"
+  }
+}

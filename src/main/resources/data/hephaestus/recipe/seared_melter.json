@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "BTB",
+    "BFB",
+    "BSB"
+  ],
+  "key": {
+    "B": {
+      "item": "hephaestus:forge_brick"
+    },
+    "T": {
+      "item": "hephaestus:seared_ingot_tank"
+    },
+    "S": {
+      "item": "hephaestus:seared_bricks"
+    },
+    "F": {
+      "item": "minecraft:blast_furnace"
+    }
+
+  },
+  "result": {
+    "id": "hephaestus:seared_melter",
+    "count": 1
+  }
+}

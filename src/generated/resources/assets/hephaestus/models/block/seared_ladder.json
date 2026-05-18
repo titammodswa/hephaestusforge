@@ -1,0 +1,8 @@
+{
+  "parent": "hephaestus:block/template/ladder",
+  "textures": {
+    "bottom": "hephaestus:block/smeltery/seared/ladder",
+    "side": "hephaestus:block/smeltery/seared/ladder",
+    "top": "hephaestus:block/smeltery/seared/fancy_bricks"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=west":  { "model": "hephaestus:block/smeltery/fluid_cannon/front", "y": 270 },
+    "facing=south": { "model": "hephaestus:block/smeltery/fluid_cannon/front", "y": 180  },
+    "facing=north": { "model": "hephaestus:block/smeltery/fluid_cannon/front" },
+    "facing=east":  { "model": "hephaestus:block/smeltery/fluid_cannon/front", "y":  90 },
+    "facing=up":    { "model": "hephaestus:block/smeltery/fluid_cannon/up"   },
+    "facing=down":  { "model": "hephaestus:block/smeltery/fluid_cannon/down" }
+  }
+}

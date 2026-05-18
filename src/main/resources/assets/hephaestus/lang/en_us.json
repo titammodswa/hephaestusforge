@@ -1,0 +1,165 @@
+{
+  "itemGroup.hephaestus.tab": "Hephaestus Foundry",
+  "itemGroup.hephaestus": "Hephaestus Foundry",
+
+  "block.hephaestus.seared_stone": "Seared Stone",
+  "block.hephaestus.seared_stone_slab": "Seared Stone Slab",
+  "block.hephaestus.seared_stone_stairs": "Seared Stone Stairs",
+  "block.hephaestus.seared_stone_wall": "Seared Stone Wall",
+
+  "block.hephaestus.seared_cobble": "Seared Cobblestone",
+  "block.hephaestus.seared_cobble_slab": "Seared Cobblestone Slab",
+  "block.hephaestus.seared_cobble_stairs": "Seared Cobblestone Stairs",
+  "block.hephaestus.seared_cobble_wall": "Seared Cobblestone Wall",
+
+  "block.hephaestus.seared_paver": "Seared Paver",
+  "block.hephaestus.seared_paver_slab": "Seared Paver Slab",
+  "block.hephaestus.seared_paver_stairs": "Seared Paver Stairs",
+  "block.hephaestus.seared_paver_wall": "Seared Paver Wall",
+
+  "block.hephaestus.seared_bricks": "Seared Bricks",
+  "block.hephaestus.seared_bricks_slab": "Seared Brick Slab",
+  "block.hephaestus.seared_bricks_stairs": "Seared Brick Stairs",
+  "block.hephaestus.seared_bricks_wall": "Seared Brick Wall",
+
+  "block.hephaestus.seared_cracked_bricks": "Cracked Seared Bricks",
+  "block.hephaestus.seared_cracked_bricks_slab": "Cracked Seared Brick Slab",
+  "block.hephaestus.seared_cracked_bricks_stairs": "Cracked Seared Brick Stairs",
+  "block.hephaestus.seared_cracked_bricks_wall": "Cracked Seared Brick Wall",
+
+  "block.hephaestus.seared_fancy_bricks": "Fancy Seared Bricks",
+  "block.hephaestus.seared_fancy_bricks_slab": "Fancy Seared Brick Slab",
+  "block.hephaestus.seared_fancy_bricks_stairs": "Fancy Seared Brick Stairs",
+  "block.hephaestus.seared_fancy_bricks_wall": "Fancy Seared Brick Wall",
+
+  "block.hephaestus.seared_triangle_bricks": "Triangle Seared Bricks",
+  "block.hephaestus.seared_triangle_bricks_slab": "Triangle Seared Brick Slab",
+  "block.hephaestus.seared_triangle_bricks_stairs": "Triangle Seared Brick Stairs",
+  "block.hephaestus.seared_triangle_bricks_wall": "Triangle Seared Brick Wall",
+
+  "block.hephaestus.seared_creeper": "Seared Creeper",
+  "block.hephaestus.seared_creeper_slab": "Seared Creeper Slab",
+  "block.hephaestus.seared_creeper_stairs": "Seared Creeper Stairs",
+  "block.hephaestus.seared_creeper_wall": "Seared Creeper Wall",
+
+  "block.hephaestus.seared_road": "Seared Road",
+  "block.hephaestus.seared_road_slab": "Seared Road Slab",
+  "block.hephaestus.seared_road_stairs": "Seared Road Stairs",
+  "block.hephaestus.seared_road_wall": "Seared Road Wall",
+
+  "block.hephaestus.seared_small_bricks": "Small Seared Bricks",
+  "block.hephaestus.seared_small_bricks_slab": "Small Seared Brick Slab",
+  "block.hephaestus.seared_small_bricks_stairs": "Small Seared Brick Stairs",
+  "block.hephaestus.seared_small_bricks_wall": "Small Seared Brick Wall",
+
+  "block.hephaestus.seared_square_bricks": "Square Seared Bricks",
+  "block.hephaestus.seared_square_bricks_slab": "Square Seared Brick Slab",
+  "block.hephaestus.seared_square_bricks_stairs": "Square Seared Brick Stairs",
+  "block.hephaestus.seared_square_bricks_wall": "Square Seared Brick Wall",
+
+  "block.hephaestus.seared_tile": "Seared Tiles",
+  "block.hephaestus.seared_tile_slab": "Seared Tile Slab",
+  "block.hephaestus.seared_tile_stairs": "Seared Tile Stairs",
+  "block.hephaestus.seared_tile_wall": "Seared Tile Wall",
+
+  "block.hephaestus.seared_ladder": "Seared Ladder",
+  "block.hephaestus.seared_glass": "Seared Glass",
+  "block.hephaestus.seared_tinted_glass": "Tinted Seared Glass",
+
+  "block.hephaestus.clear_glass": "Clear Glass",
+  "block.hephaestus.clear_tinted_glass": "Tinted Clear Glass",
+  "block.hephaestus.clear_stained_glass": "Clear Stained Glass",
+
+  "block.hephaestus.seared_melter": "Seared Melter",
+  "block.hephaestus.seared_heater": "Seared Heater",
+  "block.hephaestus.seared_table": "Seared Casting Table",
+  "block.hephaestus.seared_basin": "Seared Casting Basin",
+  "block.hephaestus.seared_faucet": "Seared Faucet",
+  "block.hephaestus.seared_channel": "Seared Channel",
+
+  "block.hephaestus.seared_fuel_tank": "Seared Fuel Tank",
+  "block.hephaestus.seared_fuel_gauge": "Seared Fuel Gauge",
+  "block.hephaestus.seared_ingot_tank": "Seared Ingot Tank",
+  "block.hephaestus.seared_ingot_gauge": "Seared Ingot Gauge",
+  "block.hephaestus.seared_casting_tank": "Seared Casting Tank",
+  "block.hephaestus.seared_lamp": "Seared Lamp",
+
+  "block.hephaestus.smeltery_controller": "Smeltery Controller",
+  "block.hephaestus.seared_drain": "Seared Drain",
+  "block.hephaestus.seared_chute": "Seared Chute",
+  "block.hephaestus.seared_duct": "Seared Duct",
+
+  "item.hephaestus.blank_cast": "Blank Cast",
+  "item.hephaestus.ingot_cast": "Ingot Cast",
+  "item.hephaestus.nugget_cast": "Nugget Cast",
+  "item.hephaestus.gem_cast": "Gem Cast",
+  "item.hephaestus.coin_cast": "Coin Cast",
+  "item.hephaestus.gear_cast": "Gear Cast",
+  "item.hephaestus.plate_cast": "Plate Cast",
+  "item.hephaestus.rod_cast": "Rod Cast",
+
+  "item.hephaestus.forge_brick": "Forge Brick",
+  "item.hephaestus.raw_cobalt": "Raw Cobalt",
+  "item.hephaestus.cobalt_ingot": "Cobalt Ingot",
+  "item.hephaestus.cobalt_powder": "Cobalt Powder",
+  "item.hephaestus.raw_steel": "Raw Steel",
+  "item.hephaestus.steel_ingot": "Steel Ingot",
+  "item.hephaestus.steel_powder": "Steel Powder",
+  "item.hephaestus.cobalt_nugget": "Cobalt Nugget",
+  "block.hephaestus.cobalt_block": "Block of Cobalt",
+  "block.hephaestus.raw_cobalt_block": "Block of Raw Cobalt",
+  "item.hephaestus.steel_nugget": "Steel Nugget",
+  "block.hephaestus.steel_block": "Block of Steel",
+
+  "fluid.hephaestus.molten_iron": "Molten Iron",
+  "item.hephaestus.molten_iron_bucket": "Molten Iron Bucket",
+  "block.hephaestus.molten_iron_block": "Molten Iron",
+
+  "fluid.hephaestus.molten_gold": "Molten Gold",
+  "item.hephaestus.molten_gold_bucket": "Molten Gold Bucket",
+  "block.hephaestus.molten_gold_block": "Molten Gold",
+
+  "fluid.hephaestus.molten_copper": "Molten Copper",
+  "item.hephaestus.molten_copper_bucket": "Molten Copper Bucket",
+  "block.hephaestus.molten_copper_block": "Molten Copper",
+
+  "fluid.hephaestus.molten_diamond": "Molten Diamond",
+  "item.hephaestus.molten_diamond_bucket": "Molten Diamond Bucket",
+  "block.hephaestus.molten_diamond_block": "Molten Diamond",
+
+  "fluid.hephaestus.molten_emerald": "Molten Emerald",
+  "item.hephaestus.molten_emerald_bucket": "Molten Emerald Bucket",
+  "block.hephaestus.molten_emerald_block": "Molten Emerald",
+
+  "fluid.hephaestus.molten_amethyst": "Molten Amethyst",
+  "item.hephaestus.molten_amethyst_bucket": "Molten Amethyst Bucket",
+  "block.hephaestus.molten_amethyst_block": "Molten Amethyst",
+
+  "fluid.hephaestus.molten_quartz": "Molten Quartz",
+  "item.hephaestus.molten_quartz_bucket": "Molten Quartz Bucket",
+  "block.hephaestus.molten_quartz_block": "Molten Quartz",
+
+  "fluid.hephaestus.molten_cobalt": "Molten Cobalt",
+  "item.hephaestus.molten_cobalt_bucket": "Molten Cobalt Bucket",
+  "block.hephaestus.molten_cobalt_block": "Molten Cobalt",
+
+  "fluid.hephaestus.molten_steel": "Molten Steel",
+  "item.hephaestus.molten_steel_bucket": "Molten Steel Bucket",
+  "block.hephaestus.molten_steel_block": "Molten Steel",
+
+  "fluid.hephaestus.molten_brass": "Molten Brass",
+  "item.hephaestus.molten_brass_bucket": "Molten Brass Bucket",
+  "block.hephaestus.molten_brass_block": "Molten Brass",
+
+  "fluid.hephaestus.molten_zinc": "Molten Zinc",
+  "item.hephaestus.molten_zinc_bucket": "Molten Zinc Bucket",
+  "block.hephaestus.molten_zinc_block": "Molten Zinc",
+
+  "fluid.hephaestus.molten_blaze": "Molten Blaze",
+  "block.hephaestus.molten_blaze_block": "Molten Blaze",
+  "item.hephaestus.molten_blaze_bucket": "Molten Blaze Bucket",
+  "gui.hephaestus.tank.bucket.auto.title": "Auto mode",
+  "block.titammods.smeltery_controller": "Smeltery Controller",
+  "gui.hephaestus.melting.no_fuel": "No fuel in tank",
+  "gui.hephaestus.melting.no_tank": "no tank installed"
+}

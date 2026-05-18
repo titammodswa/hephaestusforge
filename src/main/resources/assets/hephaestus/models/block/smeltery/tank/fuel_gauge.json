@@ -1,0 +1,7 @@
+{
+  "parent": "hephaestus:block/template/tank",
+  "textures": {
+    "top":  "hephaestus:block/smeltery/tank/gauge_top",
+    "side": "hephaestus:block/smeltery/tank/fuel_gauge"
+  }
+}

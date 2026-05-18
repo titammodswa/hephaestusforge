@@ -1,0 +1,8 @@
+{
+  "parent": "hephaestus:block/template/table",
+  "textures": {
+    "side":   "hephaestus:block/smeltery/casting/table_side",
+    "top":    "hephaestus:block/smeltery/casting/table_top",
+    "bottom": "hephaestus:block/smeltery/casting/table_bottom"
+  }
+}

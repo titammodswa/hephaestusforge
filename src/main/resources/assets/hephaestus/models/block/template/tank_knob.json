@@ -1,0 +1,118 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"2": "hephaestus:block/smeltery/tank/casting_tank_top",
+		"particle": "hephaestus:block/smeltery/tank/fuel_tank",
+		"side": "hephaestus:block/smeltery/tank/fuel_tank",
+		"top": "hephaestus:block/smeltery/tank/tank_top"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#top", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#top", "cullface": "down"}
+			}
+		},
+		{
+			"from": [3, 16, 3],
+			"to": [13, 18, 13],
+			"faces": {
+				"north": {"uv": [4, 11, 12, 13], "texture": "#2", "cullface": "up"},
+				"east": {"uv": [4, 11, 12, 13], "texture": "#2", "cullface": "up"},
+				"south": {"uv": [4, 11, 12, 13], "texture": "#2", "cullface": "up"},
+				"west": {"uv": [4, 11, 12, 13], "texture": "#2", "cullface": "up"},
+				"up": {"uv": [3, 3, 13, 13], "texture": "#2", "cullface": "up"}
+			}
+		},
+		{
+			"from": [15.9, 15.9, 15.9],
+			"to": [0.1, 0.1, 0.1],
+			"faces": {
+				"north": {"uv": [15.9, 15.9, 0.1, 0.1], "texture": "#side"},
+				"east": {"uv": [15.9, 15.9, 0.1, 0.1], "texture": "#side"},
+				"south": {"uv": [15.9, 15.9, 0.1, 0.1], "texture": "#side"},
+				"west": {"uv": [15.9, 15.9, 0.1, 0.1], "texture": "#side"},
+				"up": {"uv": [15.9, 15.9, 0.1, 0.1], "texture": "#top"},
+				"down": {"uv": [15.9, 15.9, 0.1, 0.1], "texture": "#top"}
+			}
+		}
+	],
+	"fluid": {
+		"from": [0.08, 0.08, 0.08],
+		"to": [15.92, 15.92, 15.92],
+		"increments": 256
+	},
+	"gui": {
+		"elements": [
+			{
+				"from": [0, 0, 0],
+				"to": [16, 16, 16],
+				"faces": {
+					"north": {
+						"texture": "#side",
+						"cullface": "north"
+					},
+					"east": {
+						"texture": "#side",
+						"cullface": "east"
+					},
+					"south": {
+						"texture": "#side",
+						"cullface": "south"
+					},
+					"west": {
+						"texture": "#side",
+						"cullface": "west"
+					},
+					"up": {
+						"texture": "#top",
+						"cullface": "up"
+					},
+					"down": {
+						"texture": "#top",
+						"cullface": "down"
+					}
+				}
+			},
+			{
+				"from": [3, 16, 3],
+				"to": [13, 17, 13],
+				"faces": {
+					"up": {
+						"texture": "#top",
+						"cullface": "up"
+					},
+					"north": {
+						"uv": [0, 0, 10, 1],
+						"texture": "#side",
+						"cullface": "up"
+					},
+					"south": {
+						"uv": [0, 0, 10, 1],
+						"texture": "#side",
+						"cullface": "up"
+					},
+					"west": {
+						"uv": [0, 0, 10, 1],
+						"texture": "#side",
+						"cullface": "up"
+					},
+					"east": {
+						"uv": [0, 0, 10, 1],
+						"texture": "#side",
+						"cullface": "up"
+					}
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:gems/amethyst"
+  },
+  "result": {
+    "amount": 100,
+    "id": "hephaestus:molten_amethyst"
+  },
+  "temperature": 1000,
+  "time": 120
+}

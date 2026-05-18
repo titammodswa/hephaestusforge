@@ -1,0 +1,6 @@
+{
+  "parent": "hephaestus:block/template/gauge",
+  "textures": {
+    "gauge": "hephaestus:block/smeltery/io/gauge"
+  }
+}

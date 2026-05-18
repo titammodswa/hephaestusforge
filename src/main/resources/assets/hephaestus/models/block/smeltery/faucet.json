@@ -1,0 +1,6 @@
+{
+  "parent": "hephaestus:block/template/faucet",
+  "textures": {
+    "tex": "hephaestus:block/smeltery/seared/stone"
+  }
+}
