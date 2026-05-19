@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "alltheores"
+    }
+  ],
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:rods/lumium"
+  },
+  "result": {
+    "amount": 45,
+    "id": "hephaestus:molten_lumium"
+  },
+  "temperature": 1000,
+  "time": 50
+}

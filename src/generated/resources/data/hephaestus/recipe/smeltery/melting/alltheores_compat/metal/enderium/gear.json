@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "alltheores"
+    }
+  ],
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:gears/enderium"
+  },
+  "result": {
+    "amount": 360,
+    "id": "hephaestus:molten_enderium"
+  },
+  "temperature": 1450,
+  "time": 200
+}

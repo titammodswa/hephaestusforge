@@ -13,13 +13,27 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import com.titammods.block.SmelteryControllerBlockEntity;
 import com.titammods.block.SearedDrainBlockEntity;
 import com.titammods.block.SearedChuteBlockEntity;
-import com.titammods.network.ModNetworking; // IMPORTANTE: Importar a classe
+import com.titammods.network.ModNetworking;
+import net.neoforged.fml.ModList;
+import com.titammods.registry.HephaestusFluids;
 
 @Mod(TitamMods.MODID)
 public class TitamMods {
     public static final String MODID = "hephaestus";
 
+    public static boolean hasConflict = false;
+
     public TitamMods(IEventBus modEventBus) {
+
+        if (ModList.get().isLoaded("alltheores") && ModList.get().isLoaded("ftbmaterials")) {
+            hasConflict = true;
+            if (FMLEnvironment.dist == Dist.CLIENT) {
+                net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(TitamMods::showErrorScreen);
+            }
+            return;
+        }
+
+        HephaestusFluids.registerFluids();
 
         ModBlocks.BLOCKS.register(modEventBus);
         ModTanks.BLOCKS.register(modEventBus);
@@ -36,13 +50,22 @@ public class TitamMods {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerCapabilities);
 
-        // AQUI ESTÁ O REGISTO DE REDE CORRIGIDO:
         modEventBus.addListener(ModNetworking::register);
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             ClientModEvents.register(modEventBus);
         }
         DataGenerators.register(modEventBus);
+    }
+
+    public static void showErrorScreen(net.neoforged.neoforge.client.event.ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof net.minecraft.client.gui.screens.TitleScreen) {
+            net.minecraft.client.Minecraft.getInstance().setScreen(new net.minecraft.client.gui.screens.ConfirmScreen(
+                    (clique) -> net.minecraft.client.Minecraft.getInstance().stop(),
+                    net.minecraft.network.chat.Component.translatable("gui.hephaestus.conflict.title"),
+                    net.minecraft.network.chat.Component.translatable("gui.hephaestus.conflict.description")
+            ));
+        }
     }
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {

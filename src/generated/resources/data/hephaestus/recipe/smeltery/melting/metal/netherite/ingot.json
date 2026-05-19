@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:ingots/netherite"
+  },
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_netherite"
+  },
+  "temperature": 2000,
+  "time": 100
+}

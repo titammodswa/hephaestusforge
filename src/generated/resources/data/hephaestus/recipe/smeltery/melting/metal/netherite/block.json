@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": {
+    "tag": "c:storage_blocks/netherite"
+  },
+  "result": {
+    "amount": 900,
+    "id": "hephaestus:molten_netherite"
+  },
+  "temperature": 2000,
+  "time": 200
+}

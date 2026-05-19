@@ -111,17 +111,108 @@
   "item.hephaestus.steel_nugget": "Steel Nugget",
   "block.hephaestus.steel_block": "Block of Steel",
 
-  "fluid.hephaestus.molten_iron": "Molten Iron",
-  "item.hephaestus.molten_iron_bucket": "Molten Iron Bucket",
-  "block.hephaestus.molten_iron_block": "Molten Iron",
+  "gui.hephaestus.conflict.title": "§c[HEPHAESTUS] Critical Mod Conflict!",
+  "gui.hephaestus.conflict.description": "The Hephaestus mod detected that both 'alltheores' and 'ftbmaterials' are installed.\n\nThese two mods cause duplication and cannot be used together.\nPlease close the game and remove one of them from your 'mods' folder.\n\n(Click any button below to exit the game)",
 
-  "fluid.hephaestus.molten_gold": "Molten Gold",
+  "fluid_type.hephaestus.molten_seared_stone": "Molten Seared Stone",
+  "item.hephaestus.molten_seared_stone_bucket": "Molten Seared Stone Bucket",
+  "block.hephaestus.molten_seared_stone_block": "Molten Seared Stone",
+
+  "fluid_type.hephaestus.molten_scorched_stone": "Molten Scorched Stone",
+  "item.hephaestus.molten_scorched_stone_bucket": "Molten Scorched Stone Bucket",
+  "block.hephaestus.molten_scorched_stone_block": "Molten Scorched Stone",
+
+  "fluid_type.hephaestus.molten_aluminum": "Molten Aluminum",
+  "item.hephaestus.molten_aluminum_bucket": "Molten Aluminum Bucket",
+  "block.hephaestus.molten_aluminum_block": "Molten Aluminum",
+
+  "fluid_type.hephaestus.molten_brass": "Molten Brass",
+  "item.hephaestus.molten_brass_bucket": "Molten Brass Bucket",
+  "block.hephaestus.molten_brass_block": "Molten Brass",
+
+  "fluid_type.hephaestus.molten_bronze": "Molten Bronze",
+  "item.hephaestus.molten_bronze_bucket": "Molten Bronze Bucket",
+  "block.hephaestus.molten_bronze_block": "Molten Bronze",
+
+  "fluid_type.hephaestus.molten_constantan": "Molten Constantan",
+  "item.hephaestus.molten_constantan_bucket": "Molten Constantan Bucket",
+  "block.hephaestus.molten_constantan_block": "Molten Constantan",
+
+  "fluid_type.hephaestus.molten_copper": "Molten Copper",
+  "item.hephaestus.molten_copper_bucket": "Molten Copper Bucket",
+  "block.hephaestus.molten_copper_block": "Molten Copper",
+
+  "fluid_type.hephaestus.molten_electrum": "Molten Electrum",
+  "item.hephaestus.molten_electrum_bucket": "Molten Electrum Bucket",
+  "block.hephaestus.molten_electrum_block": "Molten Electrum",
+
+  "fluid_type.hephaestus.molten_enderium": "Molten Enderium",
+  "item.hephaestus.molten_enderium_bucket": "Molten Enderium Bucket",
+  "block.hephaestus.molten_enderium_block": "Molten Enderium",
+
+  "fluid_type.hephaestus.molten_gold": "Molten Gold",
   "item.hephaestus.molten_gold_bucket": "Molten Gold Bucket",
   "block.hephaestus.molten_gold_block": "Molten Gold",
 
-  "fluid.hephaestus.molten_copper": "Molten Copper",
-  "item.hephaestus.molten_copper_bucket": "Molten Copper Bucket",
-  "block.hephaestus.molten_copper_block": "Molten Copper",
+  "fluid_type.hephaestus.molten_invar": "Molten Invar",
+  "item.hephaestus.molten_invar_bucket": "Molten Invar Bucket",
+  "block.hephaestus.molten_invar_block": "Molten Invar",
+
+  "fluid_type.hephaestus.molten_iridium": "Molten Iridium",
+  "item.hephaestus.molten_iridium_bucket": "Molten Iridium Bucket",
+  "block.hephaestus.molten_iridium_block": "Molten Iridium",
+
+  "fluid_type.hephaestus.molten_iron": "Molten Iron",
+  "item.hephaestus.molten_iron_bucket": "Molten Iron Bucket",
+  "block.hephaestus.molten_iron_block": "Molten Iron",
+
+  "fluid_type.hephaestus.molten_lead": "Molten Lead",
+  "item.hephaestus.molten_lead_bucket": "Molten Lead Bucket",
+  "block.hephaestus.molten_lead_block": "Molten Lead",
+
+  "fluid_type.hephaestus.molten_lumium": "Molten Lumium",
+  "item.hephaestus.molten_lumium_bucket": "Molten Lumium Bucket",
+  "block.hephaestus.molten_lumium_block": "Molten Lumium",
+
+  "fluid_type.hephaestus.molten_netherite": "Molten Netherite",
+  "item.hephaestus.molten_netherite_bucket": "Molten Netherite Bucket",
+  "block.hephaestus.molten_netherite_block": "Molten Netherite",
+
+  "fluid_type.hephaestus.molten_nickel": "Molten Nickel",
+  "item.hephaestus.molten_nickel_bucket": "Molten Nickel Bucket",
+  "block.hephaestus.molten_nickel_block": "Molten Nickel",
+
+  "fluid_type.hephaestus.molten_osmium": "Molten Osmium",
+  "item.hephaestus.molten_osmium_bucket": "Molten Osmium Bucket",
+  "block.hephaestus.molten_osmium_block": "Molten Osmium",
+
+  "fluid_type.hephaestus.molten_platinum": "Molten Platinum",
+  "item.hephaestus.molten_platinum_bucket": "Molten Platinum Bucket",
+  "block.hephaestus.molten_platinum_block": "Molten Platinum",
+
+  "fluid_type.hephaestus.molten_signalum": "Molten Signalum",
+  "item.hephaestus.molten_signalum_bucket": "Molten Signalum Bucket",
+  "block.hephaestus.molten_signalum_block": "Molten Signalum",
+
+  "fluid_type.hephaestus.molten_silver": "Molten Silver",
+  "item.hephaestus.molten_silver_bucket": "Molten Silver Bucket",
+  "block.hephaestus.molten_silver_block": "Molten Silver",
+
+  "fluid_type.hephaestus.molten_steel": "Molten Steel",
+  "item.hephaestus.molten_steel_bucket": "Molten Steel Bucket",
+  "block.hephaestus.molten_steel_block": "Molten Steel",
+
+  "fluid_type.hephaestus.molten_tin": "Molten Tin",
+  "item.hephaestus.molten_tin_bucket": "Molten Tin Bucket",
+  "block.hephaestus.molten_tin_block": "Molten Tin",
+
+  "fluid_type.hephaestus.molten_uranium": "Molten Uranium",
+  "item.hephaestus.molten_uranium_bucket": "Molten Uranium Bucket",
+  "block.hephaestus.molten_uranium_block": "Molten Uranium",
+
+  "fluid_type.hephaestus.molten_zinc": "Molten Zinc",
+  "item.hephaestus.molten_zinc_bucket": "Molten Zinc Bucket",
+  "block.hephaestus.molten_zinc_block": "Molten Zinc",
 
   "fluid.hephaestus.molten_diamond": "Molten Diamond",
   "item.hephaestus.molten_diamond_bucket": "Molten Diamond Bucket",
@@ -143,21 +234,10 @@
   "item.hephaestus.molten_cobalt_bucket": "Molten Cobalt Bucket",
   "block.hephaestus.molten_cobalt_block": "Molten Cobalt",
 
-  "fluid.hephaestus.molten_steel": "Molten Steel",
-  "item.hephaestus.molten_steel_bucket": "Molten Steel Bucket",
-  "block.hephaestus.molten_steel_block": "Molten Steel",
-
-  "fluid.hephaestus.molten_brass": "Molten Brass",
-  "item.hephaestus.molten_brass_bucket": "Molten Brass Bucket",
-  "block.hephaestus.molten_brass_block": "Molten Brass",
-
-  "fluid.hephaestus.molten_zinc": "Molten Zinc",
-  "item.hephaestus.molten_zinc_bucket": "Molten Zinc Bucket",
-  "block.hephaestus.molten_zinc_block": "Molten Zinc",
-
   "fluid.hephaestus.molten_blaze": "Molten Blaze",
-  "block.hephaestus.molten_blaze_block": "Molten Blaze",
   "item.hephaestus.molten_blaze_bucket": "Molten Blaze Bucket",
+  "block.hephaestus.molten_blaze_block": "Molten Blaze",
+
   "gui.hephaestus.tank.bucket.auto.title": "Auto mode",
   "block.titammods.smeltery_controller": "Smeltery Controller",
   "gui.hephaestus.melting.no_fuel": "No fuel in tank",

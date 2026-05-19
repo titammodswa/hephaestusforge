@@ -111,17 +111,108 @@
   "item.hephaestus.steel_nugget": "Pepita de Aço",
   "block.hephaestus.steel_block": "Bloco de Aço",
 
-  "fluid.hephaestus.molten_iron": "Ferro Derretido",
-  "item.hephaestus.molten_iron_bucket": "Balde de Ferro Derretido",
-  "block.hephaestus.molten_iron_block": "Ferro Derretido",
+  "gui.hephaestus.conflict.title": "§c[HEPHAESTUS] Conflito Crítico de Mods!",
+  "gui.hephaestus.conflict.description": "O mod Hephaestus detectou que tanto 'alltheores' quanto 'ftbmaterials' estão instalados.\n\nEstes dois mods causam duplicação e não podem ser usados juntos.\nPor favor, feche o jogo e remova um deles da sua pasta 'mods'.\n\n(Clique em qualquer botão abaixo para sair do jogo)",
 
-  "fluid.hephaestus.molten_gold": "Ouro Derretido",
+  "fluid_type.hephaestus.molten_seared_stone": "Pedra Chamuscada Derretida",
+  "item.hephaestus.molten_seared_stone_bucket": "Balde de Pedra Chamuscada Derretida",
+  "block.hephaestus.molten_seared_stone_block": "Pedra Chamuscada Derretida",
+
+  "fluid_type.hephaestus.molten_scorched_stone": "Pedra Tostada Derretida",
+  "item.hephaestus.molten_scorched_stone_bucket": "Balde de Pedra Tostada Derretida",
+  "block.hephaestus.molten_scorched_stone_block": "Pedra Tostada Derretida",
+
+  "fluid_type.hephaestus.molten_aluminum": "Alumínio Derretido",
+  "item.hephaestus.molten_aluminum_bucket": "Balde de Alumínio Derretido",
+  "block.hephaestus.molten_aluminum_block": "Alumínio Derretido",
+
+  "fluid_type.hephaestus.molten_brass": "Latão Derretido",
+  "item.hephaestus.molten_brass_bucket": "Balde de Latão Derretido",
+  "block.hephaestus.molten_brass_block": "Latão Derretido",
+
+  "fluid_type.hephaestus.molten_bronze": "Bronze Derretido",
+  "item.hephaestus.molten_bronze_bucket": "Balde de Bronze Derretido",
+  "block.hephaestus.molten_bronze_block": "Bronze Derretido",
+
+  "fluid_type.hephaestus.molten_constantan": "Constantan Derretido",
+  "item.hephaestus.molten_constantan_bucket": "Balde de Constantan Derretido",
+  "block.hephaestus.molten_constantan_block": "Constantan Derretido",
+
+  "fluid_type.hephaestus.molten_copper": "Cobre Derretido",
+  "item.hephaestus.molten_copper_bucket": "Balde de Cobre Derretido",
+  "block.hephaestus.molten_copper_block": "Cobre Derretido",
+
+  "fluid_type.hephaestus.molten_electrum": "Electrum Derretido",
+  "item.hephaestus.molten_electrum_bucket": "Balde de Electrum Derretido",
+  "block.hephaestus.molten_electrum_block": "Electrum Derretido",
+
+  "fluid_type.hephaestus.molten_enderium": "Enderium Derretido",
+  "item.hephaestus.molten_enderium_bucket": "Balde de Enderium Derretido",
+  "block.hephaestus.molten_enderium_block": "Enderium Derretido",
+
+  "fluid_type.hephaestus.molten_gold": "Ouro Derretido",
   "item.hephaestus.molten_gold_bucket": "Balde de Ouro Derretido",
   "block.hephaestus.molten_gold_block": "Ouro Derretido",
 
-  "fluid.hephaestus.molten_copper": "Cobre Derretido",
-  "item.hephaestus.molten_copper_bucket": "Balde de Cobre Derretido",
-  "block.hephaestus.molten_copper_block": "Cobre Derretido",
+  "fluid_type.hephaestus.molten_invar": "Invar Derretido",
+  "item.hephaestus.molten_invar_bucket": "Balde de Invar Derretido",
+  "block.hephaestus.molten_invar_block": "Invar Derretido",
+
+  "fluid_type.hephaestus.molten_iridium": "Irídio Derretido",
+  "item.hephaestus.molten_iridium_bucket": "Balde de Irídio Derretido",
+  "block.hephaestus.molten_iridium_block": "Irídio Derretido",
+
+  "fluid_type.hephaestus.molten_iron": "Ferro Derretido",
+  "item.hephaestus.molten_iron_bucket": "Balde de Ferro Derretido",
+  "block.hephaestus.molten_iron_block": "Ferro Derretido",
+
+  "fluid_type.hephaestus.molten_lead": "Chumbo Derretido",
+  "item.hephaestus.molten_lead_bucket": "Balde de Chumbo Derretido",
+  "block.hephaestus.molten_lead_block": "Chumbo Derretido",
+
+  "fluid_type.hephaestus.molten_lumium": "Lumium Derretido",
+  "item.hephaestus.molten_lumium_bucket": "Balde de Lumium Derretido",
+  "block.hephaestus.molten_lumium_block": "Lumium Derretido",
+
+  "fluid_type.hephaestus.molten_netherite": "Netherita Derretida",
+  "item.hephaestus.molten_netherite_bucket": "Balde de Netherita Derretida",
+  "block.hephaestus.molten_netherite_block": "Netherita Derretida",
+
+  "fluid_type.hephaestus.molten_nickel": "Níquel Derretido",
+  "item.hephaestus.molten_nickel_bucket": "Balde de Níquel Derretido",
+  "block.hephaestus.molten_nickel_block": "Níquel Derretido",
+
+  "fluid_type.hephaestus.molten_osmium": "Ósmio Derretido",
+  "item.hephaestus.molten_osmium_bucket": "Balde de Ósmio Derretido",
+  "block.hephaestus.molten_osmium_block": "Ósmio Derretido",
+
+  "fluid_type.hephaestus.molten_platinum": "Platina Derretida",
+  "item.hephaestus.molten_platinum_bucket": "Balde de Platina Derretida",
+  "block.hephaestus.molten_platinum_block": "Platina Derretida",
+
+  "fluid_type.hephaestus.molten_signalum": "Signalum Derretido",
+  "item.hephaestus.molten_signalum_bucket": "Balde de Signalum Derretido",
+  "block.hephaestus.molten_signalum_block": "Signalum Derretido",
+
+  "fluid_type.hephaestus.molten_silver": "Prata Derretida",
+  "item.hephaestus.molten_silver_bucket": "Balde de Prata Derretida",
+  "block.hephaestus.molten_silver_block": "Prata Derretida",
+
+  "fluid_type.hephaestus.molten_steel": "Aço Derretido",
+  "item.hephaestus.molten_steel_bucket": "Balde de Aço Derretido",
+  "block.hephaestus.molten_steel_block": "Aço Derretido",
+
+  "fluid_type.hephaestus.molten_tin": "Estanho Derretido",
+  "item.hephaestus.molten_tin_bucket": "Balde de Estanho Derretido",
+  "block.hephaestus.molten_tin_block": "Estanho Derretido",
+
+  "fluid_type.hephaestus.molten_uranium": "Urânio Derretido",
+  "item.hephaestus.molten_uranium_bucket": "Balde de Urânio Derretido",
+  "block.hephaestus.molten_uranium_block": "Urânio Derretido",
+
+  "fluid_type.hephaestus.molten_zinc": "Zinco Derretido",
+  "item.hephaestus.molten_zinc_bucket": "Balde de Zinco Derretido",
+  "block.hephaestus.molten_zinc_block": "Zinco Derretido",
 
   "fluid.hephaestus.molten_diamond": "Diamante Derretido",
   "item.hephaestus.molten_diamond_bucket": "Balde de Diamante Derretido",
@@ -143,20 +234,12 @@
   "item.hephaestus.molten_cobalt_bucket": "Balde de Cobalto Derretido",
   "block.hephaestus.molten_cobalt_block": "Cobalto Derretido",
 
-  "fluid.hephaestus.molten_steel": "Aço Derretido",
-  "item.hephaestus.molten_steel_bucket": "Balde de Aço Derretido",
-  "block.hephaestus.molten_steel_block": "Aço Derretido",
-
-  "fluid.hephaestus.molten_brass": "Brass Derretido",
-  "item.hephaestus.molten_brass_bucket": "Balde de Brass Derretido",
-  "block.hephaestus.molten_brass_block": "Brass Derretido",
-
-  "fluid.hephaestus.molten_zinc": "Zinco Derretido",
-  "item.hephaestus.molten_zinc_bucket": "Balde de Zinco Derretido",
-  "block.hephaestus.molten_zinc_block": "Zinco Derretido",
-
   "fluid.hephaestus.molten_blaze": "Blaze Derretido",
-  "block.hephaestus.molten_blaze_block": "Blaze Derretido",
   "item.hephaestus.molten_blaze_bucket": "Balde de Blaze Derretido",
-  "gui.hephaestus.tank.bucket.auto.title": "Modo Auto"
+  "block.hephaestus.molten_blaze_block": "Blaze Derretido",
+
+  "gui.hephaestus.tank.bucket.auto.title": "Modo automatico",
+  "block.titammods.smeltery_controller": "Smeltery Controller",
+  "gui.hephaestus.melting.no_fuel": "Sem combustivel",
+  "gui.hephaestus.melting.no_tank": "Sem tanque instalado"
 }

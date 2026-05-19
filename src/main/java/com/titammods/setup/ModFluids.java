@@ -58,17 +58,11 @@ public class ModFluids {
         }
     }
 
-    public static final MoltenFluid MOLTEN_IRON = new MoltenFluid("molten_iron");
-    public static final MoltenFluid MOLTEN_GOLD = new MoltenFluid("molten_gold");
-    public static final MoltenFluid MOLTEN_COPPER = new MoltenFluid("molten_copper");
-    public static final MoltenFluid MOLTEN_STEEL = new MoltenFluid("molten_steel");
     public static final MoltenFluid MOLTEN_COBALT = new MoltenFluid("molten_cobalt");
     public static final MoltenFluid MOLTEN_QUARTZ = new MoltenFluid("molten_quartz");
     public static final MoltenFluid MOLTEN_DIAMOND = new MoltenFluid("molten_diamond");
     public static final MoltenFluid MOLTEN_EMERALD = new MoltenFluid("molten_emerald");
     public static final MoltenFluid MOLTEN_AMETHYST = new MoltenFluid("molten_amethyst");
-    public static final MoltenFluid MOLTEN_BRASS = new MoltenFluid("molten_brass");
-    public static final MoltenFluid MOLTEN_ZINC = new MoltenFluid("molten_zinc");
 
     public static final MoltenFluid MOLTEN_BLAZE = new MoltenFluid("molten_blaze");
 }

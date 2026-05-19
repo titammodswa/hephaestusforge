@@ -23,6 +23,9 @@ import com.titammods.client.render.FaucetRenderer;
 import com.titammods.client.render.BasinRenderer;
 import com.titammods.client.render.TableRenderer;
 import com.titammods.setup.ModBlocks;
+import com.titammods.registry.HephaestusFluids;
+import com.titammods.registry.fluids.MoltenFluidSet;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 @EventBusSubscriber(modid = TitamMods.MODID, value = Dist.CLIENT)
 public class ClientModEvents {
@@ -33,17 +36,30 @@ public class ClientModEvents {
     }
 
     private static void onClientExtensions(RegisterClientExtensionsEvent event) {
-        registerFluidExtensions(event, ModFluids.MOLTEN_IRON, "ore/iron");
-        registerFluidExtensions(event, ModFluids.MOLTEN_GOLD, "ore/gold");
-        registerFluidExtensions(event, ModFluids.MOLTEN_COPPER, "ore/copper");
-        registerFluidExtensions(event, ModFluids.MOLTEN_STEEL, "ore/steel");
+        for (HephaestusFluids.Material material : HephaestusFluids.Material.values()) {
+            MoltenFluidSet set = HephaestusFluids.SETS.get(material);
+
+            event.registerFluidType(new IClientFluidTypeExtensions() {
+                private static final ResourceLocation STILL = ResourceLocation.fromNamespaceAndPath("hephaestus", "fluid/liquid/molten_metal");
+                private static final ResourceLocation FLOW = ResourceLocation.fromNamespaceAndPath("hephaestus", "fluid/liquid/molten_metal_flow");
+                @Override
+                public ResourceLocation getStillTexture() { return STILL; }
+                @Override
+                public ResourceLocation getFlowingTexture() { return FLOW; }
+                @Override
+                public int getTintColor() { return material.color; }
+                @Override
+                public int getTintColor(net.minecraft.world.level.material.FluidState state, net.minecraft.world.level.BlockAndTintGetter level, net.minecraft.core.BlockPos pos) {
+                    return material.color;
+                }
+            }, set.fluidType.get());
+        }
+
         registerFluidExtensions(event, ModFluids.MOLTEN_COBALT, "ore/cobalt");
         registerFluidExtensions(event, ModFluids.MOLTEN_QUARTZ, "ore/quartz");
         registerFluidExtensions(event, ModFluids.MOLTEN_DIAMOND, "ore/diamond");
         registerFluidExtensions(event, ModFluids.MOLTEN_EMERALD, "ore/emerald");
         registerFluidExtensions(event, ModFluids.MOLTEN_AMETHYST, "ore/amethyst");
-        registerFluidExtensions(event, ModFluids.MOLTEN_BRASS, "compat_alloy/brass");
-        registerFluidExtensions(event, ModFluids.MOLTEN_ZINC, "compat_alloy/zinc");
 
         registerFluidExtensions(event, ModFluids.MOLTEN_BLAZE, "blaze");
     }
@@ -63,17 +79,19 @@ public class ClientModEvents {
 
     @SuppressWarnings("deprecation")
     private static void onClientSetup(FMLClientSetupEvent event) {
-        setFluidTranslucent(ModFluids.MOLTEN_IRON);
-        setFluidTranslucent(ModFluids.MOLTEN_GOLD);
-        setFluidTranslucent(ModFluids.MOLTEN_COPPER);
-        setFluidTranslucent(ModFluids.MOLTEN_STEEL);
+
+        for (HephaestusFluids.Material material : HephaestusFluids.Material.values()) {
+            MoltenFluidSet set = HephaestusFluids.SETS.get(material);
+
+            ItemBlockRenderTypes.setRenderLayer(set.source.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(set.flowing.get(), RenderType.translucent());
+        }
+
         setFluidTranslucent(ModFluids.MOLTEN_COBALT);
         setFluidTranslucent(ModFluids.MOLTEN_QUARTZ);
         setFluidTranslucent(ModFluids.MOLTEN_DIAMOND);
         setFluidTranslucent(ModFluids.MOLTEN_EMERALD);
         setFluidTranslucent(ModFluids.MOLTEN_AMETHYST);
-        setFluidTranslucent(ModFluids.MOLTEN_BRASS);
-        setFluidTranslucent(ModFluids.MOLTEN_ZINC);
 
         setFluidTranslucent(ModFluids.MOLTEN_BLAZE);
 
@@ -91,7 +109,22 @@ public class ClientModEvents {
     }
 
     @SubscribeEvent
+    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        if (TitamMods.hasConflict) return;
+
+        for (com.titammods.registry.HephaestusFluids.Material material : com.titammods.registry.HephaestusFluids.Material.values()) {
+            com.titammods.registry.fluids.MoltenFluidSet set = com.titammods.registry.HephaestusFluids.SETS.get(material);
+
+            event.register((stack, tintIndex) -> {
+                return tintIndex == 1 ? material.color : 0xFFFFFFFF;
+            }, set.bucket.get());
+        }
+    }
+
+    @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        if (TitamMods.hasConflict) return;
+
         event.registerBlockEntityRenderer(ModBlockEntities.FAUCET.get(), FaucetRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.SMELETRY_TANK.get(), SmelteryTankRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.MELTER.get(), MelterRenderer::new);
@@ -104,8 +137,9 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(ModMenus.MELTER_MENU.get(), MelterScreen::new);
+        if (TitamMods.hasConflict) return;
 
+        event.register(ModMenus.MELTER_MENU.get(), MelterScreen::new);
         event.register(com.titammods.setup.ModMenus.SMELTERY_MENU.get(), com.titammods.client.screen.SmelteryScreen::new);
     }
 }

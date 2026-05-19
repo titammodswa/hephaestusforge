@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import com.titammods.registry.HephaestusFluids;
 
 public class ModItemModelProvider extends ItemModelProvider {
 
@@ -19,20 +20,17 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        for (HephaestusFluids.Material material : HephaestusFluids.Material.values()) {
+            createFluidBucket("molten_" + material.name, HephaestusFluids.SETS.get(material));
+        }
 
-        createFluidBucket("molten_iron", ModFluids.MOLTEN_IRON);
-        createFluidBucket("molten_gold", ModFluids.MOLTEN_GOLD);
-        createFluidBucket("molten_copper", ModFluids.MOLTEN_COPPER);
-        createFluidBucket("molten_steel", ModFluids.MOLTEN_STEEL);
-        createFluidBucket("molten_cobalt", ModFluids.MOLTEN_COBALT);
-        createFluidBucket("molten_quartz", ModFluids.MOLTEN_QUARTZ);
-        createFluidBucket("molten_diamond", ModFluids.MOLTEN_DIAMOND);
-        createFluidBucket("molten_emerald", ModFluids.MOLTEN_EMERALD);
-        createFluidBucket("molten_amethyst", ModFluids.MOLTEN_AMETHYST);
-        createFluidBucket("molten_brass", ModFluids.MOLTEN_BRASS);
-        createFluidBucket("molten_zinc", ModFluids.MOLTEN_ZINC);
+        createFluidBucketvanilla("molten_cobalt", ModFluids.MOLTEN_COBALT);
+        createFluidBucketvanilla("molten_quartz", ModFluids.MOLTEN_QUARTZ);
+        createFluidBucketvanilla("molten_diamond", ModFluids.MOLTEN_DIAMOND);
+        createFluidBucketvanilla("molten_emerald", ModFluids.MOLTEN_EMERALD);
+        createFluidBucketvanilla("molten_amethyst", ModFluids.MOLTEN_AMETHYST);
 
-        createFluidBucket("molten_blaze", ModFluids.MOLTEN_BLAZE);
+        createFluidBucketvanilla("molten_blaze", ModFluids.MOLTEN_BLAZE);
 
         basicItem(ModItems.COBALT_NUGGET.get());
         basicItem(ModItems.STEEL_NUGGET.get());
@@ -56,9 +54,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         }
     }
 
-    private void createFluidBucket(String name, ModFluids.MoltenFluid fluid) {
+    private void createFluidBucketvanilla(String name, ModFluids.MoltenFluid fluid) {
         withExistingParent(name + "_bucket", net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket"))
                 .customLoader(net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder::begin)
                 .fluid(fluid.source.get());
+    }
+    private void createFluidBucket(String name, com.titammods.registry.fluids.MoltenFluidSet fluidSet) {
+        withExistingParent(name + "_bucket", net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket"))
+                .customLoader(net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder::begin)
+                .fluid(fluidSet.source.get());
     }
 }
