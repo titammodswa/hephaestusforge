@@ -42,11 +42,12 @@ public class ModRecipes {
         @Override public StreamCodec<RegistryFriendlyByteBuf, MeltingRecipe> streamCodec() { return MeltingRecipe.STREAM_CODEC; }
     });
 
-    public record MeltingRecipe(Ingredient input, FluidStack output, int temperature, int time) implements Recipe<SingleRecipeInput> {
+    public record MeltingRecipe(Ingredient input, FluidStack output, FluidStack fuel, int temperature, int time) implements Recipe<SingleRecipeInput> {
 
         public static final MapCodec<MeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(MeltingRecipe::input),
                 FluidStack.CODEC.fieldOf("result").forGetter(MeltingRecipe::output),
+                FluidStack.CODEC.fieldOf("fuel").forGetter(MeltingRecipe::fuel),
                 Codec.INT.fieldOf("temperature").forGetter(MeltingRecipe::temperature),
                 Codec.INT.fieldOf("time").forGetter(MeltingRecipe::time)
         ).apply(inst, MeltingRecipe::new));
@@ -54,6 +55,7 @@ public class ModRecipes {
         public static final StreamCodec<RegistryFriendlyByteBuf, MeltingRecipe> STREAM_CODEC = StreamCodec.composite(
                 Ingredient.CONTENTS_STREAM_CODEC, MeltingRecipe::input,
                 FluidStack.STREAM_CODEC, MeltingRecipe::output,
+                FluidStack.STREAM_CODEC, MeltingRecipe::fuel,
                 ByteBufCodecs.INT, MeltingRecipe::temperature,
                 ByteBufCodecs.INT, MeltingRecipe::time,
                 MeltingRecipe::new

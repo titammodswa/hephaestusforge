@@ -3,7 +3,6 @@ package com.titammods.block;
 import com.titammods.menu.MelterMenu;
 import com.titammods.setup.ModBlockEntities;
 import com.titammods.setup.ModRecipes;
-import com.titammods.setup.ModFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -18,18 +17,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
+
 import javax.annotation.Nonnull;
 
 
@@ -136,7 +135,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new MelterMenu(containerId, playerInventory, this, this.data); // Mudou aqui!
+        return new MelterMenu(containerId, playerInventory, this, this.data);
     }
 
     public static void updateLight(BlockEntity be, FluidTank tank) {
@@ -205,6 +204,18 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
+    private int getTemperatureForFuel(FluidStack fluid, Level level) {
+        if (fluid.isEmpty()) return 0;
+        int maxTemp = 0;
+        for (var holder : level.getRecipeManager().getAllRecipesFor(ModRecipes.MELTING_TYPE.get())) {
+            ModRecipes.MeltingRecipe recipe = holder.value();
+            if (recipe.fuel().getFluid().isSame(fluid.getFluid())) {
+                maxTemp = Math.max(maxTemp, recipe.temperature());
+            }
+        }
+        return maxTemp;
+    }
+
     public void tick(Level level, BlockPos pos, BlockState blockState) {
         if (level.isClientSide) return;
         boolean isDirty = false;
@@ -213,20 +224,21 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         int currentAvailableHeat = this.temperature;
         if (this.fuel <= 0) {
             currentAvailableHeat = 0;
-            IFluidHandler tankBelow = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, pos.below(), net.minecraft.core.Direction.UP);
+            IFluidHandler tankBelow = level.getCapability(
+                    net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
+                    pos.below(), Direction.UP);
             if (tankBelow != null) {
-                FluidStack sim = tankBelow.drain(50, IFluidHandler.FluidAction.SIMULATE);
+                FluidStack sim = tankBelow.drain(1, IFluidHandler.FluidAction.SIMULATE);
                 if (!sim.isEmpty()) {
-                    if (sim.getFluid() == net.minecraft.world.level.material.Fluids.LAVA) currentAvailableHeat = 1000;
-                    else if (sim.getFluid() == com.titammods.setup.ModFluids.MOLTEN_BLAZE.source.get()) currentAvailableHeat = 2000;
+                    currentAvailableHeat = getTemperatureForFuel(sim, level);
                 }
             }
         }
 
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             ItemStack stack = inventory.getStackInSlot(i);
 
-            if(stack.isEmpty()) {
+            if (stack.isEmpty()) {
                 if (progress[i] != 0 || maxProgress[i] != 0 || this.state[i] != 0) {
                     progress[i] = 0; maxProgress[i] = 0; this.state[i] = 0;
                     isDirty = true;
@@ -234,7 +246,9 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 continue;
             }
 
-            var recipeHolder = level.getRecipeManager().getRecipeFor(com.titammods.setup.ModRecipes.MELTING_TYPE.get(), new net.minecraft.world.item.crafting.SingleRecipeInput(stack), level).orElse(null);
+            var recipeHolder = level.getRecipeManager()
+                    .getRecipeFor(ModRecipes.MELTING_TYPE.get(), new SingleRecipeInput(stack), level)
+                    .orElse(null);
             if (recipeHolder == null) {
                 if (this.state[i] != 3) {
                     progress[i] = 0; maxProgress[i] = 100; this.state[i] = 3;
@@ -243,7 +257,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 continue;
             }
 
-            com.titammods.setup.ModRecipes.MeltingRecipe recipe = recipeHolder.value();
+            ModRecipes.MeltingRecipe recipe = recipeHolder.value();
             if (maxProgress[i] != recipe.time()) {
                 maxProgress[i] = recipe.time();
                 isDirty = true;
@@ -274,7 +288,6 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 } else {
                     if (this.state[i] != 1) { this.state[i] = 1; isDirty = true; }
                     hasItemToMelt = true;
-
                     if (this.fuel > 0) {
                         progress[i]++;
                         isDirty = true;
@@ -307,22 +320,20 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 this.temperature = 0;
             }
         } else if (hasItemToMelt) {
-            IFluidHandler tankBelow = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, pos.below(), net.minecraft.core.Direction.UP);
+            IFluidHandler tankBelow = level.getCapability(
+                    net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
+                    pos.below(), Direction.UP);
             if (tankBelow != null) {
                 FluidStack sim = tankBelow.drain(50, IFluidHandler.FluidAction.SIMULATE);
-                int heat = 0;
-
                 if (!sim.isEmpty()) {
-                    if (sim.getFluid() == net.minecraft.world.level.material.Fluids.LAVA) heat = 1000;
-                    else if (sim.getFluid() == com.titammods.setup.ModFluids.MOLTEN_BLAZE.source.get()) heat = 2000;
-                }
-
-                if (heat > 0) {
-                    tankBelow.drain(50, IFluidHandler.FluidAction.EXECUTE);
-                    this.fuel = 200;
-                    this.maxFuel = 200;
-                    this.temperature = heat;
-                    isDirty = true;
+                    int heat = getTemperatureForFuel(sim, level);
+                    if (heat > 0) {
+                        tankBelow.drain(50, IFluidHandler.FluidAction.EXECUTE);
+                        this.fuel = 200;
+                        this.maxFuel = 200;
+                        this.temperature = heat;
+                        isDirty = true;
+                    }
                 }
             }
         }
@@ -330,8 +341,9 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         if (isDirty) setChanged(level, pos, blockState);
 
         boolean isBurning = this.fuel > 0;
-        if (blockState.hasProperty(com.titammods.block.SearedMachineBlock.ACTIVE) && blockState.getValue(com.titammods.block.SearedMachineBlock.ACTIVE) != isBurning) {
-            level.setBlockAndUpdate(pos, blockState.setValue(com.titammods.block.SearedMachineBlock.ACTIVE, isBurning));
+        if (blockState.hasProperty(SearedMachineBlock.ACTIVE)
+                && blockState.getValue(SearedMachineBlock.ACTIVE) != isBurning) {
+            level.setBlockAndUpdate(pos, blockState.setValue(SearedMachineBlock.ACTIVE, isBurning));
         }
     }
 }

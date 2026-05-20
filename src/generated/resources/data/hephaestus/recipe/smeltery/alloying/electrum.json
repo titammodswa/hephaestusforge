@@ -1,0 +1,18 @@
+{
+  "type": "hephaestus:alloying",
+  "inputs": [
+    {
+      "amount": 100,
+      "id": "hephaestus:molten_gold"
+    },
+    {
+      "amount": 100,
+      "id": "hephaestus:molten_silver"
+    }
+  ],
+  "output": {
+    "amount": 200,
+    "id": "hephaestus:molten_electrum"
+  },
+  "temperature": 760
+}

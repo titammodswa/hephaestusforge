@@ -241,5 +241,7 @@
   "gui.hephaestus.tank.bucket.auto.title": "Modo automatico",
   "block.titammods.smeltery_controller": "Smeltery Controller",
   "gui.hephaestus.melting.no_fuel": "Sem combustivel",
-  "gui.hephaestus.melting.no_tank": "Sem tanque instalado"
+  "gui.hephaestus.melting.no_tank": "Sem tanque instalado",
+  "gui.hephaestus.alloying": "Alloying",
+  "gui.hephaestus.temperature": "Calor Necessário: %s°C"
 }

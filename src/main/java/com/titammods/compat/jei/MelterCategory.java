@@ -72,7 +72,7 @@ public class MelterCategory implements IRecipeCategory<ModRecipes.MeltingRecipe>
                 .setFluidRenderer(1000, false, 12, 32)
                 .addIngredients(NeoForgeTypes.FLUID_STACK, validFuels)
                 .addRichTooltipCallback((view, tooltip) -> {
-                    tooltip.add(Component.literal("Calor Necessário: " + recipe.temperature() + "°C").withStyle(ChatFormatting.GOLD));
+                    tooltip.add(Component.translatable("gui.hephaestus.temperature", recipe.temperature()).withStyle(ChatFormatting.GOLD));
                 });
 
         builder.addSlot(RecipeIngredientRole.INPUT, 24, 18)

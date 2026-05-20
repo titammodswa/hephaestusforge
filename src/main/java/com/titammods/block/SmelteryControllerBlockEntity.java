@@ -4,7 +4,6 @@ import com.titammods.block.multiblock.IDisplayFluidListener;
 import com.titammods.block.multiblock.SmelteryFluidHandler;
 import com.titammods.block.multiblock.SmelteryMultiblock;
 import com.titammods.setup.ModBlockEntities;
-import com.titammods.setup.ModFluids;
 import com.titammods.setup.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -503,9 +502,15 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     }
 
     private int getTemperatureForFuel(FluidStack fluid) {
-        if (fluid.getFluid() == Fluids.LAVA) return 1000;
-        if (fluid.getFluid() == ModFluids.MOLTEN_BLAZE.source.get()) return 1500;
-        return 0;
+        if (fluid.isEmpty() || level == null) return 0;
+        int maxTemp = 0;
+        for (var holder : level.getRecipeManager().getAllRecipesFor(ModRecipes.MELTING_TYPE.get())) {
+            ModRecipes.MeltingRecipe recipe = holder.value();
+            if (recipe.fuel().getFluid().isSame(fluid.getFluid())) {
+                maxTemp = Math.max(maxTemp, recipe.temperature());
+            }
+        }
+        return maxTemp;
     }
 
     private void checkMultiblockStructure() {
