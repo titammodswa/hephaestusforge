@@ -102,6 +102,20 @@ public class ClientModEvents {
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.CLEAR_STAINED_GLASS.get(), RenderType.translucent());
     }
 
+    public static void registerConflictScreen() {
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(ClientModEvents::showErrorScreen);
+    }
+
+    public static void showErrorScreen(net.neoforged.neoforge.client.event.ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof net.minecraft.client.gui.screens.TitleScreen) {
+            net.minecraft.client.Minecraft.getInstance().setScreen(new net.minecraft.client.gui.screens.ConfirmScreen(
+                    (clique) -> net.minecraft.client.Minecraft.getInstance().stop(),
+                    net.minecraft.network.chat.Component.translatable("gui.hephaestus.conflict.title"),
+                    net.minecraft.network.chat.Component.translatable("gui.hephaestus.conflict.description")
+            ));
+        }
+    }
+
     @SuppressWarnings("deprecation")
     private static void setFluidTranslucent(ModFluids.MoltenFluid fluid) {
         ItemBlockRenderTypes.setRenderLayer(fluid.source.get(), RenderType.translucent());

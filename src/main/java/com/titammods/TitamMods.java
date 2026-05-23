@@ -28,7 +28,7 @@ public class TitamMods {
         if (ModList.get().isLoaded("alltheores") && ModList.get().isLoaded("ftbmaterials")) {
             hasConflict = true;
             if (FMLEnvironment.dist == Dist.CLIENT) {
-                net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(TitamMods::showErrorScreen);
+                ClientModEvents.registerConflictScreen();
             }
             return;
         }
@@ -58,28 +58,14 @@ public class TitamMods {
         DataGenerators.register(modEventBus);
     }
 
-    public static void showErrorScreen(net.neoforged.neoforge.client.event.ScreenEvent.Init.Post event) {
-        if (event.getScreen() instanceof net.minecraft.client.gui.screens.TitleScreen) {
-            net.minecraft.client.Minecraft.getInstance().setScreen(new net.minecraft.client.gui.screens.ConfirmScreen(
-                    (clique) -> net.minecraft.client.Minecraft.getInstance().stop(),
-                    net.minecraft.network.chat.Component.translatable("gui.hephaestus.conflict.title"),
-                    net.minecraft.network.chat.Component.translatable("gui.hephaestus.conflict.description")
-            ));
-        }
-    }
-
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SMELETRY_TANK.get(), (be, side) -> be.getTank());
-
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BASIN.get(), (be, side) -> be.tank);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BASIN.get(), (be, side) -> be.inventory);
-
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.TABLE.get(), (be, side) -> be.externalFluidHandler);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.TABLE.get(), (be, side) -> be.externalHandler);
-
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.MELTER.get(), (be, side) -> be.tank);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.MELTER.get(), (be, side) -> be.externalItemHandler);
-
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SMELTERY_CONTROLLER.get(), (be, side) -> be.fluidTank);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.SMELTERY_CONTROLLER.get(), (be, side) -> be.itemHandler);
 
