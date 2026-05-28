@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.137'
+    id 'net.neoforged.moddev' version '2.0.141'
 }
 
 version = mod_version
@@ -13,7 +13,7 @@ base {
     archivesName = mod_id + "-neoforge-" + minecraft_version
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 sourceSets {
     main {
@@ -43,8 +43,8 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
-        data {
-            data()
+        clientData {
+            clientData()
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
     }
@@ -80,40 +80,10 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-    // --- ADICIONADO: Repositório Oficial do Mekanism ---
-    maven {
-        name = "ModMaven"
-        url = "https://modmaven.dev/"
-    }
 }
 
 dependencies {
-    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
-
-    // DEPENDÊNCIA DA ATHENA
-    implementation("earth.terrarium.athena:athena-neoforge-1.21:${athena_version}")
-
-    // DEPENDÊNCIA DO ALLTHEORES (Desofuscação Automática)
-    implementation("curse.maven:ato-405593:7825464")
-
-    // --- ADICIONADO: Mekanism API (Apenas para tapar o buraco do DataGen do ATO) ---
-    runtimeOnly("curse.maven:mekanism-268560:7621971")
-}
-
-tasks.withType(ProcessResources).configureEach {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-    // Deixamos apenas as propriedades que você realmente declarou no gradle.properties
-    var replaceProperties = [
-            minecraft_version   : minecraft_version,
-            neoforge_version    : neoforge_version,
-            mod_id              : mod_id,
-            mod_version         : mod_version
-    ]
-    inputs.properties replaceProperties
-
-    filesMatching(['META-INF/neoforge.mods.toml']) {
-        expand replaceProperties + [project: project]
-    }
+    implementation "curse.maven:jei-238222:8108851"
+    implementation "curse.maven:athena-841890:7970442"
+    implementation "curse.maven:ato-405593:8023670"
 }

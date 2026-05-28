@@ -27,7 +27,7 @@ public class TitamMods {
 
         if (ModList.get().isLoaded("alltheores") && ModList.get().isLoaded("ftbmaterials")) {
             hasConflict = true;
-            if (FMLEnvironment.dist == Dist.CLIENT) {
+            if (FMLEnvironment.getDist() == Dist.CLIENT) {
                 net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(TitamMods::showErrorScreen);
             }
             return;
@@ -52,7 +52,7 @@ public class TitamMods {
 
         modEventBus.addListener(ModNetworking::register);
 
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             ClientModEvents.register(modEventBus);
         }
         DataGenerators.register(modEventBus);
@@ -69,7 +69,7 @@ public class TitamMods {
     }
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SMELETRY_TANK.get(), (be, side) -> be.getTank());
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, ModBlockEntities.SMELETRY_TANK.get(), (be, side) -> be.getTank());
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BASIN.get(), (be, side) -> be.tank);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BASIN.get(), (be, side) -> be.inventory);

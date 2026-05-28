@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -140,38 +141,38 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        itemHandler.deserializeNBT(provider, tag.getCompound("Inventory"));
+    protected void loadAdditional(ValueInput tag) {
+        super.loadAdditional(tag);
+        itemHandler.deserialize(tag);
         checkInventorySync();
 
-        fuel = tag.getInt("Fuel");
-        if (tag.contains("MaxFuel")) maxFuel = tag.getInt("MaxFuel");
-        temperature = tag.getInt("Temperature");
-        isFormed = tag.getBoolean("IsFormed");
+        fuel = tag.getInt("Fuel").get();
+        if (tag.getInt("MaxFuel").isPresent()) maxFuel = tag.getInt("MaxFuel").get();
+        temperature = tag.getInt("Temperature").get();
+        isFormed = tag.getBooleanOr("IsFormed", false);
 
-        int[] savedProgress = tag.getIntArray("MeltingProgress");
-        int[] savedTime = tag.getIntArray("MeltingTime");
-        int[] savedState = tag.getIntArray("MeltingState");
+        int[] savedProgress = tag.getIntArray("MeltingProgress").get();
+        int[] savedTime = tag.getIntArray("MeltingTime").get();
+        int[] savedState = tag.getIntArray("MeltingState").get();
 
         if (savedProgress.length == meltingProgress.length) this.meltingProgress = savedProgress;
         if (savedTime.length == meltingTime.length) this.meltingTime = savedTime;
         if (savedState.length == meltingState.length) this.meltingState = savedState;
 
-        fuelCapacity = tag.getInt("FuelCapacity");
-        if (tag.contains("FuelFluid")) {
-            Fluid fluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(tag.getString("FuelFluid")));
-            this.currentFuel = (fluid != Fluids.EMPTY) ? new FluidStack(fluid, tag.getInt("FuelAmount")) : FluidStack.EMPTY;
+        fuelCapacity = tag.getInt("FuelCapacity").get();
+        if (tag.getString("FuelFluid").isPresent()) {
+            Fluid fluid = BuiltInRegistries.FLUID.get(Identifier.parse(tag.getString("FuelFluid").get()));
+            this.currentFuel = (fluid != Fluids.EMPTY) ? new FluidStack(fluid, tag.getInt("FuelAmount").get()) : FluidStack.EMPTY;
         } else {
             this.currentFuel = FluidStack.EMPTY;
         }
 
-        if (tag.contains("FluidTank")) {
-            fluidTank.readFromNBT(tag.getCompound("FluidTank"));
+        if (tag.child("FluidTank").isPresent()) {
+            fluidTank.readFromNBT(tag.child("FluidTank").get());
         }
 
         if (tag.contains("DisplayFluidId")) {
-            Fluid fluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(tag.getString("DisplayFluidId")));
+            Fluid fluid = BuiltInRegistries.FLUID.get(Identifier.parse(tag.getString("DisplayFluidId")));
             this.displayFluid = (fluid != Fluids.EMPTY) ? new FluidStack(fluid, 1000) : FluidStack.EMPTY;
         } else {
             this.displayFluid = FluidStack.EMPTY;

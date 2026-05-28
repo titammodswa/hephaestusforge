@@ -53,13 +53,13 @@ public class SearedMachineBlock extends Block implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             BlockEntity entity = level.getBlockEntity(pos);
             if (entity instanceof MenuProvider menuProvider) {
                 player.openMenu(menuProvider, pos);
             }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return level.isClientSide()?InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     @Override

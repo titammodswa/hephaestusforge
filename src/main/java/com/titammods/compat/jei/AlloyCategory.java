@@ -19,7 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlloyCategory implements IRecipeCategory<AlloyRecipe> {
-    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "textures/gui/jei/alloy.png");
+    public static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(TitamMods.MODID, "textures/gui/jei/alloy.png");
 
     private final IDrawable background;
     private final IDrawable icon;

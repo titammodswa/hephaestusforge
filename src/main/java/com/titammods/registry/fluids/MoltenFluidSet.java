@@ -43,7 +43,7 @@ public class MoltenFluidSet {
         this.flowing = ModFluids.FLUIDS.register("flowing_molten_" + materialName, () -> new BaseFlowingFluid.Flowing(fluidProps));
 
         this.block = ModBlocks.BLOCKS.register("molten_" + materialName + "_block", () ->
-                new LiquidBlock(this.source.get(), BlockBehaviour.Properties.of().noCollission().strength(100.0F).noLootTable())
+                new LiquidBlock(this.source.get(), BlockBehaviour.Properties.of().noCollision().strength(100.0F).noLootTable())
         );
 
         this.bucket = ModItems.ITEMS.register("molten_" + materialName + "_bucket", () ->

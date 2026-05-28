@@ -52,12 +52,12 @@ public class SearedTableBlock extends SearedFacingBlock implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             BlockEntity entity = level.getBlockEntity(pos);
             if (entity instanceof TableBlockEntity table) {
                 table.interact(player);
             }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return level.isClientSide()?InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 }

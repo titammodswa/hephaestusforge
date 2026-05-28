@@ -49,18 +49,18 @@ public record AlloyRecipe(List<FluidStack> inputs, FluidStack output, int temper
     @Override
     public boolean matches(RecipeInput input, Level level) { return false; } // Handled manually by Smeltery
 
-    @Override
-    public ItemStack assemble(RecipeInput input, HolderLookup.Provider provider) { return ItemStack.EMPTY; }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) { return false; }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) { return ItemStack.EMPTY; }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() { return com.titammods.setup.ModRecipes.ALLOY_SERIALIZER.get(); }
-
-    @Override
-    public RecipeType<?> getType() { return com.titammods.setup.ModRecipes.ALLOY_TYPE.get(); }
+//    @Override
+//    public ItemStack assemble(RecipeInput input, HolderLookup.Provider provider) { return ItemStack.EMPTY; }
+//
+//    @Override
+//    public boolean canCraftInDimensions(int width, int height) { return false; }
+//
+//    @Override
+//    public ItemStack getResultItem(HolderLookup.Provider provider) { return ItemStack.EMPTY; }
+//
+//    @Override
+//    public RecipeSerializer<?> getSerializer() { return com.titammods.setup.ModRecipes.ALLOY_SERIALIZER.get(); }
+//
+//    @Override
+//    public RecipeType<?> getType() { return com.titammods.setup.ModRecipes.ALLOY_TYPE.get(); }
 }

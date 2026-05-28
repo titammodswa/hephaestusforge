@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.titammods.TitamMods;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -45,7 +44,7 @@ public class ModRecipes {
     public record MeltingRecipe(Ingredient input, FluidStack output, FluidStack fuel, int temperature, int time) implements Recipe<SingleRecipeInput> {
 
         public static final MapCodec<MeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(MeltingRecipe::input),
+                Ingredient.CODEC.fieldOf("ingredient").forGetter(MeltingRecipe::input),
                 FluidStack.CODEC.fieldOf("result").forGetter(MeltingRecipe::output),
                 FluidStack.CODEC.fieldOf("fuel").forGetter(MeltingRecipe::fuel),
                 Codec.INT.fieldOf("temperature").forGetter(MeltingRecipe::temperature),
@@ -62,11 +61,34 @@ public class ModRecipes {
         );
 
         @Override public boolean matches(SingleRecipeInput inv, Level level) { return input.test(inv.item()); }
-        @Override public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider lookup) { return ItemStack.EMPTY; }
-        @Override public boolean canCraftInDimensions(int w, int h) { return true; }
-        @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return ItemStack.EMPTY; }
-        @Override public RecipeSerializer<?> getSerializer() { return MELTING_SERIALIZER.get(); }
-        @Override public RecipeType<?> getType() { return MELTING_TYPE.get(); }
+
+        @Override
+        public ItemStack assemble(SingleRecipeInput singleRecipeInput) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public boolean showNotification() {
+            return false;
+        }
+
+        @Override
+        public String group() {
+            return "";
+        }
+
+        @Override public RecipeSerializer<? extends Recipe<SingleRecipeInput>> getSerializer() { return MELTING_SERIALIZER.get(); }
+        @Override public RecipeType<? extends Recipe<SingleRecipeInput>> getType() { return MELTING_TYPE.get(); }
+
+        @Override
+        public PlacementInfo placementInfo() {
+            return null;
+        }
+
+        @Override
+        public RecipeBookCategory recipeBookCategory() {
+            return null;
+        }
     }
 
     public static final Supplier<RecipeType<CastingBasinRecipe>> CASTING_BASIN_TYPE = TYPES.register("casting_basin", () -> new RecipeType<CastingBasinRecipe>() {
@@ -94,11 +116,34 @@ public class ModRecipes {
         );
 
         @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
-        @Override public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider lookup) { return output.copy(); }
-        @Override public boolean canCraftInDimensions(int w, int h) { return true; }
-        @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return output.copy(); }
-        @Override public RecipeSerializer<?> getSerializer() { return CASTING_BASIN_SERIALIZER.get(); }
-        @Override public RecipeType<?> getType() { return CASTING_BASIN_TYPE.get(); }
+
+        @Override
+        public ItemStack assemble(SingleRecipeInput singleRecipeInput) {
+            return output.copy();
+        }
+
+        @Override
+        public boolean showNotification() {
+            return false;
+        }
+
+        @Override
+        public String group() {
+            return "";
+        }
+
+        @Override public RecipeSerializer<? extends Recipe<SingleRecipeInput>> getSerializer() { return CASTING_BASIN_SERIALIZER.get(); }
+        @Override public RecipeType<? extends Recipe<SingleRecipeInput>> getType() { return CASTING_BASIN_TYPE.get(); }
+
+        @Override
+        public PlacementInfo placementInfo() {
+            return null;
+        }
+
+        @Override
+        public RecipeBookCategory recipeBookCategory() {
+            return null;
+        }
     }
 
     public static final Supplier<RecipeType<CastingTableRecipe>> CASTING_TABLE_TYPE = TYPES.register("casting_table", () -> new RecipeType<CastingTableRecipe>() {
@@ -112,7 +157,7 @@ public class ModRecipes {
 
     public record CastingTableRecipe(Ingredient cast, boolean castConsumed, FluidStack fluid, ItemStack result, int coolingTime) implements Recipe<SingleRecipeInput> {
         public static final MapCodec<CastingTableRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Ingredient.CODEC.optionalFieldOf("cast", Ingredient.EMPTY).forGetter(CastingTableRecipe::cast),
+                Ingredient.CODEC.optionalFieldOf("cast", Ingredient.of()).forGetter(CastingTableRecipe::cast),
                 Codec.BOOL.optionalFieldOf("cast_consumed", false).forGetter(CastingTableRecipe::castConsumed),
                 FluidStack.CODEC.fieldOf("fluid").forGetter(CastingTableRecipe::fluid),
                 ItemStack.CODEC.fieldOf("result").forGetter(CastingTableRecipe::result),
@@ -129,10 +174,33 @@ public class ModRecipes {
         );
 
         @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
-        @Override public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider lookup) { return result.copy(); }
-        @Override public boolean canCraftInDimensions(int w, int h) { return true; }
-        @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return result.copy(); }
-        @Override public RecipeSerializer<?> getSerializer() { return CASTING_TABLE_SERIALIZER.get(); }
-        @Override public RecipeType<?> getType() { return CASTING_TABLE_TYPE.get(); }
+
+        @Override
+        public ItemStack assemble(SingleRecipeInput singleRecipeInput) {
+            return result.copy();
+        }
+
+        @Override
+        public boolean showNotification() {
+            return false;
+        }
+
+        @Override
+        public String group() {
+            return "";
+        }
+
+        @Override public RecipeSerializer<? extends Recipe<SingleRecipeInput>> getSerializer() { return CASTING_TABLE_SERIALIZER.get(); }
+        @Override public RecipeType<? extends Recipe<SingleRecipeInput>> getType() { return CASTING_TABLE_TYPE.get(); }
+
+        @Override
+        public PlacementInfo placementInfo() {
+            return null;
+        }
+
+        @Override
+        public RecipeBookCategory recipeBookCategory() {
+            return null;
+        }
     }
 }
