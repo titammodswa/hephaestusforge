@@ -11,9 +11,16 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.resource.ResourceStack;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jspecify.annotations.NonNull;
 
 public class FaucetBlockEntity extends BlockEntity {
 
@@ -66,27 +73,33 @@ public class FaucetBlockEntity extends BlockEntity {
         BlockPos posBehind = worldPosition.relative(facing.getOpposite());
         BlockPos posBelow = worldPosition.below();
 
-        IFluidHandler source = level.getCapability(Capabilities.FluidHandler.BLOCK, posBehind, facing);
-        IFluidHandler destination = level.getCapability(Capabilities.FluidHandler.BLOCK, posBelow, Direction.UP);
+        ResourceHandler<FluidResource> source = level.getCapability(Capabilities.Fluid.BLOCK, posBehind, facing);
+        ResourceHandler<FluidResource> destination = level.getCapability(Capabilities.Fluid.BLOCK, posBelow, Direction.UP);
 
         if (source != null && destination != null) {
-            FluidStack simulatedDrain = source.drain(10, IFluidHandler.FluidAction.SIMULATE);
+            ResourceStack<FluidResource> simulatedDrain = ResourceHandlerUtil.extractFirst(source, _ -> true, 10, Transaction.openRoot());
 
-            if (!simulatedDrain.isEmpty()) {
-                int filled = destination.fill(simulatedDrain, IFluidHandler.FluidAction.SIMULATE);
+            if (simulatedDrain != null && !simulatedDrain.resource().toStack(simulatedDrain.amount()).isEmpty()) {
+                int filled = destination.insert(simulatedDrain.resource(), simulatedDrain.amount(), Transaction.openRoot());
 
                 if (filled > 0) {
                     if (!isPouring) {
                         isPouring = true;
                     }
 
-                    FluidStack actuallyDrained = source.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                    destination.fill(actuallyDrained, IFluidHandler.FluidAction.EXECUTE);
+                    try (var tx = Transaction.openRoot()) {
+                        ResourceStack<FluidResource> actuallyDrainedExtract = ResourceHandlerUtil.extractFirst(source, _ -> true, 10, tx);
+                        if (actuallyDrainedExtract != null) {
+                            FluidResource actuallyDrained = actuallyDrainedExtract.resource();
+                            destination.insert(actuallyDrained, actuallyDrainedExtract.amount(), tx);
 
-                    if (renderFluid.isEmpty() || renderFluid.getFluid() != actuallyDrained.getFluid()) {
-                        renderFluid = actuallyDrained.copy();
-                        renderFluid.setAmount(1000);
-                        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+                            if (renderFluid.isEmpty() || renderFluid.getFluid() != actuallyDrained.getFluid()) {
+                                renderFluid = actuallyDrained.toStack(actuallyDrainedExtract.amount()).copy();
+                                renderFluid.setAmount(1000);
+                                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+                            }
+                        }
+                        tx.commit();
                     }
                     return;
                 }
@@ -99,22 +112,22 @@ public class FaucetBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putBoolean("pouring", isPouring);
-        tag.putBoolean("lastRedstone", lastRedstone);
+    protected void saveAdditional(@NonNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putBoolean("pouring", isPouring);
+        output.putBoolean("lastRedstone", lastRedstone);
         if (!renderFluid.isEmpty()) {
-            tag.put("fluid", renderFluid.saveOptional(registries));
+            output.store("fluid", FluidStack.OPTIONAL_CODEC, renderFluid);
         }
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        isPouring = tag.getBoolean("pouring");
-        lastRedstone = tag.getBoolean("lastRedstone");
-        if (tag.contains("fluid")) {
-            renderFluid = FluidStack.parseOptional(registries, tag.getCompound("fluid"));
+    protected void loadAdditional(@NonNull ValueInput input) {
+        super.loadAdditional(input);
+        isPouring = input.getBooleanOr("pouring", false);
+        lastRedstone = input.getBooleanOr("lastRedstone", false);
+        if (input.keySet().contains("fluid")) {
+            renderFluid = input.read("fluid", FluidStack.OPTIONAL_CODEC).orElse(FluidStack.EMPTY);
         } else {
             renderFluid = FluidStack.EMPTY;
         }
@@ -122,9 +135,7 @@ public class FaucetBlockEntity extends BlockEntity {
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
+        return saveWithoutMetadata(registries);
     }
 
     @Override

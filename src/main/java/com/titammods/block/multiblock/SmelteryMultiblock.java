@@ -3,7 +3,7 @@ package com.titammods.block.multiblock;
 import com.titammods.block.SmelteryTankBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -142,18 +142,18 @@ public class SmelteryMultiblock {
     }
 
     private boolean isValidFloor(BlockState state) {
-        return state.is(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "smeltery_floor")));
+        return state.is(BlockTags.create(Identifier.fromNamespaceAndPath("c", "smeltery_floor")));
     }
 
     private boolean isValidWall(BlockState state) {
-        return state.is(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "smeltery_wall"))) ||
-                state.is(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "smeltery_floor"))) ||
+        return state.is(BlockTags.create(Identifier.fromNamespaceAndPath("c", "smeltery_wall"))) ||
+                state.is(BlockTags.create(Identifier.fromNamespaceAndPath("c", "smeltery_floor"))) ||
                 isTank(state);
     }
 
     private boolean isTank(BlockState state) {
         return state.getBlock() instanceof SmelteryTankBlock ||
-                state.is(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "smeltery_tanks")));
+                state.is(BlockTags.create(Identifier.fromNamespaceAndPath("c", "smeltery_tanks")));
     }
 
     private boolean isInnerBlock(BlockState state) {

@@ -8,17 +8,27 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import org.jspecify.annotations.NonNull;
 
-import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class BasinBlockEntity extends BlockEntity {
 
@@ -26,33 +36,32 @@ public class BasinBlockEntity extends BlockEntity {
 
     public int renderTimer = 0;
 
-    public final ItemStackHandler inventory = new ItemStackHandler(1) {
+    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(1) {
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged(int slot, ItemStack previousContents) {
             setChanged();
-            if (level != null && !level.isClientSide) {
+            if (level != null && !level.isClientSide()) {
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         }
 
         @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        public boolean isValid(int slot, ItemResource itemResource) {
             return false;
         }
 
-        @Nonnull
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (renderTimer > 0) return ItemStack.EMPTY; // Item congelado na bacia!
-            return super.extractItem(slot, amount, simulate);
+        public int extract(int slot, ItemResource itemResource, int amount, @NonNull TransactionContext transaction) {
+            if (renderTimer > 0) return 0; // Item congelado na bacia!
+            return super.extract(slot, itemResource, amount, transaction);
         }
     };
 
-    public final FluidTank tank = new FluidTank(900) {
+    public final FluidStacksResourceHandler tank = new FluidStacksResourceHandler(1, 900) {
         @Override
-        protected void onContentsChanged() {
+        protected void onContentsChanged(int index, FluidStack stack) {
             setChanged();
-            if (level != null && !level.isClientSide) {
+            if (level != null && !level.isClientSide()) {
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         }
@@ -65,38 +74,44 @@ public class BasinBlockEntity extends BlockEntity {
     public void extractItem(Player player) {
         if (renderTimer > 0) return;
 
-        ItemStack output = inventory.getStackInSlot(0);
+        ItemStack output = inventory.copyToList().getFirst();
         if (!output.isEmpty()) {
-            ItemHandlerHelper.giveItemToPlayer(player, output, player.getInventory().selected);
-            inventory.setStackInSlot(0, ItemStack.EMPTY);
-            tank.setFluid(FluidStack.EMPTY);
+            Inventory playerInventory = player.getInventory();
+            playerInventory.placeItemBackInInventory(output);
+            inventory.copyToList().set(0, ItemStack.EMPTY);
+            tank.copyToList().clear(); // mesma coisa de? tank.setFluid(FluidStack.EMPTY);
             setChanged();
             if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
     }
 
     public void tick() {
-        if (level == null || level.isClientSide) return;
+        if (level == null || level.isClientSide()) return;
 
         if (renderTimer > 0) {
             renderTimer--;
             return;
         }
 
-        if (!inventory.getStackInSlot(0).isEmpty()) {
+        if (!inventory.copyToList().getFirst().isEmpty()) {
             coolingTime = 0;
             return;
         }
 
-        FluidStack currentFluid = tank.getFluid();
+        FluidStack currentFluid = tank.copyToList().getFirst();
         if (currentFluid.isEmpty()) {
             coolingTime = 0;
             return;
         }
 
         ModRecipes.CastingBasinRecipe matchedRecipe = null;
-        for (var recipeHolder : level.getRecipeManager().getAllRecipesFor(ModRecipes.CASTING_BASIN_TYPE.get())) {
-            ModRecipes.CastingBasinRecipe recipe = recipeHolder.value();
+
+        RecipeManager recipeManager = Objects.requireNonNull(level.getServer()).getRecipeManager();
+        for (RecipeHolder<?> recipeHolder : recipeManager.getRecipes()) {
+            if (recipeHolder.value().getType() != ModRecipes.CASTING_BASIN_TYPE.get()) {
+                continue;
+            }
+            ModRecipes.CastingBasinRecipe recipe = (ModRecipes.CastingBasinRecipe) recipeHolder.value();
             if (recipe.input().getFluid() == currentFluid.getFluid() && currentFluid.getAmount() >= recipe.input().getAmount()) {
                 matchedRecipe = recipe;
                 break;
@@ -108,13 +123,22 @@ public class BasinBlockEntity extends BlockEntity {
             if (coolingTime >= matchedRecipe.time()) {
                 coolingTime = 0;
 
-                tank.drain(matchedRecipe.input().getAmount(), net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+                try (var tx = Transaction.openRoot()) {
+                    tank.extract(
+                            0,
+                            tank.getResource(0),
+                            matchedRecipe.input().getAmount(),
+                            tx
+                    );
 
-                inventory.setStackInSlot(0, matchedRecipe.output().copy());
+                    tx.commit();
+                }
+
+                inventory.copyToList().set(0, matchedRecipe.output().copy());
 
                 renderTimer = 20;
 
-                level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.LAVA_EXTINGUISH, net.minecraft.sounds.SoundSource.BLOCKS, 0.5F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
+                level.playSound(null, worldPosition, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.8F);
 
             }
         } else {
@@ -123,27 +147,32 @@ public class BasinBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("coolingTime", coolingTime);
-        tag.put("inventory", inventory.serializeNBT(registries));
-        tag.put("tank", tank.writeToNBT(registries, new CompoundTag()));
-        tag.putInt("renderTimer", renderTimer);
+    protected void saveAdditional(@NonNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("coolingTime", coolingTime);
+        output.putChild("inventory", inventory);
+        output.putChild("tank", tank);
+        output.putInt("renderTimer", renderTimer);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        coolingTime = tag.getInt("coolingTime");
-        if (tag.contains("inventory")) {
-            inventory.deserializeNBT(registries, tag.getCompound("inventory"));
+    protected void loadAdditional(@NonNull ValueInput input) {
+        super.loadAdditional(input);
+        coolingTime = input.getInt("coolingTime").orElseThrow();
+        if (input.keySet().contains("inventory")) {
+            inventory.deserialize(input);
         } else {
-            inventory.setStackInSlot(0, ItemStack.EMPTY);
+            inventory.copyToList().set(0, ItemStack.EMPTY);
         }
-        tank.readFromNBT(registries, tag.getCompound("tank"));
-        renderTimer = tag.getInt("renderTimer");
+        tank.deserialize(input);
+        renderTimer = input.getInt("renderTimer").orElseThrow();
     }
 
-    @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { CompoundTag tag = new CompoundTag(); saveAdditional(tag, registries); return tag; }
-    @Override public Packet<ClientGamePacketListener> getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }
+    @Override public @NonNull CompoundTag getUpdateTag(HolderLookup.@NonNull Provider registries) {
+        return saveWithoutMetadata(registries);
+    }
+
+    @Override public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
 }
