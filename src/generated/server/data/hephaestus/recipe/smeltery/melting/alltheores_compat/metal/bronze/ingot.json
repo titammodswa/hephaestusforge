@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "alltheores"
+    }
+  ],
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": "#c:ingots/bronze",
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_bronze"
+  },
+  "temperature": 950,
+  "time": 100
+}

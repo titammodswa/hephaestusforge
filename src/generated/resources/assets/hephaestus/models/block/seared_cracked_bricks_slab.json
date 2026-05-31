@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "hephaestus:block/smeltery/seared/cracked_bricks",
-    "side": "hephaestus:block/smeltery/seared/cracked_bricks",
-    "top": "hephaestus:block/smeltery/seared/cracked_bricks"
-  }
-}

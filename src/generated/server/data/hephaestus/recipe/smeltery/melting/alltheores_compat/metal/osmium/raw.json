@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "alltheores"
+    }
+  ],
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "hephaestus:molten_blaze"
+  },
+  "ingredient": "#c:raw_materials/osmium",
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_osmium"
+  },
+  "temperature": 1990,
+  "time": 150
+}

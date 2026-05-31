@@ -5,9 +5,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LiquidBlock; // Importante para o filtro
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SlabBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Set;
 
@@ -19,15 +18,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        for (DeferredHolder<Block, ? extends Block> blockHolder : ModBlocks.BLOCKS.getEntries()) {
-            Block block = blockHolder.get();
-
-            if (block instanceof LiquidBlock) {
-                continue;
-            }
-
+        for (var holder : ModBlocks.BLOCKS.getEntries()) {
+            Block block = holder.get();
+            if (block instanceof LiquidBlock) continue;
             if (block instanceof SlabBlock) {
-                this.add(block, block1 -> this.createSlabItemTable(block1));
+                this.add(block, this::createSlabItemTable);
             } else {
                 this.dropSelf(block);
             }

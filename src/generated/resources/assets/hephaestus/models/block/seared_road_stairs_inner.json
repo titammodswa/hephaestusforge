@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "hephaestus:block/smeltery/seared/road",
-    "side": "hephaestus:block/smeltery/seared/road",
-    "top": "hephaestus:block/smeltery/seared/road"
-  }
-}

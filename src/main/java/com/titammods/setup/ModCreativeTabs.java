@@ -9,13 +9,15 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModCreativeTabs {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TitamMods.MODID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TITAMMODS_TAB = TABS.register("titammods_tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.hephaestus"))
-            .icon(() -> new ItemStack(ModBlocks.SEARED_MELTER.get()))
-            .displayItems((parameters, output) -> {
-                ModItems.ITEMS.getEntries().forEach(item -> output.accept(item.get()));
-            })
-            .build());
+    public static final DeferredRegister<CreativeModeTab> TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TitamMods.MODID);
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TITAMMODS_TAB =
+            TABS.register("titammods_tab", () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.hephaestus"))
+                    .icon(() -> new ItemStack(ModBlocks.SEARED_BRICKS.get()))
+                    .displayItems((params, output) ->
+                            ModItems.ITEMS.getEntries().forEach(item -> output.accept(item.get())))
+                    .build());
 }

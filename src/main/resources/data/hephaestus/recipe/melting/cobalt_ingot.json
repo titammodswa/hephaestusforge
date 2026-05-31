@@ -1,0 +1,8 @@
+{
+  "type": "hephaestus:melting",
+  "ingredient": "hephaestus:cobalt_ingot",
+  "result": { "id": "hephaestus:molten_cobalt", "amount": 90 },
+  "fuel": { "id": "minecraft:lava", "amount": 1000 },
+  "temperature": 800,
+  "time": 200
+}

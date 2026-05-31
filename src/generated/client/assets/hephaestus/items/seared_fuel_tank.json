@@ -1,0 +1,18 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:special",
+        "base": "hephaestus:block/smeltery/tank/fuel_tank",
+        "model": {
+          "type": "hephaestus:seared_tank_fluid"
+        }
+      },
+      {
+        "type": "minecraft:model",
+        "model": "hephaestus:block/smeltery/tank/fuel_tank"
+      }
+    ]
+  }
+}

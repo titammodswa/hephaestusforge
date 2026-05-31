@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "emits_light=false": {
+      "model": "hephaestus:block/smeltery/tank/ingot_tank"
+    },
+    "emits_light=true": {
+      "model": "hephaestus:block/smeltery/tank/ingot_tank"
+    }
+  }
+}

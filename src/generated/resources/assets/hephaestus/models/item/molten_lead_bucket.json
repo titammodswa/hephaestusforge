@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "hephaestus:molten_lead",
-  "loader": "neoforge:fluid_container"
-}
