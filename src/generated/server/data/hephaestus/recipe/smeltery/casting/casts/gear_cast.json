@@ -1,0 +1,13 @@
+{
+  "type": "hephaestus:casting_table",
+  "cast": "#c:gears",
+  "cast_consumed": true,
+  "cooling_time": 60,
+  "fluid": {
+    "amount": 90,
+    "id": "hephaestus:molten_copper"
+  },
+  "result": {
+    "id": "hephaestus:gear_cast"
+  }
+}

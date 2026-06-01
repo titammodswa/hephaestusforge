@@ -23,7 +23,7 @@ public class MelterMenu extends AbstractContainerMenu {
                 (MelterBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()),
                 new SimpleContainerData(12));
     }
-
+    @SuppressWarnings("removal")
     public MelterMenu(int id, Inventory playerInventory, MelterBlockEntity entity, ContainerData data) {
         super(ModMenus.MELTER_MENU.get(), id);
         checkContainerDataCount(data, 12);
@@ -40,12 +40,12 @@ public class MelterMenu extends AbstractContainerMenu {
     }
 
     public MelterBlockEntity getBlockEntity() { return blockEntity; }
-
+    @SuppressWarnings("removal")
     public FluidStack getTankFluid() {
         if (blockEntity == null) return FluidStack.EMPTY;
         return blockEntity.tank.getFluid().copy();
     }
-
+    @SuppressWarnings("removal")
     public int getTankCapacity() {
         if (blockEntity == null) return 2700;
         return blockEntity.tank.getCapacity();

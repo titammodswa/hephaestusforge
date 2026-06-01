@@ -17,9 +17,9 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;          // MC 26.1
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;                      // MC 26.1
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -42,9 +42,9 @@ public class MelterCategory implements IRecipeCategory<ModRecipes.MeltingRecipe>
     private final IGuiHelper guiHelper;
 
     public MelterCategory(IGuiHelper guiHelper) {
-        this.guiHelper  = guiHelper;
-        this.background = guiHelper.createDrawable(TEXTURE, 0, 0, 132, 40);
-        this.icon       = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.SEARED_MELTER.get()));
+        this.guiHelper   = guiHelper;
+        this.background  = guiHelper.createDrawable(TEXTURE, 0, 0, 132, 40);
+        this.icon        = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.SEARED_MELTER.get()));
         this.tankOverlay = guiHelper.createDrawable(TEXTURE, 132, 0, 32, 32);
         this.blankLava   = guiHelper.createBlankDrawable(12, 32);
         this.blankItem   = guiHelper.createBlankDrawable(18, 18);
@@ -54,11 +54,13 @@ public class MelterCategory implements IRecipeCategory<ModRecipes.MeltingRecipe>
     @SuppressWarnings("removal")
     @Override public RecipeType<ModRecipes.MeltingRecipe> getRecipeType() { return TitamModsJEIPlugin.MELTING_TYPE; }
     @Override public Component getTitle() { return Component.translatable("block.hephaestus.seared_melter"); }
-    public IDrawable getBackground() { return background; }
     @Override public IDrawable getIcon() { return icon; }
     @Override public int getWidth()  { return 132; }
     @Override public int getHeight() { return 40; }
 
+    @SuppressWarnings("removal")
+    public IDrawable getBackground() { return background; }
+    @SuppressWarnings("removal")
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ModRecipes.MeltingRecipe recipe, IFocusGroup focuses) {
         List<FluidStack> validFuels = new ArrayList<>();
@@ -91,6 +93,8 @@ public class MelterCategory implements IRecipeCategory<ModRecipes.MeltingRecipe>
     @Override
     public void draw(ModRecipes.MeltingRecipe recipe, IRecipeSlotsView recipeSlotsView,
                      GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
+        background.draw(graphics);
+
         int meltingTicks = Math.max(1, recipe.time());
         IDrawableAnimated arrow = guiHelper.drawableBuilder(TEXTURE, 150, 41, 24, 17)
                 .buildAnimated(meltingTicks, IDrawableAnimated.StartDirection.LEFT, false);

@@ -26,7 +26,7 @@ public class MelterRenderer implements BlockEntityRenderer<MelterBlockEntity, Me
     public MelterRenderState createRenderState() {
         return new MelterRenderState();
     }
-
+    @SuppressWarnings("removal")
     @Override
     public void extractRenderState(MelterBlockEntity blockEntity,
                                    MelterRenderState state,

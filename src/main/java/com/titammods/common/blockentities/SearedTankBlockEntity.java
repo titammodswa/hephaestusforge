@@ -24,7 +24,7 @@ import org.jspecify.annotations.Nullable;
 public class SearedTankBlockEntity extends BlockEntity {
 
     public static final int CAPACITY = FluidType.BUCKET_VOLUME * 4;
-
+    @SuppressWarnings("removal")
     private final FluidTank fluidTank = new FluidTank(CAPACITY) {
         @Override
         protected void onContentsChanged() {
@@ -48,9 +48,9 @@ public class SearedTankBlockEntity extends BlockEntity {
     public SearedTankBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.SEARED_TANK.get(), pos, state);
     }
-
+    @SuppressWarnings("removal")
     public FluidTank getFluidTank() { return fluidTank; }
-
+    @SuppressWarnings("removal")
     private void updateLightBlockState(ServerLevel serverLevel) {
         BlockState current = getBlockState();
         if (!current.hasProperty(SearedTankBlock.EMITS_LIGHT)) return;
@@ -79,7 +79,7 @@ public class SearedTankBlockEntity extends BlockEntity {
         super.saveAdditional(output);
         output.store("fluid", FluidStack.OPTIONAL_CODEC, fluidTank.getFluid());
     }
-
+    @SuppressWarnings("removal")
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);

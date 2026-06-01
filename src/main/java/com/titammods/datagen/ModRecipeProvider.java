@@ -31,13 +31,13 @@ public class ModRecipeProvider extends RecipeProvider {
     protected void buildRecipes() {
 
         registerMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_IRON).source.get(),
-                1538, "iron", Items.IRON_BLOCK, Items.IRON_INGOT, Items.RAW_IRON, Items.IRON_NUGGET, null, null, null, null, "");
+                900, "iron", Items.IRON_BLOCK, Items.IRON_INGOT, Items.RAW_IRON, Items.IRON_NUGGET, null, null, null, null, "");
 
         registerMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GOLD).source.get(),
-                1060, "gold", Items.GOLD_BLOCK, Items.GOLD_INGOT, Items.RAW_GOLD, Items.GOLD_NUGGET, null, null, null, null, "");
+                900, "gold", Items.GOLD_BLOCK, Items.GOLD_INGOT, Items.RAW_GOLD, Items.GOLD_NUGGET, null, null, null, null, "");
 
         registerMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_COPPER).source.get(),
-                1080, "copper", Items.COPPER_BLOCK, Items.COPPER_INGOT, Items.RAW_COPPER, null, null, null, null, null, "");
+                900, "copper", Items.COPPER_BLOCK, Items.COPPER_INGOT, Items.RAW_COPPER, null, null, null, null, null, "");
 
         registerMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_STEEL).source.get(),
                 1000, "steel", ModBlocks.STEEL_BLOCK.get(), ModItems.STEEL_INGOT.get(), ModItems.RAW_STEEL.get(),
@@ -50,17 +50,20 @@ public class ModRecipeProvider extends RecipeProvider {
                 ModBlocks.COBALT_BLOCK.get(), ModItems.COBALT_INGOT.get(), ModItems.RAW_COBALT.get(),
                 ModItems.COBALT_NUGGET.get(), ModItems.COBALT_POWDER.get(), null, null, null, "");
 
-        registerGem(ModFluids.MOLTEN_DIAMOND.source.get(),  1400, "diamond",
-                "storage_blocks/diamond", "gems/diamond",  Items.DIAMOND_BLOCK,  Items.DIAMOND);
-        registerGem(ModFluids.MOLTEN_EMERALD.source.get(),  1200, "emerald",
-                "storage_blocks/emerald", "gems/emerald",  Items.EMERALD_BLOCK,  Items.EMERALD);
-        registerGem(ModFluids.MOLTEN_AMETHYST.source.get(), 1000, "amethyst",
-                "", "gems/amethyst", Items.AMETHYST_BLOCK, Items.AMETHYST_SHARD);
-        registerGem(ModFluids.MOLTEN_QUARTZ.source.get(),    800, "quartz",
-                "", "gems/quartz",   Items.QUARTZ_BLOCK,   Items.QUARTZ);
+        registerGem(ModFluids.MOLTEN_DIAMOND.source.get(),  1400, "diamond", "storage_blocks/diamond", "gems/diamond",  Items.DIAMOND_BLOCK,  Items.DIAMOND);
+        registerGem(ModFluids.MOLTEN_EMERALD.source.get(),  1200, "emerald", "storage_blocks/emerald", "gems/emerald",  Items.EMERALD_BLOCK,  Items.EMERALD);
+        registerGem(ModFluids.MOLTEN_AMETHYST.source.get(), 1000, "amethyst", "", "gems/amethyst", Items.AMETHYST_BLOCK, Items.AMETHYST_SHARD);
+        registerGem(ModFluids.MOLTEN_QUARTZ.source.get(),    800, "quartz", "", "gems/quartz",   Items.QUARTZ_BLOCK,   Items.QUARTZ);
 
         registerAllTheOresCompat();
         registerFtbMaterialsCompat();
+
+        createCastRecipe("ingots",   ModItems.INGOT_CAST.get(),  "ingot_cast");
+        createCastRecipe("nuggets",  ModItems.NUGGET_CAST.get(), "nugget_cast");
+        createCastRecipe("gems",     ModItems.GEM_CAST.get(),    "gem_cast");
+        createCastRecipe("plates",   ModItems.PLATE_CAST.get(),  "plate_cast");
+        createCastRecipe("gears",    ModItems.GEAR_CAST.get(),   "gear_cast");
+        createCastRecipe("rods",     ModItems.ROD_CAST.get(),    "rod_cast");
 
     }
 
@@ -130,7 +133,6 @@ public class ModRecipeProvider extends RecipeProvider {
         ModRecipes.MeltingRecipe recipe = new ModRecipes.MeltingRecipe(
                 ingredient, fluidId(fluid), amount, fuelId(temperature), 50, temperature, time);
 
-        // withConditions é obrigatório no 26.1
         this.output.withConditions(conditions).accept(
                 ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/melting/" + savePath)),
@@ -147,10 +149,50 @@ public class ModRecipeProvider extends RecipeProvider {
                 fuelId(temperature), 50,
                 temperature, time);
 
-        // FIX: Mesma correção para o withConditions aqui
         this.output.withConditions(conditions).accept(
                 ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/melting/" + savePath)),
+                recipe, null);
+    }
+
+    private void createCastRecipe(String tagPath, net.minecraft.world.level.ItemLike castResult, String savePath) {
+        Ingredient tagIngredient = Ingredient.of(
+                this.registries.lookupOrThrow(Registries.ITEM).getOrThrow(
+                        net.minecraft.tags.ItemTags.create(Identifier.fromNamespaceAndPath("c", tagPath))
+                )
+        );
+        Identifier copperFluidId = fluidId(
+                com.titammods.registry.HephaestusFluids.SETS.get(
+                        com.titammods.registry.HephaestusFluids.Material.MOLTEN_COPPER).source.get()
+        );
+        Identifier resultId = BuiltInRegistries.ITEM.getKey(castResult.asItem());
+        ModRecipes.CastingTableRecipe recipe = new ModRecipes.CastingTableRecipe(
+                java.util.Optional.of(tagIngredient), true,
+                copperFluidId, 90,
+                resultId, 1,
+                60);
+        this.output.accept(
+                net.minecraft.resources.ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/casts/" + savePath)),
+                recipe, null);
+    }
+
+    private void addCastingTable(net.minecraft.world.level.material.Fluid fluid, int fluidAmount,
+                                 net.minecraft.world.level.ItemLike castItem, boolean consumesCast,
+                                 net.minecraft.world.level.ItemLike resultItem, int time,
+                                 String savePath, net.neoforged.neoforge.common.conditions.ICondition... conditions) {
+        java.util.Optional<Ingredient> castOpt = (castItem == null)
+                ? java.util.Optional.empty()
+                : java.util.Optional.of(Ingredient.of(castItem));
+        Identifier resultId = BuiltInRegistries.ITEM.getKey(resultItem.asItem());
+        ModRecipes.CastingTableRecipe recipe = new ModRecipes.CastingTableRecipe(
+                castOpt, consumesCast,
+                fluidId(fluid), fluidAmount,
+                resultId, 1,
+                time);
+        this.output.withConditions(conditions).accept(
+                net.minecraft.resources.ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/table/" + savePath)),
                 recipe, null);
     }
 
@@ -170,7 +212,11 @@ public class ModRecipeProvider extends RecipeProvider {
         if (plate  != null) addMeltingTag("plates/"  + name, fluid, 90, temp, bt,     prefix + "metal/" + name + "/plate",  conditions);
         if (gear   != null) addMeltingTag("gears/"   + name, fluid,360, temp, bt * 2, prefix + "metal/" + name + "/gear",   conditions);
         if (rod    != null) addMeltingTag("rods/"    + name, fluid, 45, temp, bt / 2, prefix + "metal/" + name + "/rod",    conditions);
-        // casting comentado até CastingBasin/Table serem portados
+        if (ingot  != null) addCastingTable(fluid,  90, ModItems.INGOT_CAST.get(),  false, ingot,  bt,      prefix + "metal/" + name + "/ingot_cast");
+        if (nugget != null) addCastingTable(fluid,  10, ModItems.NUGGET_CAST.get(), false, nugget, bt / 3,  prefix + "metal/" + name + "/nugget_cast");
+        if (plate  != null) addCastingTable(fluid,  90, ModItems.PLATE_CAST.get(),  false, plate,  bt,      prefix + "metal/" + name + "/plate_cast");
+        if (gear   != null) addCastingTable(fluid, 360, ModItems.GEAR_CAST.get(),   false, gear,   bt * 2,  prefix + "metal/" + name + "/gear_cast");
+        if (rod    != null) addCastingTable(fluid,  45, ModItems.ROD_CAST.get(),    false, rod,    bt / 2,  prefix + "metal/" + name + "/rod_cast");
     }
 
     private void registerGem(Fluid fluid, int temp, String name, String blockTag, String gemTag,
@@ -185,7 +231,7 @@ public class ModRecipeProvider extends RecipeProvider {
             addMeltingTag(gemTag, fluid, 100, temp, bt, "gem/" + name + "/gem", conditions);
         else if (gem != null)
             addMeltingItem(gem, fluid, 100, temp, bt, "gem/" + name + "/gem", conditions);
-        // casting comentado
+        if (block != null) addCastingTable(fluid, 100, ModItems.GEM_CAST.get(), false, gem, bt, "gem/" + name + "/gem_cast");
     }
 
     private void registerExternalMetal(Fluid fluid, int temp, String name,

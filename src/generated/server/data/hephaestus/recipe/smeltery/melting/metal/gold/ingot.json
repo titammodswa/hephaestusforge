@@ -2,13 +2,13 @@
   "type": "hephaestus:melting",
   "fuel": {
     "amount": 50,
-    "id": "hephaestus:molten_blaze"
+    "id": "minecraft:lava"
   },
   "ingredient": "#c:ingots/gold",
   "result": {
     "amount": 90,
     "id": "hephaestus:molten_gold"
   },
-  "temperature": 1060,
+  "temperature": 900,
   "time": 100
 }

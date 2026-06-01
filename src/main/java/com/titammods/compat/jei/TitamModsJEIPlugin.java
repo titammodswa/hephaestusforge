@@ -24,6 +24,11 @@ public class TitamModsJEIPlugin implements IModPlugin {
     public static final RecipeType<ModRecipes.MeltingRecipe> MELTING_TYPE =
             RecipeType.create(TitamMods.MODID, "melting", ModRecipes.MeltingRecipe.class);
 
+    @SuppressWarnings("removal")
+    public static final RecipeType<ModRecipes.CastingTableRecipe> CASTING_TABLE_TYPE =
+            RecipeType.create(TitamMods.MODID, "casting_table", ModRecipes.CastingTableRecipe.class);
+
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(TitamMods.MODID, "jei_plugin");
@@ -32,7 +37,10 @@ public class TitamModsJEIPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         var gui = registration.getJeiHelpers().getGuiHelper();
-        registration.addRecipeCategories(new MelterCategory(gui));
+        registration.addRecipeCategories(
+                new MelterCategory(gui),
+                new CastingTableCategory(gui)
+        );
     }
 
     @Override
@@ -46,6 +54,11 @@ public class TitamModsJEIPlugin implements IModPlugin {
                 .byType(ModRecipes.MELTING_TYPE.get())
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(MELTING_TYPE, melting);
+
+        List<ModRecipes.CastingTableRecipe> table = rm.recipeMap()
+                .byType(ModRecipes.CASTING_TABLE_TYPE.get())
+                .stream().map(RecipeHolder::value).toList();
+        registration.addRecipes(CASTING_TABLE_TYPE, table);
     }
 
     @SuppressWarnings("removal")
@@ -54,5 +67,8 @@ public class TitamModsJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(
                 new net.minecraft.world.item.ItemStack(ModBlocks.SEARED_MELTER.get()),
                 MELTING_TYPE);
+        registration.addRecipeCatalyst(
+                new net.minecraft.world.item.ItemStack(ModBlocks.SEARED_TABLE.get()),
+                CASTING_TABLE_TYPE);
     }
 }

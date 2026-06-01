@@ -84,7 +84,6 @@ public class SearedTankItemRenderer implements SpecialModelRenderer<CompoundTag>
         int fluidLight = fluid.getFluidType().getLightLevel(fluid);
         final int finalBlock = (fluidLight * 16 > bk) ? fluidLight * 16 : bk;
 
-        // Bounds (idêntico ao renderer de mundo)
         float d    = 1f / 16f;
         float fill = Mth.clamp((float) fluid.getAmount() / SearedTankBlockEntity.CAPACITY, 0.003f, 1f);
         float x0 = d*2, x1 = 1f - d*2;

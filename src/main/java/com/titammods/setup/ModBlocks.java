@@ -4,6 +4,7 @@ import com.titammods.TitamMods;
 import com.titammods.common.blocks.MelterBlock;
 import com.titammods.common.blocks.SearedTankBlock;
 import com.titammods.common.blocks.SearedFaucetBlock;
+import com.titammods.common.blocks.SearedTableBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -70,6 +71,14 @@ public class ModBlocks {
 
     public static final DeferredBlock<SearedFaucetBlock> SEARED_FAUCET = registerBlock("seared_faucet",
             k -> new SearedFaucetBlock(
+                    BlockBehaviour.Properties.of()
+                            .strength(3.0f, 15.0f)
+                            .requiresCorrectToolForDrops()
+                            .noOcclusion()
+                            .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<SearedTableBlock> SEARED_TABLE = registerBlock("seared_table",
+            k -> new SearedTableBlock(
                     BlockBehaviour.Properties.of()
                             .strength(3.0f, 15.0f)
                             .requiresCorrectToolForDrops()

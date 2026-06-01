@@ -34,7 +34,7 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
         this.inventoryLabelY = 10000;
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }
-
+    @SuppressWarnings("removal")
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         int x = (width - imageWidth) / 2;
@@ -94,7 +94,7 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
         }
         blit(graphics, tankX, tankY, 176, 0, 52, 52);
     }
-
+    @SuppressWarnings("removal")
     @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);

@@ -4,6 +4,7 @@ import com.titammods.common.blocks.SearedFaucetBlock;
 import com.titammods.setup.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -44,9 +45,7 @@ public class FaucetBlockEntity extends BlockEntity {
     public void handleRedstone(boolean hasSignal) {
         if (hasSignal != lastRedstone) {
             lastRedstone = hasSignal;
-            if (hasSignal && !isPouring) {
-                activate();
-            }
+            if (hasSignal && !isPouring) activate();
             setChanged();
             if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
@@ -58,7 +57,7 @@ public class FaucetBlockEntity extends BlockEntity {
         setChanged();
         if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
-
+    @SuppressWarnings("removal")
     public void tick() {
         if (level == null) return;
         if (!isPouring && !lastRedstone) return;
@@ -72,10 +71,8 @@ public class FaucetBlockEntity extends BlockEntity {
 
         if (source != null && destination != null) {
             FluidStack simulatedDrain = source.drain(10, IFluidHandler.FluidAction.SIMULATE);
-
             if (!simulatedDrain.isEmpty()) {
                 int filled = destination.fill(simulatedDrain, IFluidHandler.FluidAction.SIMULATE);
-
                 if (filled > 0) {
                     if (!isPouring) isPouring = true;
 
@@ -92,19 +89,20 @@ public class FaucetBlockEntity extends BlockEntity {
             }
         }
 
-        if (isPouring) {
-            stopPouring();
-        }
+        if (isPouring) stopPouring();
     }
-
+    @SuppressWarnings("removal")
     private @Nullable IFluidHandler getFluidHandler(BlockPos pos, Direction side) {
         if (level == null) return null;
         BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof com.titammods.common.blockentities.SearedTankBlockEntity tank) {
+        if (be instanceof SearedTankBlockEntity tank) {
             return tank.getFluidTank();
         }
-        if (be instanceof com.titammods.common.blockentities.MelterBlockEntity melter) {
+        if (be instanceof MelterBlockEntity melter) {
             return melter.tank;
+        }
+        if (be instanceof TableBlockEntity table) {
+            return table.externalFluidHandler;
         }
         return null;
     }
@@ -126,7 +124,7 @@ public class FaucetBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider registries) {
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);
     }
 

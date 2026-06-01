@@ -43,7 +43,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
     public int[] progress    = new int[3];
     public int[] maxProgress = new int[3];
     public int[] state       = new int[3];
-
+    @SuppressWarnings("removal")
     public final ItemStackHandler inventory = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -54,7 +54,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         }
         @Override public int getSlotLimit(int slot) { return 1; }
     };
-
+    @SuppressWarnings("removal")
     public final IItemHandler externalItemHandler = new IItemHandler() {
         @Override public int getSlots() { return 3; }
         @Nonnull @Override public ItemStack getStackInSlot(int slot) { return inventory.getStackInSlot(slot); }
@@ -63,7 +63,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         @Override public int getSlotLimit(int slot) { return 1; }
         @Override public boolean isItemValid(int slot, @Nonnull ItemStack stack) { return inventory.isItemValid(slot, stack); }
     };
-
+    @SuppressWarnings("removal")
     public final FluidTank tank = new FluidTank(2700) {
         @Override
         protected void onContentsChanged() {
@@ -109,7 +109,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         return new MelterMenu(id, inv, this, this.data);
     }
 
-
+    @SuppressWarnings("removal")
     public static void updateLight(BlockEntity be, FluidTank tank) {
         if (be.getLevel() != null && !be.getLevel().isClientSide()) {
             FluidStack fluid = tank.getFluid();
@@ -122,7 +122,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
-
+    @SuppressWarnings("removal")
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
@@ -139,7 +139,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
             output.putInt("maxProgress" + i, maxProgress[i]);
         }
     }
-
+    @SuppressWarnings("removal")
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
@@ -179,13 +179,13 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         }
         return maxTemp;
     }
-
+    @SuppressWarnings("removal")
     private @Nullable FluidTank getFuelTankBelow(Level level, BlockPos pos) {
         BlockEntity below = level.getBlockEntity(pos.below());
         if (below instanceof SearedTankBlockEntity tank) return tank.getFluidTank();
         return null;
     }
-
+    @SuppressWarnings("removal")
     public void tick(Level level, BlockPos pos, BlockState blockState) {
         if (level.isClientSide()) return;
         boolean dirty = false;

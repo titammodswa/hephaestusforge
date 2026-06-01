@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:casting_table",
+  "cast": "hephaestus:gem_cast",
+  "cooling_time": 120,
+  "fluid": {
+    "amount": 100,
+    "id": "hephaestus:molten_amethyst"
+  },
+  "result": {
+    "id": "minecraft:amethyst_shard"
+  }
+}

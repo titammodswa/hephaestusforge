@@ -60,7 +60,7 @@ public class SearedTankBlock extends BaseEntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) { return RenderShape.MODEL; }
-
+    @SuppressWarnings("removal")
     @Override
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
                                        BlockPos pos, Player player, InteractionHand hand,
@@ -73,7 +73,7 @@ public class SearedTankBlock extends BaseEntityBlock {
         }
         return InteractionResult.PASS;
     }
-
+    @SuppressWarnings("removal")
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state,
                                        boolean includeData) {

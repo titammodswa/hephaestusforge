@@ -26,7 +26,7 @@ public class SearedTankRenderer implements BlockEntityRenderer<SearedTankBlockEn
     public SearedTankRenderState createRenderState() {
         return new SearedTankRenderState();
     }
-
+    @SuppressWarnings("removal")
     @Override
     public void extractRenderState(SearedTankBlockEntity blockEntity,
                                    SearedTankRenderState state,
