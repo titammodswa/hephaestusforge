@@ -238,17 +238,83 @@ public class ModRecipeProvider extends RecipeProvider {
         ICondition cond = new ModLoadedCondition("ftbmaterials");
         String prefix = "ftbmaterials_compat/";
 
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ALUMINUM).source.get(),   660, "aluminum",  "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_BRASS).source.get(),      930, "brass",     "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_BRONZE).source.get(),     950, "bronze",    "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LEAD).source.get(),       327, "lead",      "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_NICKEL).source.get(),    1450, "nickel",    "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_OSMIUM).source.get(),    1990, "osmium",    "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_PLATINUM).source.get(),  1768, "platinum",  "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SILVER).source.get(),     960, "silver",    "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_TIN).source.get(),        230, "tin",       "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_URANIUM).source.get(),   1130, "uranium",   "ftbmaterials", prefix, cond);
-        registerExternalMetal(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ZINC).source.get(),       419, "zinc",      "ftbmaterials", prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ALUMINUM).source.get(),    660, "aluminum",   true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_BRONZE).source.get(),      950, "bronze",     true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CONSTANTAN).source.get(), 1220, "constantan", true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_IRIDIUM).source.get(),    2440, "iridium",    true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LEAD).source.get(),        327, "lead",       true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_NICKEL).source.get(),     1450, "nickel",     true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_OSMIUM).source.get(),     1990, "osmium",     true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_PLATINUM).source.get(),   1768, "platinum",   true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SILVER).source.get(),      960, "silver",     true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_TIN).source.get(),         230, "tin",        true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_URANIUM).source.get(),    1130, "uranium",    true,  prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ZINC).source.get(),        419, "zinc",       true,  prefix, cond);
+
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_BRASS).source.get(),       930, "brass",      false, prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ELECTRUM).source.get(),   1000, "electrum",   false, prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_INVAR).source.get(),      1420, "invar",      false, prefix, cond);
+        registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LUMIUM).source.get(),     1000, "lumium",     false, prefix, cond);
+    }
+
+    private void registerExternalMetalById(Fluid fluid, int temp, String name,
+                                           boolean hasRaw, String prefix, ICondition cond) {
+        int bt = 100;
+
+        addMeltingTag("storage_blocks/" + name, fluid, 900, temp, bt * 2,
+                prefix + "metal/" + name + "/block", cond);
+        if (hasRaw && !name.equals("steel") && !name.equals("brass"))
+            addMeltingTag("storage_blocks/raw_" + name, fluid, 900, temp, (int)(bt * 2.5),
+                    prefix + "metal/" + name + "/raw_block", cond);
+        addMeltingTag("ingots/" + name,   fluid,  90, temp, bt,
+                prefix + "metal/" + name + "/ingot",  cond);
+        if (hasRaw && !name.equals("brass"))
+            addMeltingTag("raw_materials/" + name, fluid, 90, temp, (int)(bt * 1.5),
+                    prefix + "metal/" + name + "/raw", cond);
+        addMeltingTag("nuggets/" + name,  fluid,  10, temp, bt / 3,
+                prefix + "metal/" + name + "/nugget", cond);
+        addMeltingTag("dusts/" + name,    fluid,  90, temp, bt,
+                prefix + "metal/" + name + "/dust",   cond);
+        addMeltingTag("plates/" + name,   fluid,  90, temp, bt,
+                prefix + "metal/" + name + "/plate",  cond);
+        addMeltingTag("gears/" + name,    fluid, 360, temp, bt * 2,
+                prefix + "metal/" + name + "/gear",   cond);
+        addMeltingTag("rods/" + name,     fluid,  45, temp, bt / 2,
+                prefix + "metal/" + name + "/rod",    cond);
+
+        Identifier fluidId  = fluidId(fluid);
+        Identifier blockId  = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_block");
+        Identifier ingotId  = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_ingot");
+        Identifier nuggetId = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_nugget");
+        Identifier plateId  = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_plate");
+        Identifier gearId   = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_gear");
+        Identifier rodId    = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_rod");
+
+        var ingotCast  = java.util.Optional.of(net.minecraft.world.item.crafting.Ingredient.of(ModItems.INGOT_CAST.get()));
+        var nuggetCast = java.util.Optional.of(net.minecraft.world.item.crafting.Ingredient.of(ModItems.NUGGET_CAST.get()));
+        var plateCast  = java.util.Optional.of(net.minecraft.world.item.crafting.Ingredient.of(ModItems.PLATE_CAST.get()));
+        var gearCast   = java.util.Optional.of(net.minecraft.world.item.crafting.Ingredient.of(ModItems.GEAR_CAST.get()));
+        var rodCast    = java.util.Optional.of(net.minecraft.world.item.crafting.Ingredient.of(ModItems.ROD_CAST.get()));
+
+        this.output.withConditions(cond).accept(
+                rk("smeltery/casting/table/" + prefix + "metal/" + name + "/ingot_cast"),
+                new ModRecipes.CastingTableRecipe(ingotCast,  false, fluidId,  90, ingotId,  1, bt),      null);
+        this.output.withConditions(cond).accept(
+                rk("smeltery/casting/table/" + prefix + "metal/" + name + "/nugget_cast"),
+                new ModRecipes.CastingTableRecipe(nuggetCast, false, fluidId,  10, nuggetId, 1, bt / 3),  null);
+        this.output.withConditions(cond).accept(
+                rk("smeltery/casting/table/" + prefix + "metal/" + name + "/plate_cast"),
+                new ModRecipes.CastingTableRecipe(plateCast,  false, fluidId,  90, plateId,  1, bt),      null);
+        this.output.withConditions(cond).accept(
+                rk("smeltery/casting/table/" + prefix + "metal/" + name + "/gear_cast"),
+                new ModRecipes.CastingTableRecipe(gearCast,   false, fluidId, 360, gearId,   1, bt * 2),  null);
+        this.output.withConditions(cond).accept(
+                rk("smeltery/casting/table/" + prefix + "metal/" + name + "/rod_cast"),
+                new ModRecipes.CastingTableRecipe(rodCast,    false, fluidId,  45, rodId,    1, bt / 2),  null);
+
+        this.output.withConditions(cond).accept(
+                rk("smeltery/casting/basin/" + prefix + "metal/" + name + "/block_cast"),
+                new ModRecipes.CastingBasinRecipe(fluidId, 900, blockId, 1, bt * 2),                      null);
     }
 
     private Identifier fuelId(int temp) {
@@ -324,33 +390,37 @@ public class ModRecipeProvider extends RecipeProvider {
                 recipe, null);
     }
 
-    private void addCastingTable(net.minecraft.world.level.material.Fluid fluid, int fluidAmount,
-                                 net.minecraft.world.level.ItemLike castItem, boolean consumesCast,
-                                 net.minecraft.world.level.ItemLike resultItem, int time,
-                                 String savePath, net.neoforged.neoforge.common.conditions.ICondition... conditions) {
-        java.util.Optional<Ingredient> castOpt = (castItem == null)
-                ? java.util.Optional.empty()
-                : java.util.Optional.of(Ingredient.of(castItem));
+    private void addCastingTable(Fluid fluid, int fluidAmount,
+                                 ItemLike castItem, boolean consumesCast,
+                                 ItemLike resultItem, int time,
+                                 String savePath, ICondition... conditions) {
+        Identifier fluidId  = fluidId(fluid);
         Identifier resultId = BuiltInRegistries.ITEM.getKey(resultItem.asItem());
+        java.util.Optional<net.minecraft.world.item.crafting.Ingredient> castOpt =
+                (castItem == null)
+                        ? java.util.Optional.empty()
+                        : java.util.Optional.of(net.minecraft.world.item.crafting.Ingredient.of(castItem));
+
         ModRecipes.CastingTableRecipe recipe = new ModRecipes.CastingTableRecipe(
-                castOpt, consumesCast,
-                fluidId(fluid), fluidAmount,
-                resultId, 1,
-                time);
+                castOpt, consumesCast, fluidId, fluidAmount, resultId, 1, time);
+
         this.output.withConditions(conditions).accept(
-                net.minecraft.resources.ResourceKey.create(Registries.RECIPE,
+                ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/table/" + savePath)),
                 recipe, null);
     }
 
-    private void addCastingBasin(net.minecraft.world.level.material.Fluid fluid, int fluidAmount,
-                                 net.minecraft.world.level.ItemLike resultItem, int time,
-                                 String savePath) {
+    private void addCastingBasin(Fluid fluid, int fluidAmount,
+                                 ItemLike resultItem, int time,
+                                 String savePath, ICondition... conditions) {
+        Identifier fluidId  = fluidId(fluid);
         Identifier resultId = BuiltInRegistries.ITEM.getKey(resultItem.asItem());
+
         ModRecipes.CastingBasinRecipe recipe = new ModRecipes.CastingBasinRecipe(
-                fluidId(fluid), fluidAmount, resultId, 1, time);
-        this.output.accept(
-                net.minecraft.resources.ResourceKey.create(Registries.RECIPE,
+                fluidId, fluidAmount, resultId, 1, time);
+
+        this.output.withConditions(conditions).accept(
+                ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/basin/" + savePath)),
                 recipe, null);
     }
@@ -360,28 +430,31 @@ public class ModRecipeProvider extends RecipeProvider {
                                ItemLike dust, ItemLike plate, ItemLike gear, ItemLike rod,
                                String prefix, ICondition... conditions) {
         int bt = 100;
+
         addMeltingTag("storage_blocks/" + name, fluid, 900, temp, bt * 2,        prefix + "metal/" + name + "/block",    conditions);
         if (raw != null && !name.equals("steel") && !name.equals("brass"))
             addMeltingTag("storage_blocks/raw_" + name, fluid, 900, temp, (int)(bt * 2.5), prefix + "metal/" + name + "/raw_block", conditions);
         addMeltingTag("ingots/" + name,           fluid,  90, temp, bt,            prefix + "metal/" + name + "/ingot",   conditions);
         if (raw != null && !name.equals("brass"))
             addMeltingTag("raw_materials/" + name, fluid,  90, temp, (int)(bt * 1.5), prefix + "metal/" + name + "/raw",      conditions);
-        if (nugget != null) addMeltingTag("nuggets/" + name, fluid, 10, temp, bt / 3, prefix + "metal/" + name + "/nugget", conditions);
-        if (dust   != null) addMeltingTag("dusts/"   + name, fluid, 90, temp, bt,     prefix + "metal/" + name + "/dust",   conditions);
-        if (plate  != null) addMeltingTag("plates/"  + name, fluid, 90, temp, bt,     prefix + "metal/" + name + "/plate",  conditions);
-        if (gear   != null) addMeltingTag("gears/"   + name, fluid,360, temp, bt * 2, prefix + "metal/" + name + "/gear",   conditions);
-        if (rod    != null) addMeltingTag("rods/"    + name, fluid, 45, temp, bt / 2, prefix + "metal/" + name + "/rod",    conditions);
-        if (ingot  != null) addCastingTable(fluid,  90, ModItems.INGOT_CAST.get(),  false, ingot,  bt,      prefix + "metal/" + name + "/ingot_cast");
-        if (nugget != null) addCastingTable(fluid,  10, ModItems.NUGGET_CAST.get(), false, nugget, bt / 3,  prefix + "metal/" + name + "/nugget_cast");
-        if (plate  != null) addCastingTable(fluid,  90, ModItems.PLATE_CAST.get(),  false, plate,  bt,      prefix + "metal/" + name + "/plate_cast");
-        if (gear   != null) addCastingTable(fluid, 360, ModItems.GEAR_CAST.get(),   false, gear,   bt * 2,  prefix + "metal/" + name + "/gear_cast");
-        if (rod    != null) addCastingTable(fluid,  45, ModItems.ROD_CAST.get(),    false, rod,    bt / 2,  prefix + "metal/" + name + "/rod_cast");
-        if (block != null) addCastingBasin(fluid, 900, block, bt * 2, prefix + "metal/" + name + "/block");
+        if (nugget != null) addMeltingTag("nuggets/" + name, fluid,  10, temp, bt / 3,  prefix + "metal/" + name + "/nugget", conditions);
+        if (dust   != null) addMeltingTag("dusts/"   + name, fluid,  90, temp, bt,      prefix + "metal/" + name + "/dust",   conditions);
+        if (plate  != null) addMeltingTag("plates/"  + name, fluid,  90, temp, bt,      prefix + "metal/" + name + "/plate",  conditions);
+        if (gear   != null) addMeltingTag("gears/"   + name, fluid, 360, temp, bt * 2,  prefix + "metal/" + name + "/gear",   conditions);
+        if (rod    != null) addMeltingTag("rods/"    + name, fluid,  45, temp, bt / 2,  prefix + "metal/" + name + "/rod",    conditions);
+
+        if (ingot  != null) addCastingTable(fluid,  90, ModItems.INGOT_CAST.get(),  false, ingot,  bt,       prefix + "metal/" + name + "/ingot_cast",  conditions);
+        if (nugget != null) addCastingTable(fluid,  10, ModItems.NUGGET_CAST.get(), false, nugget, bt / 3,   prefix + "metal/" + name + "/nugget_cast", conditions);
+        if (plate  != null) addCastingTable(fluid,  90, ModItems.PLATE_CAST.get(),  false, plate,  bt,       prefix + "metal/" + name + "/plate_cast",  conditions);
+        if (gear   != null) addCastingTable(fluid, 360, ModItems.GEAR_CAST.get(),   false, gear,   bt * 2,   prefix + "metal/" + name + "/gear_cast",   conditions);
+        if (rod    != null) addCastingTable(fluid,  45, ModItems.ROD_CAST.get(),    false, rod,    bt / 2,   prefix + "metal/" + name + "/rod_cast",    conditions);
+        if (block  != null) addCastingBasin(fluid, 900, block, bt * 2, prefix + "metal/" + name + "/block_cast", conditions);
     }
 
     private void registerGem(Fluid fluid, int temp, String name, String blockTag, String gemTag,
                              ItemLike block, ItemLike gem, ICondition... conditions) {
         int bt = 120;
+
         if (blockTag != null && !blockTag.isEmpty())
             addMeltingTag(blockTag, fluid, 900, temp, bt * 2, "gem/" + name + "/block", conditions);
         else if (block != null)
@@ -391,8 +464,9 @@ public class ModRecipeProvider extends RecipeProvider {
             addMeltingTag(gemTag, fluid, 100, temp, bt, "gem/" + name + "/gem", conditions);
         else if (gem != null)
             addMeltingItem(gem, fluid, 100, temp, bt, "gem/" + name + "/gem", conditions);
-        if (block != null) addCastingTable(fluid, 100, ModItems.GEM_CAST.get(), false, gem, bt, "gem/" + name + "/gem_cast");
-        if (block != null) addCastingBasin(fluid, 900, block, bt * 2, "gem/" + name + "/block");
+
+        if (gem   != null) addCastingTable(fluid, 100, ModItems.GEM_CAST.get(), false, gem,  bt,       "gem/" + name + "/gem_cast",   conditions);
+        if (block != null) addCastingBasin(fluid, 900, block, bt * 2, "gem/" + name + "/block_cast", conditions);
     }
 
     private void registerExternalMetal(Fluid fluid, int temp, String name,

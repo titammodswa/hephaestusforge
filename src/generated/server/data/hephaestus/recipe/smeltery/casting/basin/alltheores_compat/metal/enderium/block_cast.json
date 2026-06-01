@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "alltheores"
+    }
+  ],
+  "type": "hephaestus:casting_basin",
+  "cooling_time": 200,
+  "fluid": {
+    "amount": 900,
+    "id": "hephaestus:molten_enderium"
+  },
+  "result": {
+    "id": "alltheores:enderium_block"
+  }
+}
