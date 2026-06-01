@@ -89,6 +89,93 @@
   "block.hephaestus.seared_chute": "Calha Chamuscada",
   "block.hephaestus.seared_duct": "Duto Chamuscado",
 
+  "item.hephaestus.seared_stone": "Pedra Chamuscada",
+  "item.hephaestus.seared_stone_slab": "Laje de Pedra Chamuscada",
+  "item.hephaestus.seared_stone_stairs": "Escadas de Pedra Chamuscada",
+  "item.hephaestus.seared_stone_wall": "Muro de Pedra Chamuscada",
+
+  "item.hephaestus.seared_cobble": "Pedregulho Chamuscado",
+  "item.hephaestus.seared_cobble_slab": "Laje de Pedregulho Chamuscado",
+  "item.hephaestus.seared_cobble_stairs": "Escadas de Pedregulho Chamuscado",
+  "item.hephaestus.seared_cobble_wall": "Muro de Pedregulho Chamuscado",
+
+  "item.hephaestus.seared_paver": "Pavimento Chamuscado",
+  "item.hephaestus.seared_paver_slab": "Laje de Pavimento Chamuscado",
+  "item.hephaestus.seared_paver_stairs": "Escadas de Pavimento Chamuscado",
+  "item.hephaestus.seared_paver_wall": "Muro de Pavimento Chamuscado",
+
+  "item.hephaestus.seared_bricks": "Tijolos Chamuscados",
+  "item.hephaestus.seared_bricks_slab": "Laje de Tijolos Chamuscados",
+  "item.hephaestus.seared_bricks_stairs": "Escadas de Tijolos Chamuscados",
+  "item.hephaestus.seared_bricks_wall": "Muro de Tijolos Chamuscados",
+
+  "item.hephaestus.seared_cracked_bricks": "Tijolos Chamuscados Rachados",
+  "item.hephaestus.seared_cracked_bricks_slab": "Laje de Tijolos Chamuscados Rachados",
+  "item.hephaestus.seared_cracked_bricks_stairs": "Escadas de Tijolos Chamuscados Rachados",
+  "item.hephaestus.seared_cracked_bricks_wall": "Muro de Tijolos Chamuscados Rachados",
+
+  "item.hephaestus.seared_fancy_bricks": "Tijolos Chamuscados Trabalhados",
+  "item.hephaestus.seared_fancy_bricks_slab": "Laje de Tijolos Chamuscados Trabalhados",
+  "item.hephaestus.seared_fancy_bricks_stairs": "Escadas de Tijolos Chamuscados Trabalhados",
+  "item.hephaestus.seared_fancy_bricks_wall": "Muro de Tijolos Chamuscados Trabalhados",
+
+  "item.hephaestus.seared_triangle_bricks": "Tijolos Chamuscados Triangulares",
+  "item.hephaestus.seared_triangle_bricks_slab": "Laje de Tijolos Chamuscados Triangulares",
+  "item.hephaestus.seared_triangle_bricks_stairs": "Escadas de Tijolos Chamuscados Triangulares",
+  "item.hephaestus.seared_triangle_bricks_wall": "Muro de Tijolos Chamuscados Triangulares",
+
+  "item.hephaestus.seared_creeper": "Creeper Chamuscado",
+  "item.hephaestus.seared_creeper_slab": "Laje de Creeper Chamuscado",
+  "item.hephaestus.seared_creeper_stairs": "Escadas de Creeper Chamuscado",
+  "item.hephaestus.seared_creeper_wall": "Muro de Creeper Chamuscado",
+
+  "item.hephaestus.seared_road": "Estrada Chamuscada",
+  "item.hephaestus.seared_road_slab": "Laje de Estrada Chamuscada",
+  "item.hephaestus.seared_road_stairs": "Escadas de Estrada Chamuscada",
+  "item.hephaestus.seared_road_wall": "Muro de Estrada Chamuscada",
+
+  "item.hephaestus.seared_small_bricks": "Tijolos Chamuscados Pequenos",
+  "item.hephaestus.seared_small_bricks_slab": "Laje de Tijolos Chamuscados Pequenos",
+  "item.hephaestus.seared_small_bricks_stairs": "Escadas de Tijolos Chamuscados Pequenos",
+  "item.hephaestus.seared_small_bricks_wall": "Muro de Tijolos Chamuscados Pequenos",
+
+  "item.hephaestus.seared_square_bricks": "Tijolos Chamuscados Quadrados",
+  "item.hephaestus.seared_square_bricks_slab": "Laje de Tijolos Chamuscados Quadrados",
+  "item.hephaestus.seared_square_bricks_stairs": "Escadas de Tijolos Chamuscados Quadrados",
+  "item.hephaestus.seared_square_bricks_wall": "Muro de Tijolos Chamuscados Quadrados",
+
+  "item.hephaestus.seared_tile": "Azulejos Chamuscados",
+  "item.hephaestus.seared_tile_slab": "Laje de Azulejos Chamuscados",
+  "item.hephaestus.seared_tile_stairs": "Escadas de Azulejos Chamuscados",
+  "item.hephaestus.seared_tile_wall": "Muro de Azulejos Chamuscados",
+
+  "item.hephaestus.seared_ladder": "Escada Chamuscada",
+  "item.hephaestus.seared_glass": "Vidro Chamuscado",
+  "item.hephaestus.seared_tinted_glass": "Vidro Chamuscado Tingido",
+
+  "item.hephaestus.clear_glass": "Vidro Transparente",
+  "item.hephaestus.clear_tinted_glass": "Vidro Transparente Tingido",
+  "item.hephaestus.clear_stained_glass": "Vidro Transparente Colorido",
+
+  "item.hephaestus.seared_melter": "Derretedor Chamuscado",
+  "item.hephaestus.seared_heater": "Aquecedor Chamuscado",
+  "item.hephaestus.seared_table": "Mesa de Fundição Chamuscada",
+  "item.hephaestus.seared_basin": "Bacia de Fundição Chamuscada",
+  "item.hephaestus.seared_faucet": "Torneira Chamuscada",
+  "item.hephaestus.seared_channel": "Canal Chamuscado",
+
+  "item.hephaestus.seared_fuel_tank": "Tanque de Combustível Chamuscado",
+  "item.hephaestus.seared_fuel_gauge": "Medidor de Combustível Chamuscado",
+  "item.hephaestus.seared_ingot_tank": "Tanque de Lingotes Chamuscado",
+  "item.hephaestus.seared_ingot_gauge": "Medidor de Lingotes Chamuscado",
+  "item.hephaestus.seared_casting_tank": "Tanque de Fundição Chamuscado",
+  "item.hephaestus.seared_lamp": "Lâmpada Chamuscada",
+
+  "item.hephaestus.smeltery_controller": "Controlador da Fundição",
+  "item.hephaestus.seared_drain": "Dreno Chamuscado",
+  "item.hephaestus.seared_chute": "Calha Chamuscada",
+  "item.hephaestus.seared_duct": "Duto Chamuscado",
+
   "item.hephaestus.blank_cast": "Molde Vazio",
   "item.hephaestus.ingot_cast": "Molde de Lingote",
   "item.hephaestus.nugget_cast": "Molde de Pepita",
@@ -110,6 +197,9 @@
   "item.hephaestus.steel_powder": "Pó de Aço",
   "item.hephaestus.steel_nugget": "Pepita de Aço",
   "block.hephaestus.steel_block": "Bloco de Aço",
+  "item.hephaestus.steel_block": "Bloco de Aço",
+  "item.hephaestus.cobalt_block": "Bloco de Cobalto",
+  "item.hephaestus.raw_cobalt_block": "Bloco de Cobalto Bruto",
 
   "gui.hephaestus.conflict.title": "§c[HEPHAESTUS] Conflito Crítico de Mods!",
   "gui.hephaestus.conflict.description": "O mod Hephaestus detectou que tanto 'alltheores' quanto 'ftbmaterials' estão instalados.\n\nEstes dois mods causam duplicação e não podem ser usados juntos.\nPor favor, feche o jogo e remova um deles da sua pasta 'mods'.\n\n(Clique em qualquer botão abaixo para sair do jogo)",

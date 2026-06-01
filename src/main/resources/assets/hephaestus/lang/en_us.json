@@ -89,6 +89,93 @@
   "block.hephaestus.seared_chute": "Seared Chute",
   "block.hephaestus.seared_duct": "Seared Duct",
 
+  "item.hephaestus.seared_stone": "Seared Stone",
+  "item.hephaestus.seared_stone_slab": "Seared Stone Slab",
+  "item.hephaestus.seared_stone_stairs": "Seared Stone Stairs",
+  "item.hephaestus.seared_stone_wall": "Seared Stone Wall",
+
+  "item.hephaestus.seared_cobble": "Seared Cobblestone",
+  "item.hephaestus.seared_cobble_slab": "Seared Cobblestone Slab",
+  "item.hephaestus.seared_cobble_stairs": "Seared Cobblestone Stairs",
+  "item.hephaestus.seared_cobble_wall": "Seared Cobblestone Wall",
+
+  "item.hephaestus.seared_paver": "Seared Paver",
+  "item.hephaestus.seared_paver_slab": "Seared Paver Slab",
+  "item.hephaestus.seared_paver_stairs": "Seared Paver Stairs",
+  "item.hephaestus.seared_paver_wall": "Seared Paver Wall",
+
+  "item.hephaestus.seared_bricks": "Seared Bricks",
+  "item.hephaestus.seared_bricks_slab": "Seared Brick Slab",
+  "item.hephaestus.seared_bricks_stairs": "Seared Brick Stairs",
+  "item.hephaestus.seared_bricks_wall": "Seared Brick Wall",
+
+  "item.hephaestus.seared_cracked_bricks": "Cracked Seared Bricks",
+  "item.hephaestus.seared_cracked_bricks_slab": "Cracked Seared Brick Slab",
+  "item.hephaestus.seared_cracked_bricks_stairs": "Cracked Seared Brick Stairs",
+  "item.hephaestus.seared_cracked_bricks_wall": "Cracked Seared Brick Wall",
+
+  "item.hephaestus.seared_fancy_bricks": "Fancy Seared Bricks",
+  "item.hephaestus.seared_fancy_bricks_slab": "Fancy Seared Brick Slab",
+  "item.hephaestus.seared_fancy_bricks_stairs": "Fancy Seared Brick Stairs",
+  "item.hephaestus.seared_fancy_bricks_wall": "Fancy Seared Brick Wall",
+
+  "item.hephaestus.seared_triangle_bricks": "Triangle Seared Bricks",
+  "item.hephaestus.seared_triangle_bricks_slab": "Triangle Seared Brick Slab",
+  "item.hephaestus.seared_triangle_bricks_stairs": "Triangle Seared Brick Stairs",
+  "item.hephaestus.seared_triangle_bricks_wall": "Triangle Seared Brick Wall",
+
+  "item.hephaestus.seared_creeper": "Seared Creeper",
+  "item.hephaestus.seared_creeper_slab": "Seared Creeper Slab",
+  "item.hephaestus.seared_creeper_stairs": "Seared Creeper Stairs",
+  "item.hephaestus.seared_creeper_wall": "Seared Creeper Wall",
+
+  "item.hephaestus.seared_road": "Seared Road",
+  "item.hephaestus.seared_road_slab": "Seared Road Slab",
+  "item.hephaestus.seared_road_stairs": "Seared Road Stairs",
+  "item.hephaestus.seared_road_wall": "Seared Road Wall",
+
+  "item.hephaestus.seared_small_bricks": "Small Seared Bricks",
+  "item.hephaestus.seared_small_bricks_slab": "Small Seared Brick Slab",
+  "item.hephaestus.seared_small_bricks_stairs": "Small Seared Brick Stairs",
+  "item.hephaestus.seared_small_bricks_wall": "Small Seared Brick Wall",
+
+  "item.hephaestus.seared_square_bricks": "Square Seared Bricks",
+  "item.hephaestus.seared_square_bricks_slab": "Square Seared Brick Slab",
+  "item.hephaestus.seared_square_bricks_stairs": "Square Seared Brick Stairs",
+  "item.hephaestus.seared_square_bricks_wall": "Square Seared Brick Wall",
+
+  "item.hephaestus.seared_tile": "Seared Tiles",
+  "item.hephaestus.seared_tile_slab": "Seared Tile Slab",
+  "item.hephaestus.seared_tile_stairs": "Seared Tile Stairs",
+  "item.hephaestus.seared_tile_wall": "Seared Tile Wall",
+
+  "item.hephaestus.seared_ladder": "Seared Ladder",
+  "item.hephaestus.seared_glass": "Seared Glass",
+  "item.hephaestus.seared_tinted_glass": "Tinted Seared Glass",
+
+  "item.hephaestus.clear_glass": "Clear Glass",
+  "item.hephaestus.clear_tinted_glass": "Tinted Clear Glass",
+  "item.hephaestus.clear_stained_glass": "Clear Stained Glass",
+
+  "item.hephaestus.seared_melter": "Seared Melter",
+  "item.hephaestus.seared_heater": "Seared Heater",
+  "item.hephaestus.seared_table": "Seared Casting Table",
+  "item.hephaestus.seared_basin": "Seared Casting Basin",
+  "item.hephaestus.seared_faucet": "Seared Faucet",
+  "item.hephaestus.seared_channel": "Seared Channel",
+
+  "item.hephaestus.seared_fuel_tank": "Seared Fuel Tank",
+  "item.hephaestus.seared_fuel_gauge": "Seared Fuel Gauge",
+  "item.hephaestus.seared_ingot_tank": "Seared Ingot Tank",
+  "item.hephaestus.seared_ingot_gauge": "Seared Ingot Gauge",
+  "item.hephaestus.seared_casting_tank": "Seared Casting Tank",
+  "item.hephaestus.seared_lamp": "Seared Lamp",
+
+  "item.hephaestus.smeltery_controller": "Smeltery Controller",
+  "item.hephaestus.seared_drain": "Seared Drain",
+  "item.hephaestus.seared_chute": "Seared Chute",
+  "item.hephaestus.seared_duct": "Seared Duct",
+
   "item.hephaestus.blank_cast": "Blank Cast",
   "item.hephaestus.ingot_cast": "Ingot Cast",
   "item.hephaestus.nugget_cast": "Nugget Cast",
@@ -110,6 +197,9 @@
   "block.hephaestus.raw_cobalt_block": "Block of Raw Cobalt",
   "item.hephaestus.steel_nugget": "Steel Nugget",
   "block.hephaestus.steel_block": "Block of Steel",
+  "item.hephaestus.steel_block": "Block of Steel",
+  "item.hephaestus.cobalt_block": "Block of Cobalt",
+  "item.hephaestus.raw_cobalt_block": "Block of Raw Cobalt",
 
   "gui.hephaestus.conflict.title": "§c[HEPHAESTUS] Critical Mod Conflict!",
   "gui.hephaestus.conflict.description": "The Hephaestus mod detected that both 'alltheores' and 'ftbmaterials' are installed.\n\nThese two mods cause duplication and cannot be used together.\nPlease close the game and remove one of them from your 'mods' folder.\n\n(Click any button below to exit the game)",

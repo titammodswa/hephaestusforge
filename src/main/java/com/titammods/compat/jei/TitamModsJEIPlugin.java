@@ -28,6 +28,9 @@ public class TitamModsJEIPlugin implements IModPlugin {
     public static final RecipeType<ModRecipes.CastingTableRecipe> CASTING_TABLE_TYPE =
             RecipeType.create(TitamMods.MODID, "casting_table", ModRecipes.CastingTableRecipe.class);
 
+    @SuppressWarnings("removal")
+    public static final RecipeType<ModRecipes.CastingBasinRecipe> CASTING_BASIN_TYPE =
+            RecipeType.create(TitamMods.MODID, "casting_basin", ModRecipes.CastingBasinRecipe.class);
 
     @Override
     public Identifier getPluginUid() {
@@ -39,7 +42,8 @@ public class TitamModsJEIPlugin implements IModPlugin {
         var gui = registration.getJeiHelpers().getGuiHelper();
         registration.addRecipeCategories(
                 new MelterCategory(gui),
-                new CastingTableCategory(gui)
+                new CastingTableCategory(gui),
+                new CastingBasinCategory(gui)
         );
     }
 
@@ -47,7 +51,6 @@ public class TitamModsJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
         if (server == null) return;
-
         RecipeManager rm = server.getRecipeManager();
 
         List<ModRecipes.MeltingRecipe> melting = rm.recipeMap()
@@ -59,6 +62,11 @@ public class TitamModsJEIPlugin implements IModPlugin {
                 .byType(ModRecipes.CASTING_TABLE_TYPE.get())
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(CASTING_TABLE_TYPE, table);
+
+        List<ModRecipes.CastingBasinRecipe> basin = rm.recipeMap()
+                .byType(ModRecipes.CASTING_BASIN_TYPE.get())
+                .stream().map(RecipeHolder::value).toList();
+        registration.addRecipes(CASTING_BASIN_TYPE, basin);
     }
 
     @SuppressWarnings("removal")
@@ -70,5 +78,8 @@ public class TitamModsJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(
                 new net.minecraft.world.item.ItemStack(ModBlocks.SEARED_TABLE.get()),
                 CASTING_TABLE_TYPE);
+        registration.addRecipeCatalyst(
+                new net.minecraft.world.item.ItemStack(ModBlocks.SEARED_BASIN.get()),
+                CASTING_BASIN_TYPE);
     }
 }
