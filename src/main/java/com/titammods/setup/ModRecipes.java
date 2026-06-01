@@ -40,6 +40,15 @@ public class ModRecipes {
             SERIALIZERS.register("melting",
                     () -> new RecipeSerializer<>(MeltingRecipe.CODEC, MeltingRecipe.STREAM_CODEC));
 
+    public static final Supplier<RecipeType<CastingBasinRecipe>> CASTING_BASIN_TYPE =
+            TYPES.register("casting_basin", () -> new RecipeType<CastingBasinRecipe>() {
+                @Override public String toString() { return "casting_basin"; }
+            });
+
+    public static final Supplier<RecipeSerializer<CastingBasinRecipe>> CASTING_BASIN_SERIALIZER =
+            SERIALIZERS.register("casting_basin",
+                    () -> new RecipeSerializer<>(CastingBasinRecipe.CODEC, CastingBasinRecipe.STREAM_CODEC));
+
     public record MeltingRecipe(
             Ingredient input,
             Identifier resultId,
@@ -98,6 +107,73 @@ public class ModRecipes {
         @Override public ItemStack assemble(SingleRecipeInput inv) { return ItemStack.EMPTY; }
         @Override public RecipeSerializer<MeltingRecipe> getSerializer() { return MELTING_SERIALIZER.get(); }
         @Override public RecipeType<MeltingRecipe> getType() { return MELTING_TYPE.get(); }
+        @Override public RecipeBookCategory recipeBookCategory() { return HEPHAESTUS_CATEGORY.get(); }
+        @Override public String group() { return ""; }
+        @Override public boolean showNotification() { return false; }
+        @Override public List<net.minecraft.world.item.crafting.display.RecipeDisplay> display() { return List.of(); }
+        private static final PlacementInfo PLACEMENT = PlacementInfo.createFromOptionals(List.of());
+        @Override public PlacementInfo placementInfo() { return PLACEMENT; }
+    }
+
+    public record CastingBasinRecipe(
+            Identifier fluidId,
+            int fluidAmount,
+            Identifier resultId,
+            int resultCount,
+            int coolingTime
+    ) implements Recipe<SingleRecipeInput> {
+
+        public FluidStack fluidStack() {
+            Fluid f = BuiltInRegistries.FLUID.getValue(fluidId);
+            return (f == null || f.isSame(Fluids.EMPTY)) ? FluidStack.EMPTY : new FluidStack(f, fluidAmount);
+        }
+
+        public ItemStack result() {
+            net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.getValue(resultId);
+            return (item == null || item == net.minecraft.world.item.Items.AIR)
+                    ? ItemStack.EMPTY : new ItemStack(item, resultCount);
+        }
+
+        private record FluidRef(Identifier id, int amount) {
+            static final Codec<FluidRef> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                    Identifier.CODEC.fieldOf("id").forGetter(FluidRef::id),
+                    Codec.INT.fieldOf("amount").forGetter(FluidRef::amount)
+            ).apply(inst, FluidRef::new));
+        }
+
+        private record ItemRef(Identifier id, int count) {
+            static final Codec<ItemRef> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                    Identifier.CODEC.fieldOf("id").forGetter(ItemRef::id),
+                    Codec.INT.optionalFieldOf("count", 1).forGetter(ItemRef::count)
+            ).apply(inst, ItemRef::new));
+        }
+
+        public static final MapCodec<CastingBasinRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+                FluidRef.CODEC.fieldOf("fluid").forGetter(r -> new FluidRef(r.fluidId(), r.fluidAmount())),
+                ItemRef.CODEC.fieldOf("result").forGetter(r -> new ItemRef(r.resultId(), r.resultCount())),
+                Codec.INT.fieldOf("cooling_time").forGetter(CastingBasinRecipe::coolingTime)
+        ).apply(inst, (fluid, result, time) ->
+                new CastingBasinRecipe(fluid.id(), fluid.amount(), result.id(), result.count(), time)));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, CastingBasinRecipe> STREAM_CODEC =
+                StreamCodec.of(
+                        (buf, r) -> {
+                            buf.writeUtf(r.fluidId().getNamespace()); buf.writeUtf(r.fluidId().getPath());
+                            buf.writeVarInt(r.fluidAmount());
+                            buf.writeUtf(r.resultId().getNamespace()); buf.writeUtf(r.resultId().getPath());
+                            buf.writeVarInt(r.resultCount());
+                            buf.writeVarInt(r.coolingTime());
+                        },
+                        buf -> new CastingBasinRecipe(
+                                Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()), buf.readVarInt(),
+                                Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()), buf.readVarInt(),
+                                buf.readVarInt())
+                );
+
+        @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
+        @Override public ItemStack assemble(SingleRecipeInput inv) { return result(); }
+        @Override public RecipeSerializer<CastingBasinRecipe> getSerializer() { return CASTING_BASIN_SERIALIZER.get(); }
+        @Override public RecipeType<CastingBasinRecipe> getType() { return CASTING_BASIN_TYPE.get(); }
         @Override public RecipeBookCategory recipeBookCategory() { return HEPHAESTUS_CATEGORY.get(); }
         @Override public String group() { return ""; }
         @Override public boolean showNotification() { return false; }

@@ -104,6 +104,9 @@ public class FaucetBlockEntity extends BlockEntity {
         if (be instanceof TableBlockEntity table) {
             return table.externalFluidHandler;
         }
+        if (be instanceof com.titammods.common.blockentities.BasinBlockEntity basin) {
+            return basin.externalFluidHandler;
+        }
         return null;
     }
 

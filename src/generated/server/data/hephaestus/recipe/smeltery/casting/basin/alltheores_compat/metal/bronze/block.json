@@ -1,0 +1,11 @@
+{
+  "type": "hephaestus:casting_basin",
+  "cooling_time": 200,
+  "fluid": {
+    "amount": 900,
+    "id": "hephaestus:molten_bronze"
+  },
+  "result": {
+    "id": "alltheores:bronze_block"
+  }
+}

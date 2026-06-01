@@ -5,6 +5,7 @@ import com.titammods.common.blockentities.FaucetBlockEntity;
 import com.titammods.common.blockentities.MelterBlockEntity;
 import com.titammods.common.blockentities.SearedTankBlockEntity;
 import com.titammods.common.blockentities.TableBlockEntity;
+import com.titammods.common.blockentities.BasinBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -46,5 +47,10 @@ public class ModBlockEntities {
                             TableBlockEntity::new,
                             ModBlocks.SEARED_TABLE.get()
                     )
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BasinBlockEntity>> BASIN =
+            BLOCK_ENTITY_TYPES.register("basin", () ->
+                    new BlockEntityType<>(BasinBlockEntity::new, ModBlocks.SEARED_BASIN.get())
             );
 }

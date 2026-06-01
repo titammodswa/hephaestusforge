@@ -58,6 +58,14 @@ public class ModModelProvider implements DataProvider {
             "molten_blaze",    "molten_blaze"
     );
 
+    private static final String[] COMPLEX_BLOCKS = {
+            "seared_melter",
+            "seared_table",
+            "seared_basin",
+            "seared_faucet",
+            "smeltery_controller",
+    };
+
     private final PackOutput.PathProvider modelBlockPath;
     private final PackOutput.PathProvider modelItemPath;
     private final PackOutput.PathProvider blockstatePath;
@@ -85,6 +93,10 @@ public class ModModelProvider implements DataProvider {
             Identifier id = id(name);
             futures.add(save(cache, tankBlockstate(modelPath),        blockstatePath.json(id)));
             futures.add(save(cache, tankClientItem(name, modelPath),  itemPath.json(id)));
+        }
+
+        for (String name : COMPLEX_BLOCKS) {
+            futures.add(save(cache, complexBlockClientItem(name), itemPath.json(id(name))));
         }
 
         for (var e : BLOCK_TEX.entrySet()) {
@@ -139,6 +151,15 @@ public class ModModelProvider implements DataProvider {
         dir.addProperty("prefix", "fluid/");
         sources.add(dir);
         j.add("sources", sources);
+        return j;
+    }
+
+    private JsonObject complexBlockClientItem(String name) {
+        JsonObject j = new JsonObject();
+        JsonObject m = new JsonObject();
+        m.addProperty("type",  "minecraft:model");
+        m.addProperty("model", TitamMods.MODID + ":item/" + name);
+        j.add("model", m);
         return j;
     }
 

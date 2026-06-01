@@ -196,6 +196,18 @@ public class ModRecipeProvider extends RecipeProvider {
                 recipe, null);
     }
 
+    private void addCastingBasin(net.minecraft.world.level.material.Fluid fluid, int fluidAmount,
+                                 net.minecraft.world.level.ItemLike resultItem, int time,
+                                 String savePath) {
+        Identifier resultId = BuiltInRegistries.ITEM.getKey(resultItem.asItem());
+        ModRecipes.CastingBasinRecipe recipe = new ModRecipes.CastingBasinRecipe(
+                fluidId(fluid), fluidAmount, resultId, 1, time);
+        this.output.accept(
+                net.minecraft.resources.ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/basin/" + savePath)),
+                recipe, null);
+    }
+
     private void registerMetal(Fluid fluid, int temp, String name,
                                ItemLike block, ItemLike ingot, ItemLike raw, ItemLike nugget,
                                ItemLike dust, ItemLike plate, ItemLike gear, ItemLike rod,
@@ -217,6 +229,7 @@ public class ModRecipeProvider extends RecipeProvider {
         if (plate  != null) addCastingTable(fluid,  90, ModItems.PLATE_CAST.get(),  false, plate,  bt,      prefix + "metal/" + name + "/plate_cast");
         if (gear   != null) addCastingTable(fluid, 360, ModItems.GEAR_CAST.get(),   false, gear,   bt * 2,  prefix + "metal/" + name + "/gear_cast");
         if (rod    != null) addCastingTable(fluid,  45, ModItems.ROD_CAST.get(),    false, rod,    bt / 2,  prefix + "metal/" + name + "/rod_cast");
+        if (block != null) addCastingBasin(fluid, 900, block, bt * 2, prefix + "metal/" + name + "/block");
     }
 
     private void registerGem(Fluid fluid, int temp, String name, String blockTag, String gemTag,
@@ -232,6 +245,7 @@ public class ModRecipeProvider extends RecipeProvider {
         else if (gem != null)
             addMeltingItem(gem, fluid, 100, temp, bt, "gem/" + name + "/gem", conditions);
         if (block != null) addCastingTable(fluid, 100, ModItems.GEM_CAST.get(), false, gem, bt, "gem/" + name + "/gem_cast");
+        if (block != null) addCastingBasin(fluid, 900, block, bt * 2, "gem/" + name + "/block");
     }
 
     private void registerExternalMetal(Fluid fluid, int temp, String name,

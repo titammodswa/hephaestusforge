@@ -5,6 +5,7 @@ import com.titammods.common.blocks.MelterBlock;
 import com.titammods.common.blocks.SearedTankBlock;
 import com.titammods.common.blocks.SearedFaucetBlock;
 import com.titammods.common.blocks.SearedTableBlock;
+import com.titammods.common.blocks.SearedBasinBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -64,10 +65,10 @@ public class ModBlocks {
                             .lightLevel(state -> state.getValue(MelterBlock.LIGHT))
                             .setId(ResourceKey.create(Registries.BLOCK, k))));
 
-    public static final DeferredBlock<Block> SMELTERY_CONTROLLER = registerBlock("smeltery_controller",
-            k -> new net.minecraft.world.level.block.Block(
-                    BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.STONE_BRICKS)
-                            .setId(ResourceKey.create(Registries.BLOCK, k))));
+//    public static final DeferredBlock<Block> SMELTERY_CONTROLLER = registerBlock("smeltery_controller",
+//            k -> new net.minecraft.world.level.block.Block(
+//                    BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.STONE_BRICKS)
+//                            .setId(ResourceKey.create(Registries.BLOCK, k))));
 
     public static final DeferredBlock<SearedFaucetBlock> SEARED_FAUCET = registerBlock("seared_faucet",
             k -> new SearedFaucetBlock(
@@ -79,6 +80,14 @@ public class ModBlocks {
 
     public static final DeferredBlock<SearedTableBlock> SEARED_TABLE = registerBlock("seared_table",
             k -> new SearedTableBlock(
+                    BlockBehaviour.Properties.of()
+                            .strength(3.0f, 15.0f)
+                            .requiresCorrectToolForDrops()
+                            .noOcclusion()
+                            .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<SearedBasinBlock> SEARED_BASIN = registerBlock("seared_basin",
+            k -> new SearedBasinBlock(
                     BlockBehaviour.Properties.of()
                             .strength(3.0f, 15.0f)
                             .requiresCorrectToolForDrops()

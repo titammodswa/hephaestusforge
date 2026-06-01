@@ -1,4 +1,32 @@
-// 26.1.2	2026-06-01T02:30:55.4092224	hephaestus recipes
+// 26.1.2	2026-06-01T03:04:48.2474535	hephaestus recipes
+851aa8b0b176501235b39b618a8a0fa6de66777d data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/aluminum/block.json
+1eb1a26936eba18ea7ebeb5ec03a23d1ad4fcb14 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/brass/block.json
+fb1d695f8576caea70fc25be7768fba8480abfb0 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/bronze/block.json
+e7e375438b8c6570ce291dc44bc68997eed7b91d data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/constantan/block.json
+caca2ab07f5c7902daa994898191f787c956de40 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/electrum/block.json
+74664833dfbe90b508d0fd31ac3ccd0442e067f1 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/enderium/block.json
+dd47ae32e6a9300e93e8d0a5ce653418a07969c1 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/invar/block.json
+f4ad3dbf84ce8e5dfce0fc55c82308b061fb4648 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/iridium/block.json
+e3d18991258ab22cc5cce1a0bbdb761f0aa6197c data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/lead/block.json
+7c6b9657e8062a70eb2a4eedb721398f9c4f588b data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/lumium/block.json
+d047dc3707b99dc2c76184c4f6de850b1c96938d data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/nickel/block.json
+162eab4a8dafbb7b183078999fd05bff5aaba9c5 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/osmium/block.json
+50736f8e752d5ead68ad0362ba949150bcbd86c9 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/platinum/block.json
+16580b27a71aa00eca361e955dcfa8ba5bda2dd4 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/signalum/block.json
+9120b3b77ff21d5edf1c3021056f911d636963d1 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/silver/block.json
+7a3e9ac6005a83f0858cb17931abbc539dd3d79b data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/tin/block.json
+875c42abd10063dbe55192c50265117e6d93d079 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/uranium/block.json
+5a53bb690e129f4a46e0b18e4c45ddf56b42caca data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/zinc/block.json
+7e3c57ed3722e884b152c309d73b5ff41f489dc4 data/hephaestus/recipe/smeltery/casting/basin/gem/amethyst/block.json
+4bf776dfdd4ba17fe0f8517920757d4221cf3a98 data/hephaestus/recipe/smeltery/casting/basin/gem/diamond/block.json
+348fce2142348b68ee5fd02790c9248512ffb5fc data/hephaestus/recipe/smeltery/casting/basin/gem/emerald/block.json
+d6795c774e98b936d2ba062d25c2a277551c49b0 data/hephaestus/recipe/smeltery/casting/basin/gem/quartz/block.json
+6933e16dad5f46aa09db28607f767f76f6041279 data/hephaestus/recipe/smeltery/casting/basin/metal/cobalt/block.json
+c5191341cd0bbb963f9ebd4e7b193db4fff3e8ca data/hephaestus/recipe/smeltery/casting/basin/metal/copper/block.json
+e6c54a0574028998edb3f769f80f85c2de20ced5 data/hephaestus/recipe/smeltery/casting/basin/metal/gold/block.json
+376e495152340ffda7701f3db2324738c6988a64 data/hephaestus/recipe/smeltery/casting/basin/metal/iron/block.json
+0123d7bc423ada3db4038470cef9d262b2eaf7e3 data/hephaestus/recipe/smeltery/casting/basin/metal/netherite/block.json
+5ce28b92ee4283a0908561604c1d6ff13a1c9b0c data/hephaestus/recipe/smeltery/casting/basin/metal/steel/block.json
 18cf71874374d8b01457a3cc259744427b4b6ddf data/hephaestus/recipe/smeltery/casting/casts/gear_cast.json
 897e19fc05dc9e76908053f86c9ef7ac0073f2c2 data/hephaestus/recipe/smeltery/casting/casts/gem_cast.json
 1c1f5493c12668aeacc0f1361f1b8ddbb643f8a2 data/hephaestus/recipe/smeltery/casting/casts/ingot_cast.json
