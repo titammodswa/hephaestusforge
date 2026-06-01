@@ -1,6 +1,7 @@
 package com.titammods.setup;
 
 import com.titammods.TitamMods;
+import com.titammods.common.blockentities.FaucetBlockEntity;
 import com.titammods.common.blockentities.MelterBlockEntity;
 import com.titammods.common.blockentities.SearedTankBlockEntity;
 import net.minecraft.core.registries.Registries;
@@ -27,6 +28,14 @@ public class ModBlockEntities {
                     new BlockEntityType<>(
                             MelterBlockEntity::new,
                             ModBlocks.SEARED_MELTER.get()
+                    )
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FaucetBlockEntity>> FAUCET =
+            BLOCK_ENTITY_TYPES.register("faucet", () ->
+                    new BlockEntityType<>(
+                            FaucetBlockEntity::new,
+                            ModBlocks.SEARED_FAUCET.get()
                     )
             );
 }

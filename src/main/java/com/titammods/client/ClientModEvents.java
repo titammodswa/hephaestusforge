@@ -13,6 +13,7 @@ import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import com.titammods.common.blockentities.render.MelterRenderer;
 import com.titammods.common.blockentities.render.SearedTankItemRenderer;
+import com.titammods.common.blockentities.render.FaucetRenderer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -75,6 +76,11 @@ public class ClientModEvents {
                 BlockEntityRenderers.register(
                         ModBlockEntities.MELTER.get(),
                         MelterRenderer::new)
+        );
+        event.enqueueWork(() ->
+                BlockEntityRenderers.register(
+                        ModBlockEntities.FAUCET.get(),
+                        FaucetRenderer::new)
         );
     }
 }
