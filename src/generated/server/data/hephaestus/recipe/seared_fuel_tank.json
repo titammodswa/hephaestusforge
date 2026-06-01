@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "hephaestus:seared_bricks",
+    "L": "minecraft:lava_bucket"
+  },
+  "pattern": [
+    "BBB",
+    "BLB",
+    "BBB"
+  ],
+  "result": {
+    "id": "hephaestus:seared_fuel_tank"
+  }
+}

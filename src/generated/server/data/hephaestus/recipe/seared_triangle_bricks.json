@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "hephaestus:seared_bricks",
+    "S": "hephaestus:seared_stone"
+  },
+  "pattern": [
+    "BS",
+    "SB"
+  ],
+  "result": {
+    "count": 4,
+    "id": "hephaestus:seared_triangle_bricks"
+  }
+}

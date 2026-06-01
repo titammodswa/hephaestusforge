@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "hephaestus:seared_bricks"
+  },
+  "pattern": [
+    "BBB",
+    "B B",
+    "B B"
+  ],
+  "result": {
+    "id": "hephaestus:seared_table"
+  }
+}

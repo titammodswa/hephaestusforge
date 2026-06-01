@@ -1,4 +1,4 @@
-// 26.1.2	2026-06-01T03:04:48.2545579	Loot Tables
+// 26.1.2	2026-06-01T14:52:41.9396825	Loot Tables
 55af5a2147a380f67192e8255f4d2fb7b3d39ac3 data/hephaestus/loot_table/blocks/cobalt_block.json
 20615703ad5b62ee58b18a8638ef3cd6f0d0ac40 data/hephaestus/loot_table/blocks/raw_cobalt_block.json
 c604b270ec9a93f4c564d19e6f729a680a7fb326 data/hephaestus/loot_table/blocks/seared_basin.json
@@ -19,5 +19,4 @@ d14de7982023d9a64fa4161bc1c87ab5017a6c69 data/hephaestus/loot_table/blocks/seare
 3ba329f6a3032ef3d6967bc2779f7e624e58cfb5 data/hephaestus/loot_table/blocks/seared_table.json
 f914ee2809fe8365ab0d72e585a23d2e39dc76e2 data/hephaestus/loot_table/blocks/seared_tile.json
 1f5ba32b445c28a45c4f11854773a35fb2ae42dc data/hephaestus/loot_table/blocks/seared_triangle_bricks.json
-a44152c8d9dc44c812821168859d795e5856379c data/hephaestus/loot_table/blocks/smeltery_controller.json
 58d965889482572665b032dcbf3d9ebd777b1eb2 data/hephaestus/loot_table/blocks/steel_block.json

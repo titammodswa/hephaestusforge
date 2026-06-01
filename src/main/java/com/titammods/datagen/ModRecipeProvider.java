@@ -20,6 +20,11 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class ModRecipeProvider extends RecipeProvider {
 
@@ -57,6 +62,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
         registerAllTheOresCompat();
         registerFtbMaterialsCompat();
+        addVanillaRecipes();
 
         createCastRecipe("ingots",   ModItems.INGOT_CAST.get(),  "ingot_cast");
         createCastRecipe("nuggets",  ModItems.NUGGET_CAST.get(), "nugget_cast");
@@ -67,6 +73,142 @@ public class ModRecipeProvider extends RecipeProvider {
 
     }
 
+    private void addVanillaRecipes() {
+        var items = this.registries.lookupOrThrow(Registries.ITEM);
+
+        //Forge Brick
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModItems.FORGE_BRICK.get(), 16)
+                .pattern("CCS").pattern("GLS").pattern("GCC")
+                .define('G', Items.GRAVEL).define('C', Items.COAL)
+                .define('S', Items.SAND).define('L', Items.CLAY_BALL)
+                .unlockedBy("has_clay", this.has(Items.CLAY_BALL))
+                .save(this.output, rk("forge_brick"));
+
+        //Seared Bricks
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_BRICKS.get(), 4)
+                .pattern("BB").pattern("BB")
+                .define('B', ModItems.FORGE_BRICK.get())
+                .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
+                .save(this.output, rk("seared_bricks"));
+
+        //Seared Cobble
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_COBBLE.get(), 4)
+                .pattern("BS").pattern("SB")
+                .define('B', ModItems.FORGE_BRICK.get()).define('S', Items.COBBLESTONE)
+                .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
+                .save(this.output, rk("seared_cobble"));
+
+        //Seared Ingot Tank
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_INGOT_TANK.get())
+                .pattern("BBB").pattern("B B").pattern("BBB")
+                .define('B', ModBlocks.SEARED_BRICKS.get())
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_ingot_tank"));
+
+        //Seared Fuel Tank
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_FUEL_TANK.get())
+                .pattern("BBB").pattern("BLB").pattern("BBB")
+                .define('B', ModBlocks.SEARED_BRICKS.get()).define('L', Items.LAVA_BUCKET)
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_fuel_tank"));
+
+        //Seared Melter
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_MELTER.get())
+                .pattern("BTB").pattern("BFB").pattern("BSB")
+                .define('B', ModItems.FORGE_BRICK.get())
+                .define('T', ModBlocks.SEARED_INGOT_TANK.get())
+                .define('S', ModBlocks.SEARED_BRICKS.get())
+                .define('F', Items.BLAST_FURNACE)
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_melter"));
+
+        //Seared Faucet
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_FAUCET.get(), 2)
+                .pattern("B B").pattern(" C ")
+                .define('B', ModBlocks.SEARED_BRICKS.get()).define('C', Items.COPPER_INGOT)
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_faucet"));
+
+        //Seared Table
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_TABLE.get())
+                .pattern("BBB").pattern("B B").pattern("B B")
+                .define('B', ModBlocks.SEARED_BRICKS.get())
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_table"));
+
+        //Seared Basin
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_BASIN.get())
+                .pattern("B B").pattern("B B").pattern("BBB")
+                .define('B', ModBlocks.SEARED_BRICKS.get())
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_basin"));
+
+        //Decorativos
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_SMALL_BRICKS.get(), 4)
+                .pattern("BB").pattern("BB")
+                .define('B', ModBlocks.SEARED_BRICKS.get())
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_small_bricks"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_SQUARE_BRICKS.get(), 4)
+                .pattern("BB").pattern("BB")
+                .define('B', ModBlocks.SEARED_SMALL_BRICKS.get())
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_square_bricks"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_TILE.get(), 4)
+                .pattern("BB").pattern("BB")
+                .define('B', ModBlocks.SEARED_STONE.get())
+                .unlockedBy("has_seared_stone", this.has(ModBlocks.SEARED_STONE.get()))
+                .save(this.output, rk("seared_tile"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_FANCY_BRICKS.get(), 4)
+                .pattern("BB").pattern("BB")
+                .define('B', ModBlocks.SEARED_TILE.get())
+                .unlockedBy("has_seared_tile", this.has(ModBlocks.SEARED_TILE.get()))
+                .save(this.output, rk("seared_fancy_bricks"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_TRIANGLE_BRICKS.get(), 4)
+                .pattern("BS").pattern("SB")
+                .define('B', ModBlocks.SEARED_BRICKS.get()).define('S', ModBlocks.SEARED_STONE.get())
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_triangle_bricks"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_ROAD.get())
+                .pattern("B").pattern("B")
+                .define('B', ModBlocks.SEARED_BRICKS.get())
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_road"));
+
+        //Fornalha — SimpleCookingRecipeBuilder.smelting com CookingBookCategory ──
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ModBlocks.SEARED_COBBLE.get()),
+                        RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS,
+                        ModBlocks.SEARED_STONE.get(), 0.1f, 200)
+                .unlockedBy("has_seared_cobble", this.has(ModBlocks.SEARED_COBBLE.get()))
+                .save(this.output, rk("seared_stone_from_smelting"));
+
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ModBlocks.SEARED_STONE.get()),
+                        RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS,
+                        ModBlocks.SEARED_PAVER.get(), 0.1f, 200)
+                .unlockedBy("has_seared_stone", this.has(ModBlocks.SEARED_STONE.get()))
+                .save(this.output, rk("seared_paver_from_smelting"));
+
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ModBlocks.SEARED_BRICKS.get()),
+                        RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS,
+                        ModBlocks.SEARED_CRACKED_BRICKS.get(), 0.1f, 200)
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("seared_cracked_bricks_from_smelting"));
+
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ModBlocks.SEARED_SMALL_BRICKS.get()),
+                        RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS,
+                        ModBlocks.SEARED_CREEPER.get(), 0.1f, 200)
+                .unlockedBy("has_seared_small_bricks", this.has(ModBlocks.SEARED_SMALL_BRICKS.get()))
+                .save(this.output, rk("seared_creeper_from_smelting"));
+    }
 
     private void registerAllTheOresCompat() {
         ICondition cond = new ModLoadedCondition("alltheores");
@@ -113,6 +255,11 @@ public class ModRecipeProvider extends RecipeProvider {
         return temp <= 1000
                 ? Identifier.fromNamespaceAndPath("minecraft", "lava")
                 : Identifier.fromNamespaceAndPath("hephaestus", "molten_blaze");
+    }
+
+    private net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>> rk(String path) {
+        return ResourceKey.create(Registries.RECIPE,
+                Identifier.fromNamespaceAndPath(TitamMods.MODID, path));
     }
 
     private Identifier fluidId(Fluid fluid) {
