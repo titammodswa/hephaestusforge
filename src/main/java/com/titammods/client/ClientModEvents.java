@@ -29,7 +29,14 @@ public class ClientModEvents {
     private static final Material MOLTEN_METAL_FLOW =
             new Material(Identifier.fromNamespaceAndPath(TitamMods.MODID, "fluid/liquid/molten_metal_flow"));
     private static final FluidModel.Unbaked MOLTEN_METAL_MODEL =
-            new FluidModel.Unbaked(MOLTEN_METAL_STILL, MOLTEN_METAL_FLOW, null, null);
+            new FluidModel.Unbaked(MOLTEN_METAL_STILL, MOLTEN_METAL_FLOW, null,
+                    fluid -> {
+                        net.neoforged.neoforge.fluids.FluidType ft = fluid.getFluidType();
+                        if (ft instanceof com.titammods.registry.fluids.MoltenFluidType mft) {
+                            return mft.tintColor;
+                        }
+                        return -1;
+                    });
 
     public static void register(IEventBus modEventBus) {
         modEventBus.addListener(ClientModEvents::onRegisterFluidModels);
