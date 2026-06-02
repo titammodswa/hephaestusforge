@@ -34,29 +34,32 @@ public class ModFluids {
 
     public static class MoltenFluid {
 
-        public final DeferredHolder<FluidType, FluidType> type;
+        public final DeferredHolder<FluidType, com.titammods.registry.fluids.MoltenFluidType> type;
         public final DeferredHolder<Fluid, MoltenSource>  source;
         public final DeferredHolder<Fluid, MoltenFlowing> flowing;
         public final DeferredBlock<LiquidBlock>            block;
         public final DeferredItem<BucketItem>              bucket;
 
-        public MoltenFluid(String name) {
+        public MoltenFluid(String name, int color) {
             final MoltenFluid self = this;
 
-            type = FLUID_TYPES.register(name, () -> new FluidType(
-                    FluidType.Properties.create()
-                            .descriptionId("fluid." + TitamMods.MODID + "." + name)
-                            .fallDistanceModifier(0F)
-                            .canExtinguish(false)
-                            .canConvertToSource(false)
-                            .supportsBoating(false)
-                            .sound(SoundActions.BUCKET_FILL,  SoundEvents.BUCKET_FILL_LAVA)
-                            .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
-                            .temperature(1300)
-                            .density(3000)
-                            .viscosity(6000)
-                            .lightLevel(15)
-            ));
+            type = FLUID_TYPES.register(name, () ->
+                    new com.titammods.registry.fluids.MoltenFluidType(
+                            FluidType.Properties.create()
+                                    .descriptionId("fluid." + TitamMods.MODID + "." + name)
+                                    .fallDistanceModifier(0F)
+                                    .canExtinguish(false)
+                                    .canConvertToSource(false)
+                                    .supportsBoating(false)
+                                    .sound(SoundActions.BUCKET_FILL,  SoundEvents.BUCKET_FILL_LAVA)
+                                    .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
+                                    .temperature(1300)
+                                    .density(3000)
+                                    .viscosity(6000)
+                                    .lightLevel(15),
+                            color
+                    )
+            );
 
             source  = FLUIDS.register(name,             () -> new MoltenSource(self));
             flowing = FLUIDS.register(name + "_flowing", () -> new MoltenFlowing(self));
@@ -90,7 +93,7 @@ public class ModFluids {
         }
 
         private abstract class MoltenBase extends LavaFluid {
-            @Override public FluidType getFluidType() { return type.get(); }
+            @Override public com.titammods.registry.fluids.MoltenFluidType getFluidType() { return type.get(); }
             @Override public Fluid getFlowing()       { return flowing.get(); }
             @Override public Fluid getSource()        { return source.get(); }
             @Override public boolean isSame(Fluid f) {
@@ -120,10 +123,10 @@ public class ModFluids {
         }
     }
 
-    public static final MoltenFluid MOLTEN_COBALT   = new MoltenFluid("molten_cobalt");
-    public static final MoltenFluid MOLTEN_QUARTZ   = new MoltenFluid("molten_quartz");
-    public static final MoltenFluid MOLTEN_DIAMOND  = new MoltenFluid("molten_diamond");
-    public static final MoltenFluid MOLTEN_EMERALD  = new MoltenFluid("molten_emerald");
-    public static final MoltenFluid MOLTEN_AMETHYST = new MoltenFluid("molten_amethyst");
-    public static final MoltenFluid MOLTEN_BLAZE    = new MoltenFluid("molten_blaze");
+    public static final MoltenFluid MOLTEN_COBALT   = new MoltenFluid("molten_cobalt",   0xFF7E8BC4);
+    public static final MoltenFluid MOLTEN_QUARTZ   = new MoltenFluid("molten_quartz",   0xFFE8DFD0);
+    public static final MoltenFluid MOLTEN_DIAMOND  = new MoltenFluid("molten_diamond",  0xFF4AEEEE);
+    public static final MoltenFluid MOLTEN_EMERALD  = new MoltenFluid("molten_emerald",  0xFF4AEE72);
+    public static final MoltenFluid MOLTEN_AMETHYST = new MoltenFluid("molten_amethyst", 0xFFB04AEE);
+    public static final MoltenFluid MOLTEN_BLAZE    = new MoltenFluid("molten_blaze",    0xFFFF8C00);
 }

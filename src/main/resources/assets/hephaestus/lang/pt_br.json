@@ -333,5 +333,15 @@
   "gui.hephaestus.melting.no_fuel": "Sem combustivel",
   "gui.hephaestus.melting.no_tank": "Sem tanque instalado",
   "gui.hephaestus.alloying": "Alloying",
-  "gui.hephaestus.temperature": "Calor Necessário: %s°C"
+  "gui.hephaestus.unit.blocks": "%s Blocos",
+  "gui.hephaestus.unit.ingots": "%s Barras",
+  "gui.hephaestus.unit.nuggets": "%s Pepitas",
+  "gui.hephaestus.fluid_amount": "%s / %s mB",
+  "gui.hephaestus.fluid_mb": "%s mB",
+  "gui.hephaestus.tank_capacity": "Capacidade: %s mB",
+  "gui.hephaestus.time_seconds": "%ss",
+  "gui.hephaestus.temperature_value": "%s°C",
+  "gui.hephaestus.temperature": "Temperatura: %s°C",
+  "gui.hephaestus.cast_consumed": "Molde Consumido",
+  "gui.hephaestus.cast_reusable": "Molde Reutilizável"
 }

@@ -12,6 +12,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -40,7 +42,6 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        // Fundo principal
         blit(graphics, x, y, 0, 0, imageWidth, imageHeight);
 
         if (getMenu().isBurning()) {
@@ -52,7 +53,6 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
             BlockEntity below = minecraft.level.getBlockEntity(
                     getMenu().getBlockEntity().getBlockPos().below());
             if (below instanceof SearedTankBlockEntity fuelBE) {
-                // Overlay do tanque (borda)
                 blit(graphics, x + 152, y + 31, 194, 52, 14, 38);
                 FluidStack fuelFluid = fuelBE.getFluidTank().getFluid();
                 if (!fuelFluid.isEmpty()) {
@@ -114,19 +114,19 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
                 int mb      = amount % 10;
 
                 StringBuilder sb = new StringBuilder();
-                if (blocks  > 0) sb.append(blocks).append(" Blocos ");
-                if (ingots  > 0) sb.append(ingots).append(" Barras ");
-                if (nuggets > 0) sb.append(nuggets).append(" Pepitas ");
+                if (blocks  > 0) sb.append(blocks).append(" ").append(Component.translatable("gui.hephaestus.unit.blocks").getString()).append(" ");
+                if (ingots  > 0) sb.append(ingots).append(" ").append(Component.translatable("gui.hephaestus.unit.ingots").getString()).append(" ");
+                if (nuggets > 0) sb.append(nuggets).append(" ").append(Component.translatable("gui.hephaestus.unit.nuggets").getString()).append(" ");
                 if (mb > 0 || sb.isEmpty()) sb.append(mb).append(" mB");
 
                 List<Component> tooltip = new ArrayList<>();
                 tooltip.add(fluid.getHoverName());
                 tooltip.add(Component.literal(sb.toString().trim()).withStyle(ChatFormatting.GRAY));
-                tooltip.add(Component.literal(amount + " / " + cap + " mB").withStyle(ChatFormatting.DARK_GRAY));
+                tooltip.add(Component.translatable("gui.hephaestus.fluid_amount", amount, cap).withStyle(ChatFormatting.DARK_GRAY));
                 graphics.setComponentTooltipForNextFrame(this.font, tooltip, mouseX, mouseY);
             } else {
                 graphics.setComponentTooltipForNextFrame(this.font,
-                        List.of(Component.literal("Capacidade: 2700 mB").withStyle(ChatFormatting.GRAY)),
+                        List.of(Component.translatable("gui.hephaestus.tank_capacity", getMenu().getBlockEntity().tank.getCapacity()).withStyle(ChatFormatting.GRAY)),
                         mouseX, mouseY);
             }
         }
@@ -138,19 +138,51 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
 
     private void drawFluidFill(GuiGraphicsExtractor graphics, int x, int y, int w, int h, FluidStack fluid) {
         if (fluid.isEmpty() || w <= 0 || h <= 0) return;
-        int color;
         try {
             FluidState fs = fluid.getFluid().defaultFluidState();
-            var model  = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fs);
-            var tint   = model.fluidTintSource();
-            if (tint != null) {
-                int t = tint.colorAsStack(fluid);
-                int a = (t >> 24 & 0xFF); if (a == 0) a = 210;
-                color = (a << 24) | (t & 0x00FFFFFF);
+            var fluidModel = Minecraft.getInstance().getModelManager()
+                    .getFluidStateModelSet().get(fs);
+
+            TextureAtlasSprite sprite = fluidModel.stillMaterial().sprite();
+
+            var tintSrc = fluidModel.fluidTintSource();
+            int r, g, b, a;
+            if (tintSrc != null) {
+                int color = tintSrc.colorAsStack(fluid);
+                a = (color >> 24 & 0xFF); if (a == 0) a = 210;
+                r = (color >> 16) & 0xFF;
+                g = (color >>  8) & 0xFF;
+                b =  color        & 0xFF;
+            } else if (fluid.getFluidType() instanceof com.titammods.registry.fluids.MoltenFluidType mft) {
+                int color = mft.tintColor;
+                a = (color >> 24 & 0xFF); if (a == 0) a = 210;
+                r = (color >> 16) & 0xFF;
+                g = (color >>  8) & 0xFF;
+                b =  color        & 0xFF;
+            } else if (fluid.is(net.minecraft.tags.FluidTags.LAVA)) {
+                r = 0xFF; g = 0x66; b = 0x00; a = 210;
             } else {
-                color = fluid.is(net.minecraft.tags.FluidTags.LAVA) ? 0xD2FF6600 : 0xD23399FF;
+                r = 0xAA; g = 0xAA; b = 0xAA; a = 210;
             }
-        } catch (Exception e) { color = 0xD23399FF; }
-        graphics.fill(x, y, x + w, y + h, color);
+
+            int argb = (a << 24) | (r << 16) | (g << 8) | b;
+            int texW = Math.round(16f / (sprite.getU1() - sprite.getU0()));
+            int texH = Math.round(16f / (sprite.getV1() - sprite.getV0()));
+            float uPx = sprite.getU0() * texW;
+            float vPx = sprite.getV0() * texH;
+            graphics.enableScissor(x, y, x + w, y + h);
+            for (int ty = y; ty < y + h; ty += 16) {
+                for (int tx = x; tx < x + w; tx += 16) {
+                    graphics.blit(
+                            net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
+                            sprite.atlasLocation(),
+                            tx, ty, uPx, vPx, 16, 16, texW, texH, argb
+                    );
+                }
+            }
+            graphics.disableScissor();
+        } catch (Exception e) {
+            graphics.fill(x, y, x + w, y + h, 0xD23399FF);
+        }
     }
 }

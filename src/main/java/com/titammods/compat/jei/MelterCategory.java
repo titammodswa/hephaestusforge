@@ -85,7 +85,7 @@ public class MelterCategory implements IRecipeCategory<ModRecipes.MeltingRecipe>
                 .setOverlay(tankOverlay, 0, 0)
                 .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.output())
                 .addRichTooltipCallback((view, tooltip) -> tooltip.add(
-                        Component.literal(recipe.output().getAmount() + " mB")
+                        Component.translatable("gui.hephaestus.fluid_mb", recipe.output().getAmount())
                                 .withStyle(ChatFormatting.GRAY)));
     }
 
@@ -101,8 +101,8 @@ public class MelterCategory implements IRecipeCategory<ModRecipes.MeltingRecipe>
         arrow.draw(graphics, 56, 18);
 
         Font font = Minecraft.getInstance().font;
-        String tempString = recipe.temperature() + "°C";
+        String tempString = Component.translatable("gui.hephaestus.temperature_value", recipe.temperature()).getString();
         int textX = 68 - font.width(tempString) / 2;
-        graphics.text(font, Component.literal(tempString), textX, 3, Color.GRAY.getRGB());
+        graphics.text(font, Component.translatable("gui.hephaestus.temperature_value", recipe.temperature()), textX, 3, Color.GRAY.getRGB());
     }
 }

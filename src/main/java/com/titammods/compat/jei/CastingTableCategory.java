@@ -66,7 +66,7 @@ public class CastingTableCategory implements IRecipeCategory<ModRecipes.CastingT
                 .setOverlay(tankOverlay, 0, 0)
                 .addIngredient(NeoForgeTypes.FLUID_STACK, fluidStack)
                 .addRichTooltipCallback((view, tooltip) ->
-                        tooltip.add(Component.literal(fluidStack.getAmount() + " mB")
+                        tooltip.add(Component.translatable("gui.hephaestus.fluid_mb", fluidStack.getAmount())
                                 .withStyle(ChatFormatting.GRAY)));
 
         boolean hasCast = recipe.cast().isPresent();
@@ -111,9 +111,9 @@ public class CastingTableCategory implements IRecipeCategory<ModRecipes.CastingT
         }
 
         Font font = Minecraft.getInstance().font;
-        String timeStr = (coolingTicks / 20) + "s";
+        String timeStr = Component.translatable("gui.hephaestus.time_seconds", coolingTicks / 20).getString();
         int x = 72 - font.width(timeStr) / 2;
-        graphics.text(font, Component.literal(timeStr), x, 2, Color.GRAY.getRGB());
+        graphics.text(font, Component.translatable("gui.hephaestus.time_seconds", coolingTicks / 20), x, 2, Color.GRAY.getRGB());
     }
 
     @SuppressWarnings("removal")
@@ -123,8 +123,8 @@ public class CastingTableCategory implements IRecipeCategory<ModRecipes.CastingT
         boolean hasCast = recipe.cast().isPresent();
         if (hasCast && mouseX >= 63 && mouseX <= 76 && mouseY >= 39 && mouseY <= 50) {
             String label = recipe.castConsumed()
-                    ? "Cast Consumed: true"
-                    : "Cast Reusable";
+                    ? Component.translatable("gui.hephaestus.cast_consumed").getString()
+                    : Component.translatable("gui.hephaestus.cast_reusable").getString();
             return Collections.singletonList(
                     Component.literal(label).withStyle(ChatFormatting.GRAY));
         }

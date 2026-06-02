@@ -62,7 +62,7 @@ public class CastingBasinCategory implements IRecipeCategory<ModRecipes.CastingB
                 .setOverlay(tankOverlay, 0, 0)
                 .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.fluidStack())
                 .addRichTooltipCallback((view, tooltip) ->
-                        tooltip.add(Component.literal(recipe.fluidAmount() + " mB")
+                        tooltip.add(Component.translatable("gui.hephaestus.fluid_mb", recipe.fluidAmount())
                                 .withStyle(ChatFormatting.GRAY)));
 
         builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 43, 8)
@@ -88,9 +88,9 @@ public class CastingBasinCategory implements IRecipeCategory<ModRecipes.CastingB
 
         blockIcon.draw(graphics, 38, 35);
 
-        String coolingString = (coolingTicks / 20) + "s";
+        String coolingString = Component.translatable("gui.hephaestus.time_seconds", coolingTicks / 20).getString();
         Font font = Minecraft.getInstance().font;
         int x = 72 - font.width(coolingString) / 2;
-        graphics.text(font, Component.literal(coolingString), x, 2, Color.GRAY.getRGB());
+        graphics.text(font, Component.translatable("gui.hephaestus.time_seconds", coolingTicks / 20), x, 2, Color.GRAY.getRGB());
     }
 }
