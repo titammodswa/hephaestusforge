@@ -1,5 +1,7 @@
 {
   "values": [
-    "#c:smeltery_floor"
+    "#c:smeltery_floor",
+    "hephaestus:seared_chute",
+    "hephaestus:seared_drain"
   ]
 }

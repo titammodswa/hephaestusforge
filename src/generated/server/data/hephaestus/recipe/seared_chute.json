@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "hephaestus:forge_brick",
+    "G": "#c:ingots/copper"
+  },
+  "pattern": [
+    "BGB",
+    "B B",
+    "BGB"
+  ],
+  "result": {
+    "id": "hephaestus:seared_chute"
+  }
+}

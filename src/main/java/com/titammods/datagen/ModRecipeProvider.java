@@ -207,6 +207,30 @@ public class ModRecipeProvider extends RecipeProvider {
                         ModBlocks.SEARED_CREEPER.get(), 0.1f, 200)
                 .unlockedBy("has_seared_small_bricks", this.has(ModBlocks.SEARED_SMALL_BRICKS.get()))
                 .save(this.output, rk("seared_creeper_from_smelting"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_CHUTE.get(), 1)
+                .pattern("BGB").pattern("B B").pattern("BGB")
+                .define('B', ModItems.FORGE_BRICK.get())
+                .define('G', net.minecraft.tags.ItemTags.create(Identifier.fromNamespaceAndPath("c", "ingots/copper")))
+                .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
+                .save(this.output, rk("seared_chute"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_DRAIN.get(), 1)
+                .pattern("BBB").pattern("G G").pattern("BBB")
+                .define('B', ModItems.FORGE_BRICK.get())
+                .define('G', net.minecraft.tags.ItemTags.create(Identifier.fromNamespaceAndPath("c", "ingots/copper")))
+                .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
+                .save(this.output, rk("seared_drain"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SMELTERY_CONTROLLER.get(), 1)
+                .pattern("BBB").pattern("CSH").pattern("BTB")
+                .define('B', ModBlocks.SEARED_BRICKS.get())
+                .define('C', ModBlocks.SEARED_CHUTE.get())
+                .define('H', ModBlocks.SEARED_DRAIN.get())
+                .define('T', ModBlocks.SEARED_FUEL_TANK.get())
+                .define('S', Items.BLAST_FURNACE)
+                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, rk("smeltery_controller"));
     }
 
     private void registerAllTheOresCompat() {

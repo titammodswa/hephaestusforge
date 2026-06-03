@@ -48,7 +48,6 @@ public class ModModelProvider implements DataProvider {
             "seared_fuel_tank",  "block/smeltery/tank/fuel_tank"
     );
 
-    // ModFluids: nomes dos fluidos (para neoforge:fluid_container)
     private static final Map<String, String> MOD_FLUID_STILL = Map.of(
             "molten_cobalt",   "molten_cobalt",
             "molten_quartz",   "molten_quartz",
@@ -64,6 +63,8 @@ public class ModModelProvider implements DataProvider {
             "seared_basin",
             "seared_faucet",
             "smeltery_controller",
+            "seared_chute",
+            "seared_drain",
     };
 
     private final PackOutput.PathProvider modelBlockPath;
@@ -125,7 +126,7 @@ public class ModModelProvider implements DataProvider {
         }
 
         for (var e : MOD_FLUID_STILL.entrySet()) {
-            String name       = e.getKey();          // "molten_cobalt" etc.
+            String name       = e.getKey();
             String blockName  = name + "_block";
             String bucketName = name + "_bucket";
 

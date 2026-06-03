@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "hephaestus:forge_brick",
+    "G": "#c:ingots/copper"
+  },
+  "pattern": [
+    "BBB",
+    "G G",
+    "BBB"
+  ],
+  "result": {
+    "id": "hephaestus:seared_drain"
+  }
+}

@@ -41,8 +41,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(bTag("c", "storage_blocks"))
                 .add(ModBlocks.COBALT_BLOCK.get(),
-                     ModBlocks.RAW_COBALT_BLOCK.get(),
-                     ModBlocks.STEEL_BLOCK.get());
+                        ModBlocks.RAW_COBALT_BLOCK.get(),
+                        ModBlocks.STEEL_BLOCK.get());
 
         tag(bTag("c", "storage_blocks/cobalt"))    .add(ModBlocks.COBALT_BLOCK.get());
         tag(bTag("c", "storage_blocks/raw_cobalt")).add(ModBlocks.RAW_COBALT_BLOCK.get());
@@ -66,7 +66,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.SEARED_TILE.get()
         );
 
-        tag(smelteryWall).addTag(smelteryFloor);
+        tag(smelteryWall).addTag(smelteryFloor)
+                .add(ModBlocks.SEARED_CHUTE.get())
+                .add(ModBlocks.SEARED_DRAIN.get());
     }
 
     private net.minecraft.tags.TagKey<Block> bTag(String namespace, String path) {

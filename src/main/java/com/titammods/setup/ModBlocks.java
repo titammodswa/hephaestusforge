@@ -1,11 +1,7 @@
 package com.titammods.setup;
 
 import com.titammods.TitamMods;
-import com.titammods.common.blocks.MelterBlock;
-import com.titammods.common.blocks.SearedTankBlock;
-import com.titammods.common.blocks.SearedFaucetBlock;
-import com.titammods.common.blocks.SearedTableBlock;
-import com.titammods.common.blocks.SearedBasinBlock;
+import com.titammods.common.blocks.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -16,6 +12,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import com.titammods.common.blocks.SmelteryControllerBlock;
+import com.titammods.common.blocks.SearedChuteBlock;
+import com.titammods.common.blocks.SearedDrainBlock;
 
 import java.util.function.Function;
 
@@ -65,11 +64,6 @@ public class ModBlocks {
                             .lightLevel(state -> state.getValue(MelterBlock.LIGHT))
                             .setId(ResourceKey.create(Registries.BLOCK, k))));
 
-//    public static final DeferredBlock<Block> SMELTERY_CONTROLLER = registerBlock("smeltery_controller",
-//            k -> new net.minecraft.world.level.block.Block(
-//                    BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.STONE_BRICKS)
-//                            .setId(ResourceKey.create(Registries.BLOCK, k))));
-
     public static final DeferredBlock<SearedFaucetBlock> SEARED_FAUCET = registerBlock("seared_faucet",
             k -> new SearedFaucetBlock(
                     BlockBehaviour.Properties.of()
@@ -93,6 +87,21 @@ public class ModBlocks {
                             .requiresCorrectToolForDrops()
                             .noOcclusion()
                             .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<SmelteryControllerBlock> SMELTERY_CONTROLLER =
+            registerBlock("smeltery_controller", k -> new SmelteryControllerBlock(
+                    BlockBehaviour.Properties.of().strength(3f, 15f).requiresCorrectToolForDrops()
+                            .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<SearedChuteBlock> SEARED_CHUTE =
+            registerBlock("seared_chute", k -> new SearedChuteBlock(
+                    BlockBehaviour.Properties.of().strength(3f, 15f).requiresCorrectToolForDrops()
+                            .noOcclusion().setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<SearedDrainBlock> SEARED_DRAIN =
+            registerBlock("seared_drain", k -> new SearedDrainBlock(
+                    BlockBehaviour.Properties.of().strength(3f, 15f).requiresCorrectToolForDrops()
+                            .noOcclusion().setId(ResourceKey.create(Registries.BLOCK, k))));
 
     private static DeferredBlock<Block> searedBlock(String name) {
         return registerBlock(name,

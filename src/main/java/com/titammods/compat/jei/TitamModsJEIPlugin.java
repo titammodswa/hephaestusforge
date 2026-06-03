@@ -12,6 +12,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 
@@ -19,6 +20,14 @@ import java.util.List;
 
 @JeiPlugin
 public class TitamModsJEIPlugin implements IModPlugin {
+
+    @SuppressWarnings("removal")
+    public static final RecipeType<ModRecipes.AlloyRecipe> ALLOY_TYPE =
+            RecipeType.create(TitamMods.MODID, "alloy", ModRecipes.AlloyRecipe.class);
+
+    @SuppressWarnings("removal")
+    public static final RecipeType<ModRecipes.MeltingRecipe> SMELTERY_TYPE =
+            RecipeType.create(TitamMods.MODID, "smeltery_melting", ModRecipes.MeltingRecipe.class);
 
     @SuppressWarnings("removal")
     public static final RecipeType<ModRecipes.MeltingRecipe> MELTING_TYPE =
@@ -43,7 +52,9 @@ public class TitamModsJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(
                 new MelterCategory(gui),
                 new CastingTableCategory(gui),
-                new CastingBasinCategory(gui)
+                new CastingBasinCategory(gui),
+                new AlloyCategory(gui),
+                new SmelteryCategory(gui)
         );
     }
 
@@ -67,6 +78,12 @@ public class TitamModsJEIPlugin implements IModPlugin {
                 .byType(ModRecipes.CASTING_BASIN_TYPE.get())
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(CASTING_BASIN_TYPE, basin);
+
+        List<ModRecipes.AlloyRecipe> alloy = rm.recipeMap()
+                .byType(ModRecipes.ALLOY_TYPE.get())
+                .stream().map(RecipeHolder::value).toList();
+        registration.addRecipes(ALLOY_TYPE, alloy);
+        registration.addRecipes(SMELTERY_TYPE, melting);
     }
 
     @SuppressWarnings("removal")
@@ -81,5 +98,7 @@ public class TitamModsJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(
                 new net.minecraft.world.item.ItemStack(ModBlocks.SEARED_BASIN.get()),
                 CASTING_BASIN_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.SMELTERY_CONTROLLER.get()), ALLOY_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.SMELTERY_CONTROLLER.get()), SMELTERY_TYPE);
     }
 }

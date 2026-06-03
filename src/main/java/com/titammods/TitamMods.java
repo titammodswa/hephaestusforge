@@ -29,7 +29,6 @@ public class TitamMods {
 
         HephaestusFluids.registerFluids();
 
-        // Registries
         ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModFluids.FLUID_TYPES.register(modEventBus);
@@ -42,10 +41,11 @@ public class TitamMods {
         ModCreativeTabs.TABS.register(modEventBus);
 
 
-        // Client
         if (FMLEnvironment.getDist() == Dist.CLIENT) {
             ClientModEvents.register(modEventBus);
         }
+
+        modEventBus.addListener(com.titammods.network.ModNetworking::register);
 
         DataGenerators.register(modEventBus);
     }

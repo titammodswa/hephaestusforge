@@ -328,11 +328,7 @@
   "item.hephaestus.molten_blaze_bucket": "Molten Blaze Bucket",
   "block.hephaestus.molten_blaze_block": "Molten Blaze",
 
-  "gui.hephaestus.tank.bucket.auto.title": "Auto mode",
   "block.titammods.smeltery_controller": "Smeltery Controller",
-  "gui.hephaestus.melting.no_fuel": "No fuel in tank",
-  "gui.hephaestus.melting.no_tank": "no tank installed",
-  "gui.hephaestus.alloying": "Alloying",
   "gui.hephaestus.unit.blocks": "Blocks",
   "gui.hephaestus.unit.ingots": "Ingots",
   "gui.hephaestus.unit.nuggets": "Nuggets",
@@ -343,5 +339,10 @@
   "gui.hephaestus.temperature_value": "%s°C",
   "gui.hephaestus.temperature": "Temperature: %s°C",
   "gui.hephaestus.cast_consumed": "Cast Consumed",
-  "gui.hephaestus.cast_reusable": "Cast Reusable"
+  "gui.hephaestus.cast_reusable": "Cast Reusable",
+  "gui.hephaestus.smeltery.incomplete": "The Smeltery is incomplete!",
+  "gui.hephaestus.alloying": "Alloying",
+  "gui.hephaestus.melting.no_fuel": "No Fuel",
+  "gui.hephaestus.melting.no_tank": "No Fuel Tank",
+  "gui.hephaestus.tank.bucket.auto.title": "Auto Fill/Drain"
 }

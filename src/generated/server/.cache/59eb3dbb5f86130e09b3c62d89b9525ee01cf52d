@@ -1,11 +1,13 @@
-// 26.1.2	2026-06-01T14:52:41.9396825	Loot Tables
+// 26.1.2	2026-06-03T05:37:23.3259751	Loot Tables
 55af5a2147a380f67192e8255f4d2fb7b3d39ac3 data/hephaestus/loot_table/blocks/cobalt_block.json
 20615703ad5b62ee58b18a8638ef3cd6f0d0ac40 data/hephaestus/loot_table/blocks/raw_cobalt_block.json
 c604b270ec9a93f4c564d19e6f729a680a7fb326 data/hephaestus/loot_table/blocks/seared_basin.json
 90fd5469b9e0feeb4ebff627e8c74d7f70b712b1 data/hephaestus/loot_table/blocks/seared_bricks.json
+846b666708b6f44ae094523e8e1856f5051167ca data/hephaestus/loot_table/blocks/seared_chute.json
 916f301055416e92e91a07a791910a76695f14d0 data/hephaestus/loot_table/blocks/seared_cobble.json
 21e5d5ea6dac1987b03d835f8007cb5370f11721 data/hephaestus/loot_table/blocks/seared_cracked_bricks.json
 667e884476a5d3fda42d6575573cb83ce588c386 data/hephaestus/loot_table/blocks/seared_creeper.json
+080d218e442185ba60e8e7665ee219c60d17183c data/hephaestus/loot_table/blocks/seared_drain.json
 13fb1b7a86b72ae0a035485377aa793f4e38cae5 data/hephaestus/loot_table/blocks/seared_fancy_bricks.json
 f1f1a69a9e1f2c7fe2ceebbeaeb0fba581e2dfd8 data/hephaestus/loot_table/blocks/seared_faucet.json
 4f5c47ef6878074c8ba2d9f7288b1729d29c6255 data/hephaestus/loot_table/blocks/seared_fuel_tank.json
@@ -19,4 +21,5 @@ d14de7982023d9a64fa4161bc1c87ab5017a6c69 data/hephaestus/loot_table/blocks/seare
 3ba329f6a3032ef3d6967bc2779f7e624e58cfb5 data/hephaestus/loot_table/blocks/seared_table.json
 f914ee2809fe8365ab0d72e585a23d2e39dc76e2 data/hephaestus/loot_table/blocks/seared_tile.json
 1f5ba32b445c28a45c4f11854773a35fb2ae42dc data/hephaestus/loot_table/blocks/seared_triangle_bricks.json
+a44152c8d9dc44c812821168859d795e5856379c data/hephaestus/loot_table/blocks/smeltery_controller.json
 58d965889482572665b032dcbf3d9ebd777b1eb2 data/hephaestus/loot_table/blocks/steel_block.json

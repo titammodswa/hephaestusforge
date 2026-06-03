@@ -328,11 +328,7 @@
   "item.hephaestus.molten_blaze_bucket": "Balde de Blaze Derretido",
   "block.hephaestus.molten_blaze_block": "Blaze Derretido",
 
-  "gui.hephaestus.tank.bucket.auto.title": "Modo automatico",
   "block.titammods.smeltery_controller": "Smeltery Controller",
-  "gui.hephaestus.melting.no_fuel": "Sem combustivel",
-  "gui.hephaestus.melting.no_tank": "Sem tanque instalado",
-  "gui.hephaestus.alloying": "Alloying",
   "gui.hephaestus.unit.blocks": "%s Blocos",
   "gui.hephaestus.unit.ingots": "%s Barras",
   "gui.hephaestus.unit.nuggets": "%s Pepitas",
@@ -343,5 +339,10 @@
   "gui.hephaestus.temperature_value": "%s°C",
   "gui.hephaestus.temperature": "Temperatura: %s°C",
   "gui.hephaestus.cast_consumed": "Molde Consumido",
-  "gui.hephaestus.cast_reusable": "Molde Reutilizável"
+  "gui.hephaestus.cast_reusable": "Molde Reutilizável",
+  "gui.hephaestus.smeltery.incomplete": "A Forja está incompleta!",
+  "gui.hephaestus.alloying": "Liga",
+  "gui.hephaestus.melting.no_fuel": "Sem Combustível",
+  "gui.hephaestus.melting.no_tank": "Sem Tanque de Combustível",
+  "gui.hephaestus.tank.bucket.auto.title": "Encher/Esvaziar Auto"
 }

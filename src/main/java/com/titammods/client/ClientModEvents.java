@@ -21,6 +21,7 @@ import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import com.titammods.common.blockentities.render.SmelteryIORenderer;
 
 public class ClientModEvents {
 
@@ -73,6 +74,7 @@ public class ClientModEvents {
 
     private static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenus.MELTER_MENU.get(), com.titammods.client.screen.MelterScreen::new);
+        event.register(ModMenus.SMELTERY_MENU.get(), com.titammods.client.screen.SmelteryScreen::new);
     }
 
     private static void onClientSetup(FMLClientSetupEvent event) {
@@ -81,6 +83,8 @@ public class ClientModEvents {
                         ModBlockEntities.SEARED_TANK.get(),
                         SearedTankRenderer::new)
         );
+        BlockEntityRenderers.register(ModBlockEntities.SEARED_CHUTE.get(), SmelteryIORenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.SEARED_DRAIN.get(), SmelteryIORenderer::new);
         event.enqueueWork(() ->
                 BlockEntityRenderers.register(
                         ModBlockEntities.MELTER.get(),
