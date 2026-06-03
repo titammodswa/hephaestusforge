@@ -16,7 +16,7 @@ public class ModCreativeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TITAMMODS_TAB =
             TABS.register("titammods_tab", () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.hephaestus"))
-                    .icon(() -> new ItemStack(ModBlocks.SEARED_BRICKS.get()))
+                    .icon(() -> new ItemStack(ModBlocks.SEARED_MELTER.get()))
                     .displayItems((params, output) ->
                             ModItems.ITEMS.getEntries().forEach(item -> output.accept(item.get())))
                     .build());

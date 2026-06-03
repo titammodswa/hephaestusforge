@@ -66,13 +66,13 @@ public class SearedTankRenderer implements BlockEntityRenderer<SearedTankBlockEn
 
         float d    = 1f / 16f;
         float fill = Mth.clamp((float) fluid.getAmount() / state.capacity, 0.003f, 1f);
-        float x0 = d*2, x1 = 1f - d*2;
-        float z0 = d*2, z1 = 1f - d*2;
-        float y0 = d*2, y1 = y0 + (d*12) * fill;
+        float x0 = d*2,  x1 = 1f - d*2;
+        float z0 = d*2,  z1 = 1f - d*2;
+        float y0 = d*2,  y1 = y0 + (d*13) * fill;
 
         collector.submitCustomGeometry(poseStack, RenderTypes.translucentMovingBlock(),
                 (pose, buf) -> renderBox(buf, pose, sprite, r, g, b, alpha,
-                        sky, finalBlock, x0, y0, z0, x1, y1, z1));
+                        sky, finalBlock, x0, y0, z0, x1, y1, z1, fill));
 
         poseStack.popPose();
     }
@@ -83,9 +83,23 @@ public class SearedTankRenderer implements BlockEntityRenderer<SearedTankBlockEn
                           int sky, int block,
                           float x0, float y0, float z0,
                           float x1, float y1, float z1) {
+        renderBox(buf, pose, spr, r, g, b, a, sky, block, x0, y0, z0, x1, y1, z1, 1f);
+    }
+
+    static void renderBox(VertexConsumer buf, PoseStack.Pose pose,
+                          TextureAtlasSprite spr,
+                          int r, int g, int b, int a,
+                          int sky, int block,
+                          float x0, float y0, float z0,
+                          float x1, float y1, float z1,
+                          float fill) {
         Matrix4f m = pose.pose();
         float u0 = spr.getU0(), u1 = spr.getU1();
         float v0 = spr.getV0(), v1 = spr.getV1();
+        float uvH = v1 - v0;
+
+        float vTop = v0 + uvH * (1f - fill);
+
         // Top
         v(buf,m,x0,y1,z0, r,g,b,a, u0,v0, sky,block); v(buf,m,x0,y1,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x1,y1,z1, r,g,b,a, u1,v1, sky,block); v(buf,m,x1,y1,z0, r,g,b,a, u1,v0, sky,block);
@@ -93,17 +107,17 @@ public class SearedTankRenderer implements BlockEntityRenderer<SearedTankBlockEn
         v(buf,m,x0,y0,z1, r,g,b,a, u0,v1, sky,block); v(buf,m,x0,y0,z0, r,g,b,a, u0,v0, sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u1,v0, sky,block); v(buf,m,x1,y0,z1, r,g,b,a, u1,v1, sky,block);
         // North
-        v(buf,m,x1,y1,z0, r,g,b,a, u0,v0, sky,block); v(buf,m,x1,y0,z0, r,g,b,a, u0,v1, sky,block);
-        v(buf,m,x0,y0,z0, r,g,b,a, u1,v1, sky,block); v(buf,m,x0,y1,z0, r,g,b,a, u1,v0, sky,block);
+        v(buf,m,x1,y1,z0, r,g,b,a, u0,vTop, sky,block); v(buf,m,x1,y0,z0, r,g,b,a, u0,v1, sky,block);
+        v(buf,m,x0,y0,z0, r,g,b,a, u1,v1,   sky,block); v(buf,m,x0,y1,z0, r,g,b,a, u1,vTop, sky,block);
         // South
-        v(buf,m,x0,y1,z1, r,g,b,a, u0,v0, sky,block); v(buf,m,x0,y0,z1, r,g,b,a, u0,v1, sky,block);
-        v(buf,m,x1,y0,z1, r,g,b,a, u1,v1, sky,block); v(buf,m,x1,y1,z1, r,g,b,a, u1,v0, sky,block);
+        v(buf,m,x0,y1,z1, r,g,b,a, u0,vTop, sky,block); v(buf,m,x0,y0,z1, r,g,b,a, u0,v1, sky,block);
+        v(buf,m,x1,y0,z1, r,g,b,a, u1,v1,   sky,block); v(buf,m,x1,y1,z1, r,g,b,a, u1,vTop, sky,block);
         // West
-        v(buf,m,x0,y1,z0, r,g,b,a, u0,v0, sky,block); v(buf,m,x0,y0,z0, r,g,b,a, u0,v1, sky,block);
-        v(buf,m,x0,y0,z1, r,g,b,a, u1,v1, sky,block); v(buf,m,x0,y1,z1, r,g,b,a, u1,v0, sky,block);
+        v(buf,m,x0,y1,z0, r,g,b,a, u0,vTop, sky,block); v(buf,m,x0,y0,z0, r,g,b,a, u0,v1, sky,block);
+        v(buf,m,x0,y0,z1, r,g,b,a, u1,v1,   sky,block); v(buf,m,x0,y1,z1, r,g,b,a, u1,vTop, sky,block);
         // East
-        v(buf,m,x1,y1,z1, r,g,b,a, u0,v0, sky,block); v(buf,m,x1,y0,z1, r,g,b,a, u0,v1, sky,block);
-        v(buf,m,x1,y0,z0, r,g,b,a, u1,v1, sky,block); v(buf,m,x1,y1,z0, r,g,b,a, u1,v0, sky,block);
+        v(buf,m,x1,y1,z1, r,g,b,a, u0,vTop, sky,block); v(buf,m,x1,y0,z1, r,g,b,a, u0,v1, sky,block);
+        v(buf,m,x1,y0,z0, r,g,b,a, u1,v1,   sky,block); v(buf,m,x1,y1,z0, r,g,b,a, u1,vTop, sky,block);
     }
 
     private static void v(VertexConsumer b, Matrix4f m,
