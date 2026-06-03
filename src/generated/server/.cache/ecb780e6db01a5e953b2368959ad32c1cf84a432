@@ -1,4 +1,4 @@
-// 26.1.2	2026-06-03T05:37:23.3199734	hephaestus recipes
+// 26.1.2	2026-06-03T18:04:07.6003989	hephaestus recipes
 b0061957a5239e3a0647813b423c8620a229df5c data/hephaestus/advancement/recipes/building_blocks/forge_brick.json
 99cda3a79ea8c58f4e82ee2cb4d44076e79f058e data/hephaestus/advancement/recipes/building_blocks/seared_basin.json
 68c94ea74e02cba6647fdc8b33c99249385df103 data/hephaestus/advancement/recipes/building_blocks/seared_bricks.json
@@ -42,6 +42,11 @@ bd6068876727f005e93176ffbdb720eb3f445b42 data/hephaestus/recipe/seared_road.json
 64c4fb6982d3de5f5ed01ada11eb211b8c9d76a4 data/hephaestus/recipe/seared_table.json
 235cba97324928f053e45e4fa8f2f4a170881679 data/hephaestus/recipe/seared_tile.json
 0430ed2a4045d6ff074037de51869ba27a353a6f data/hephaestus/recipe/seared_triangle_bricks.json
+1b5bdf39d17a60e2ef118b9423a44d526720ee9e data/hephaestus/recipe/smeltery/alloying/brass.json
+da621bd31ccec2e462809e4bd0a0bdb7fdea29d9 data/hephaestus/recipe/smeltery/alloying/bronze.json
+9bfd600a96974bd8ccfa17b85bea141610821cd0 data/hephaestus/recipe/smeltery/alloying/constantan.json
+989a71c881c78173b2a0468629fbc01ff2ae6594 data/hephaestus/recipe/smeltery/alloying/electrum.json
+630c87cea85df1075a6e291c2a4000dee9ec8971 data/hephaestus/recipe/smeltery/alloying/invar.json
 e1621b4b996f1d52d6ff8e214e6504537d399f53 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/aluminum/block_cast.json
 51077f8aba08ba500c4fca9d6c1772f6ae8eebf0 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/brass/block_cast.json
 cf468707c76a3e172f514e5a9eee3c99bbf190c0 data/hephaestus/recipe/smeltery/casting/basin/alltheores_compat/metal/bronze/block_cast.json
@@ -522,4 +527,5 @@ e967b4dfbb3885791540d6557bd63adb350893bc data/hephaestus/recipe/smeltery/melting
 3cfd4824dc18490a2aa4ce113d6c4d62c630036e data/hephaestus/recipe/smeltery/melting/metal/steel/ingot.json
 de8e8c73bfeb916fae616f83cdf43114303021ec data/hephaestus/recipe/smeltery/melting/metal/steel/nugget.json
 dd174a8a79d83afd6d019df1a3101c659f1f957d data/hephaestus/recipe/smeltery/melting/metal/steel/raw.json
+54b479fbd0c3df3138eba74a738df6f153a9485d data/hephaestus/recipe/smeltery/melting/misc/molten_blaze.json
 63f56bcbe0976c5ebad089732398b6531948ba64 data/hephaestus/recipe/smeltery_controller.json

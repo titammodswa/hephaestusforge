@@ -28,6 +28,7 @@ public class SmelteryScreen extends AbstractContainerScreen<SmelteryMenu> {
 
     public final SmelteryControllerBlockEntity blockEntity;
 
+    private boolean shiftHeld = false;
     private float scrollProgress = 0f;
     private boolean isScrolling  = false;
 
@@ -35,7 +36,7 @@ public class SmelteryScreen extends AbstractContainerScreen<SmelteryMenu> {
         super(menu, playerInv, title);
         this.blockEntity = menu.blockEntity;
     }
-    @SuppressWarnings("removal")
+
     @Override
     protected void init() {
         try {
@@ -44,6 +45,7 @@ public class SmelteryScreen extends AbstractContainerScreen<SmelteryMenu> {
             f.setAccessible(true);
             f.set(this, 220);
         } catch (Exception e) {
+            // fallback silencioso
         }
         super.init();
         this.inventoryLabelY = 10000;
@@ -168,7 +170,7 @@ public class SmelteryScreen extends AbstractContainerScreen<SmelteryMenu> {
         if (mx >= x + 8 && mx < x + 114 && my >= y + 16 && my < y + 122) {
             List<FluidStack> fluids = blockEntity.fluidTank.getFluids();
             int cap = blockEntity.fluidTank.getCapacity();
-            boolean shift = net.minecraft.client.Minecraft.getInstance().options.keyShift.isDown();
+            boolean shift = shiftHeld;
 
             if (cap > 0 && !fluids.isEmpty()) {
                 int[] heights = calcLiquidHeights(fluids, cap, 106, 3);
@@ -397,6 +399,22 @@ public class SmelteryScreen extends AbstractContainerScreen<SmelteryMenu> {
             Minecraft.getInstance().getConnection().send(new net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket(
                     new com.titammods.network.ScrollSyncPayload(row)));
         }
+    }
+
+    @Override
+    public boolean keyPressed(net.minecraft.client.input.KeyEvent event) {
+        if (event.key() == org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT
+                || event.key() == org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT_SHIFT)
+            shiftHeld = true;
+        return super.keyPressed(event);
+    }
+
+    @Override
+    public boolean keyReleased(net.minecraft.client.input.KeyEvent event) {
+        if (event.key() == org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT
+                || event.key() == org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT_SHIFT)
+            shiftHeld = false;
+        return super.keyReleased(event);
     }
 
     private void blit(GuiGraphicsExtractor g, int x, int y, int u, int v, int w, int h) {

@@ -63,6 +63,8 @@ public class ModRecipeProvider extends RecipeProvider {
         registerAllTheOresCompat();
         registerFtbMaterialsCompat();
         addVanillaRecipes();
+        addMeltingMiscRecipes();
+        addAlloyRecipes();
 
         createCastRecipe("ingots",   ModItems.INGOT_CAST.get(),  "ingot_cast");
         createCastRecipe("nuggets",  ModItems.NUGGET_CAST.get(), "nugget_cast");
@@ -507,5 +509,54 @@ public class ModRecipeProvider extends RecipeProvider {
     private ItemLike getExternalItem(String modid, String path) {
         var item = BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath(modid, path));
         return item == Items.AIR ? null : item;
+    }
+
+    private void addMeltingMiscRecipes() {
+        addMeltingItem(net.minecraft.world.item.Items.BLAZE_ROD,
+                com.titammods.setup.ModFluids.MOLTEN_BLAZE.source.get(),
+                250, 800, 100,
+                "misc/molten_blaze");
+    }
+
+    private void addAlloyRecipes() {
+        Identifier copper    = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_COPPER).source.get());
+        Identifier zinc      = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_ZINC).source.get());
+        Identifier tin       = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_TIN).source.get());
+        Identifier gold      = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_GOLD).source.get());
+        Identifier silver    = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_SILVER).source.get());
+        Identifier iron      = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_IRON).source.get());
+        Identifier nickel    = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_NICKEL).source.get());
+        Identifier brass     = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_BRASS).source.get());
+        Identifier bronze    = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_BRONZE).source.get());
+        Identifier electrum  = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_ELECTRUM).source.get());
+        Identifier invar     = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_INVAR).source.get());
+        Identifier constantan= fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_CONSTANTAN).source.get());
+
+        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 100), new FluidEntry(zinc, 100)),
+                brass, 200, 650, "brass");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 300), new FluidEntry(tin, 100)),
+                bronze, 400, 700, "bronze");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(gold, 100), new FluidEntry(silver, 100)),
+                electrum, 200, 760, "electrum");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(iron, 200), new FluidEntry(nickel, 100)),
+                invar, 300, 900, "invar");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 100), new FluidEntry(nickel, 100)),
+                constantan, 200, 920, "constantan");
+    }
+
+    private record FluidEntry(Identifier id, int amount) {}
+
+    private void addAlloyRecipe(java.util.List<FluidEntry> inputs,
+                                Identifier resultId, int resultAmount,
+                                int temperature, String savePath) {
+        var inputRefs = inputs.stream()
+                .map(e -> new com.titammods.setup.ModRecipes.AlloyRecipe.FluidRef(e.id(), e.amount()))
+                .toList();
+        com.titammods.setup.ModRecipes.AlloyRecipe recipe =
+                new com.titammods.setup.ModRecipes.AlloyRecipe(inputRefs, resultId, resultAmount, temperature);
+        this.output.accept(
+                ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/alloying/" + savePath)),
+                recipe, null);
     }
 }

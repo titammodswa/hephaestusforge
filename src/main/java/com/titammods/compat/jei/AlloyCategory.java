@@ -59,7 +59,7 @@ public class AlloyCategory implements IRecipeCategory<ModRecipes.AlloyRecipe> {
     @SuppressWarnings("removal")
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ModRecipes.AlloyRecipe recipe, IFocusGroup focuses) {
-        List<FluidStack> inputs = recipe.inputs();
+        List<FluidStack> inputs = recipe.inputFluids();
         int count = inputs.size();
 
         if (count > 0) {

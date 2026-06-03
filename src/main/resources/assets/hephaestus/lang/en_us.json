@@ -344,5 +344,7 @@
   "gui.hephaestus.alloying": "Alloying",
   "gui.hephaestus.melting.no_fuel": "No Fuel",
   "gui.hephaestus.melting.no_tank": "No Fuel Tank",
-  "gui.hephaestus.tank.bucket.auto.title": "Auto Fill/Drain"
+  "gui.hephaestus.tank.bucket.auto.title": "Auto Fill/Drain",
+  "gui.hephaestus.shift_hint": "[Shift] for details",
+  "gui.hephaestus.tank_free": "Free: %s mB"
 }

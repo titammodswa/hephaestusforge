@@ -17,7 +17,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -50,54 +49,6 @@ public class ModRecipes {
             SERIALIZERS.register("casting_basin",
                     () -> new RecipeSerializer<>(CastingBasinRecipe.CODEC, CastingBasinRecipe.STREAM_CODEC));
 
-    public static final Supplier<RecipeType<AlloyRecipe>> ALLOY_TYPE =
-            TYPES.register("alloy", () -> new RecipeType<AlloyRecipe>() {
-                @Override public String toString() { return "alloy"; }
-            });
-
-    public static final Supplier<RecipeSerializer<AlloyRecipe>> ALLOY_SERIALIZER =
-            SERIALIZERS.register("alloy",
-                    () -> new RecipeSerializer<>(AlloyRecipe.CODEC, AlloyRecipe.STREAM_CODEC));
-
-    public record AlloyRecipe(
-            List<FluidStack> inputs,
-            FluidStack output,
-            int temperature
-    ) implements Recipe<SingleRecipeInput> {
-
-        public static final MapCodec<AlloyRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                FluidStack.CODEC.listOf().fieldOf("inputs").forGetter(AlloyRecipe::inputs),
-                FluidStack.CODEC.fieldOf("output").forGetter(AlloyRecipe::output),
-                Codec.INT.fieldOf("temperature").forGetter(AlloyRecipe::temperature)
-        ).apply(inst, AlloyRecipe::new));
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, AlloyRecipe> STREAM_CODEC = StreamCodec.of(
-                (buf, r) -> {
-                    buf.writeVarInt(r.inputs().size());
-                    for (FluidStack s : r.inputs()) FluidStack.STREAM_CODEC.encode(buf, s);
-                    FluidStack.STREAM_CODEC.encode(buf, r.output());
-                    buf.writeVarInt(r.temperature());
-                },
-                buf -> {
-                    int size = buf.readVarInt();
-                    List<FluidStack> inputs = new ArrayList<>();
-                    for (int i = 0; i < size; i++) inputs.add(FluidStack.STREAM_CODEC.decode(buf));
-                    return new AlloyRecipe(inputs, FluidStack.STREAM_CODEC.decode(buf), buf.readVarInt());
-                }
-        );
-
-        @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
-        @Override public ItemStack assemble(SingleRecipeInput inv) { return ItemStack.EMPTY; }
-        @Override public RecipeSerializer<AlloyRecipe> getSerializer() { return ALLOY_SERIALIZER.get(); }
-        @Override public RecipeType<AlloyRecipe> getType()             { return ALLOY_TYPE.get(); }
-        @Override public RecipeBookCategory recipeBookCategory()       { return HEPHAESTUS_CATEGORY.get(); }
-        @Override public String group()                                { return ""; }
-        @Override public boolean showNotification()                    { return false; }
-        @Override public List<net.minecraft.world.item.crafting.display.RecipeDisplay> display() { return List.of(); }
-        private static final PlacementInfo PLACEMENT = PlacementInfo.createFromOptionals(List.of());
-        @Override public PlacementInfo placementInfo()                 { return PLACEMENT; }
-    }
-
     public record MeltingRecipe(
             Ingredient input,
             Identifier resultId,
@@ -118,7 +69,7 @@ public class ModRecipes {
             return (f == null || f.isSame(Fluids.EMPTY)) ? FluidStack.EMPTY : new FluidStack(f, fuelAmount);
         }
 
-        private record FluidRef(Identifier id, int amount) {
+        public record FluidRef(Identifier id, int amount) {
             static final Codec<FluidRef> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                     Identifier.CODEC.fieldOf("id").forGetter(FluidRef::id),
                     Codec.INT.fieldOf("amount").forGetter(FluidRef::amount)
@@ -183,7 +134,7 @@ public class ModRecipes {
                     ? ItemStack.EMPTY : new ItemStack(item, resultCount);
         }
 
-        private record FluidRef(Identifier id, int amount) {
+        public record FluidRef(Identifier id, int amount) {
             static final Codec<FluidRef> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                     Identifier.CODEC.fieldOf("id").forGetter(FluidRef::id),
                     Codec.INT.fieldOf("amount").forGetter(FluidRef::amount)
@@ -262,7 +213,7 @@ public class ModRecipes {
                     : new ItemStack(item, resultCount);
         }
 
-        private record FluidRef(Identifier id, int amount) {
+        public record FluidRef(Identifier id, int amount) {
             static final Codec<FluidRef> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                     Identifier.CODEC.fieldOf("id").forGetter(FluidRef::id),
                     Codec.INT.fieldOf("amount").forGetter(FluidRef::amount)
@@ -317,6 +268,104 @@ public class ModRecipes {
         @Override public ItemStack assemble(SingleRecipeInput inv) { return result(); }
         @Override public RecipeSerializer<CastingTableRecipe> getSerializer() { return CASTING_TABLE_SERIALIZER.get(); }
         @Override public RecipeType<CastingTableRecipe> getType() { return CASTING_TABLE_TYPE.get(); }
+        @Override public RecipeBookCategory recipeBookCategory() { return HEPHAESTUS_CATEGORY.get(); }
+        @Override public String group() { return ""; }
+        @Override public boolean showNotification() { return false; }
+        @Override public List<net.minecraft.world.item.crafting.display.RecipeDisplay> display() { return List.of(); }
+        private static final PlacementInfo PLACEMENT = PlacementInfo.createFromOptionals(List.of());
+        @Override public PlacementInfo placementInfo() { return PLACEMENT; }
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    // CastingBasinRecipe — DEFERRED (bloco não portado ainda)
+    // ════════════════════════════════════════════════════════════════════════
+
+    /*
+    public static final Supplier<RecipeType<CastingBasinRecipe>> CASTING_BASIN_TYPE = ...
+    public static final Supplier<RecipeSerializer<CastingBasinRecipe>> CASTING_BASIN_SERIALIZER = ...
+    public record CastingBasinRecipe(...) implements Recipe<SingleRecipeInput> { ... }
+    */
+
+    // ════════════════════════════════════════════════════════════════════════
+    // AlloyRecipe — usa Identifier+int (lazy) igual ao MeltingRecipe
+    // para evitar "Components not bound yet" no datagen
+    // ════════════════════════════════════════════════════════════════════════
+
+    public static final Supplier<RecipeType<AlloyRecipe>> ALLOY_TYPE =
+            TYPES.register("alloy", () -> new RecipeType<AlloyRecipe>() {
+                @Override public String toString() { return "alloy"; }
+            });
+
+    public static final Supplier<RecipeSerializer<AlloyRecipe>> ALLOY_SERIALIZER =
+            SERIALIZERS.register("alloy",
+                    () -> new RecipeSerializer<>(AlloyRecipe.CODEC, AlloyRecipe.STREAM_CODEC));
+
+    public record AlloyRecipe(
+            List<FluidRef> inputs,
+            Identifier resultId,
+            int resultAmount,
+            int temperature
+    ) implements Recipe<SingleRecipeInput> {
+
+        /** Resolve inputs para FluidStack em runtime (fora do datagen). */
+        public List<net.neoforged.neoforge.fluids.FluidStack> inputFluids() {
+            return inputs.stream().map(FluidRef::toStack).filter(s -> !s.isEmpty()).toList();
+        }
+
+        /** Resolve output para FluidStack em runtime. */
+        public net.neoforged.neoforge.fluids.FluidStack output() {
+            net.minecraft.world.level.material.Fluid f = BuiltInRegistries.FLUID.getValue(resultId);
+            return (f == null || f.isSame(net.minecraft.world.level.material.Fluids.EMPTY))
+                    ? net.neoforged.neoforge.fluids.FluidStack.EMPTY
+                    : new net.neoforged.neoforge.fluids.FluidStack(f, resultAmount);
+        }
+
+        public record FluidRef(Identifier id, int amount) {
+            static final Codec<FluidRef> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                    Identifier.CODEC.fieldOf("id").forGetter(FluidRef::id),
+                    Codec.INT.fieldOf("amount").forGetter(FluidRef::amount)
+            ).apply(inst, FluidRef::new));
+
+            net.neoforged.neoforge.fluids.FluidStack toStack() {
+                net.minecraft.world.level.material.Fluid f = BuiltInRegistries.FLUID.getValue(id);
+                return (f == null || f.isSame(net.minecraft.world.level.material.Fluids.EMPTY))
+                        ? net.neoforged.neoforge.fluids.FluidStack.EMPTY
+                        : new net.neoforged.neoforge.fluids.FluidStack(f, amount);
+            }
+        }
+
+        public static final MapCodec<AlloyRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+                FluidRef.CODEC.listOf().fieldOf("inputs").forGetter(AlloyRecipe::inputs),
+                FluidRef.CODEC.fieldOf("output").forGetter(r -> new FluidRef(r.resultId(), r.resultAmount())),
+                Codec.INT.fieldOf("temperature").forGetter(AlloyRecipe::temperature)
+        ).apply(inst, (inputs, out, temp) -> new AlloyRecipe(inputs, out.id(), out.amount(), temp)));
+
+        public static final StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, AlloyRecipe> STREAM_CODEC =
+                StreamCodec.of(
+                        (buf, r) -> {
+                            buf.writeVarInt(r.inputs().size());
+                            for (FluidRef f : r.inputs()) {
+                                buf.writeUtf(f.id().toString());
+                                buf.writeVarInt(f.amount());
+                            }
+                            buf.writeUtf(r.resultId().toString());
+                            buf.writeVarInt(r.resultAmount());
+                            buf.writeVarInt(r.temperature());
+                        },
+                        buf -> {
+                            int size = buf.readVarInt();
+                            List<FluidRef> inputs = new java.util.ArrayList<>();
+                            for (int i = 0; i < size; i++)
+                                inputs.add(new FluidRef(Identifier.parse(buf.readUtf()), buf.readVarInt()));
+                            return new AlloyRecipe(inputs,
+                                    Identifier.parse(buf.readUtf()), buf.readVarInt(), buf.readVarInt());
+                        }
+                );
+
+        @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
+        @Override public ItemStack assemble(SingleRecipeInput inv) { return ItemStack.EMPTY; }
+        @Override public RecipeSerializer<AlloyRecipe> getSerializer() { return ALLOY_SERIALIZER.get(); }
+        @Override public RecipeType<AlloyRecipe> getType() { return ALLOY_TYPE.get(); }
         @Override public RecipeBookCategory recipeBookCategory() { return HEPHAESTUS_CATEGORY.get(); }
         @Override public String group() { return ""; }
         @Override public boolean showNotification() { return false; }

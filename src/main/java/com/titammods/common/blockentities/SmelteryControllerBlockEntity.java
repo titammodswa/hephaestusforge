@@ -325,7 +325,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             if (availTemp < recipe.temperature()) continue;
 
             boolean hasAll = true;
-            for (var input : recipe.inputs()) {
+            for (var input : recipe.inputFluids()) {
                 if (!hasFluid(input)) { hasAll = false; break; }
             }
             if (!hasAll) continue;
@@ -334,7 +334,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             int filled        = fluidTank.fill(out, IFluidHandler.FluidAction.SIMULATE);
             if (filled < out.getAmount()) continue;
 
-            for (var input : recipe.inputs()) drainFluid(input);
+            for (var input : recipe.inputFluids()) drainFluid(input);
             fluidTank.fill(out, IFluidHandler.FluidAction.EXECUTE);
             changed = true;
             break;
