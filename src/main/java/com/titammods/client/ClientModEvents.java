@@ -22,6 +22,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import com.titammods.common.blockentities.render.SmelteryIORenderer;
+import com.titammods.common.blockentities.render.SmelteryControllerRenderer;
 
 public class ClientModEvents {
 
@@ -85,6 +86,7 @@ public class ClientModEvents {
         );
         BlockEntityRenderers.register(ModBlockEntities.SEARED_CHUTE.get(), SmelteryIORenderer::new);
         BlockEntityRenderers.register(ModBlockEntities.SEARED_DRAIN.get(), SmelteryIORenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.SMELTERY_CONTROLLER.get(), SmelteryControllerRenderer::new);
         event.enqueueWork(() ->
                 BlockEntityRenderers.register(
                         ModBlockEntities.MELTER.get(),
@@ -105,5 +107,23 @@ public class ClientModEvents {
                         ModBlockEntities.BASIN.get(),
                         BasinRenderer::new)
         );
+
+        if (com.titammods.TitamMods.hasConflict) {
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(ClientModEvents::showErrorScreen);
+        }
     }
+    public static void showErrorScreen(net.neoforged.neoforge.client.event.ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof net.minecraft.client.gui.screens.TitleScreen) {
+            net.minecraft.client.Minecraft.getInstance().setScreen(
+                    new net.minecraft.client.gui.screens.ConfirmScreen(
+                            ignored -> net.minecraft.client.Minecraft.getInstance().stop(),
+                            net.minecraft.network.chat.Component
+                                    .translatable("gui.hephaestus.conflict.title"),
+                            net.minecraft.network.chat.Component
+                                    .translatable("gui.hephaestus.conflict.description")
+                    )
+            );
+        }
+    }
+
 }

@@ -41,6 +41,10 @@ import org.jspecify.annotations.Nullable;
 public class SmelteryControllerBlockEntity extends BlockEntity implements MenuProvider, IDisplayFluidListener {
 
     private SmelteryMultiblock multiblock;
+
+    public SmelteryMultiblock getMultiblock() { return multiblock; }
+    public BlockPos syncedMinInner = null;
+    public BlockPos syncedMaxInner = null;
     private int  tickCounter = 0;
     private boolean isFormed = false;
 
@@ -93,7 +97,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        if (level.isClientSide()) return;
+        if (level == null || level.isClientSide()) return;
 
         tickCounter++;
         if (tickCounter >= 20) {
@@ -368,6 +372,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
     @SuppressWarnings("removal")
     private void checkMultiblockStructure() {
+        if (level == null) return;
         BlockState cur = getBlockState();
         if (multiblock == null) multiblock = new SmelteryMultiblock(level, worldPosition);
         Direction facing = cur.getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -379,18 +384,23 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 isFormed = true;
                 fluidTank.setCapacity(volume * 8000);
                 resizeInventory(volume);
+                syncedMinInner = multiblock.minInner;
+                syncedMaxInner = multiblock.maxInner;
                 setChanged();
                 level.setBlockAndUpdate(worldPosition, cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, true));
+                level.sendBlockUpdated(worldPosition, cur, cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, true), Block.UPDATE_ALL);
                 linkIOBlocks(true);
             }
         } else if (isFormed) {
-            isFormed     = false;
-            fuel         = 0;
-            maxFuel      = 0;
-            temperature  = 0;
-            currentFuel  = FluidStack.EMPTY;
-            fuelCapacity = 0;
+            isFormed       = false;
+            fuel           = 0;
+            maxFuel        = 0;
+            temperature    = 0;
+            currentFuel    = FluidStack.EMPTY;
+            fuelCapacity   = 0;
             fluidTank.setCapacity(0);
+            syncedMinInner = null;
+            syncedMaxInner = null;
             setChanged();
             level.setBlockAndUpdate(worldPosition,
                     cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, false)
@@ -480,6 +490,15 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
         if (!displayFluid.isEmpty())
             output.putString("display_fluid", BuiltInRegistries.FLUID.getKey(displayFluid.getFluid()).toString());
+
+        if (multiblock != null && multiblock.isValid && multiblock.minInner != null) {
+            output.putInt("mb_minX", multiblock.minInner.getX());
+            output.putInt("mb_minY", multiblock.minInner.getY());
+            output.putInt("mb_minZ", multiblock.minInner.getZ());
+            output.putInt("mb_maxX", multiblock.maxInner.getX());
+            output.putInt("mb_maxY", multiblock.maxInner.getY());
+            output.putInt("mb_maxZ", multiblock.maxInner.getZ());
+        }
     }
     @SuppressWarnings("removal")
     @Override
@@ -521,10 +540,27 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
         if (isFormed) fluidTank.setCapacity(itemHandler.getSlots() * 8000);
 
+        int mbMinY = input.getIntOr("mb_minY", Integer.MIN_VALUE);
+        if (mbMinY != Integer.MIN_VALUE) {
+            syncedMinInner = new BlockPos(
+                    input.getIntOr("mb_minX", 0), mbMinY, input.getIntOr("mb_minZ", 0));
+            syncedMaxInner = new BlockPos(
+                    input.getIntOr("mb_maxX", 0), input.getIntOr("mb_maxY", 0),
+                    input.getIntOr("mb_maxZ", 0));
+        } else { syncedMinInner = null; syncedMaxInner = null; }
+
         String displayId = input.getStringOr("display_fluid", "");
         if (!displayId.isEmpty()) {
             Fluid f = BuiltInRegistries.FLUID.getValue(Identifier.parse(displayId));
             displayFluid = (f != null && !f.isSame(Fluids.EMPTY)) ? new FluidStack(f, 1000) : FluidStack.EMPTY;
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide() && isFormed) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
     }
 

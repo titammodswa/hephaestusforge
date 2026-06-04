@@ -20,10 +20,7 @@ public class TitamMods {
 
         if (ModList.get().isLoaded("alltheores") && ModList.get().isLoaded("ftbmaterials")) {
             hasConflict = true;
-            if (FMLEnvironment.getDist() == Dist.CLIENT) {
-                net.neoforged.neoforge.common.NeoForge.EVENT_BUS
-                        .addListener(TitamMods::showErrorScreen);
-            }
+
             return;
         }
 
@@ -50,17 +47,4 @@ public class TitamMods {
         DataGenerators.register(modEventBus);
     }
 
-    public static void showErrorScreen(net.neoforged.neoforge.client.event.ScreenEvent.Init.Post event) {
-        if (event.getScreen() instanceof net.minecraft.client.gui.screens.TitleScreen) {
-            net.minecraft.client.Minecraft.getInstance().setScreen(
-                    new net.minecraft.client.gui.screens.ConfirmScreen(
-                            ignored -> net.minecraft.client.Minecraft.getInstance().stop(),
-                            net.minecraft.network.chat.Component
-                                    .translatable("gui.hephaestus.conflict.title"),
-                            net.minecraft.network.chat.Component
-                                    .translatable("gui.hephaestus.conflict.description")
-                    )
-            );
-        }
-    }
 }
