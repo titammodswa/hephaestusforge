@@ -65,6 +65,7 @@ public class ModRecipeProvider extends RecipeProvider {
         addVanillaRecipes();
         addMeltingMiscRecipes();
         addAlloyRecipes();
+        addEntityMeltingRecipes();
 
         createCastRecipe("ingots",   ModItems.INGOT_CAST.get(),  "ingot_cast");
         createCastRecipe("nuggets",  ModItems.NUGGET_CAST.get(), "nugget_cast");
@@ -339,6 +340,29 @@ public class ModRecipeProvider extends RecipeProvider {
         this.output.withConditions(cond).accept(
                 rk("smeltery/casting/basin/" + prefix + "metal/" + name + "/block_cast"),
                 new ModRecipes.CastingBasinRecipe(fluidId, 900, blockId, 1, bt * 2),                      null);
+    }
+
+    private void addEntityMeltingRecipes() {
+        addEntityMeltingRecipe(
+                net.minecraft.world.entity.EntityType.BLAZE,
+                Identifier.fromNamespaceAndPath(TitamMods.MODID, "molten_blaze"),
+                250, 2, "blaze");
+
+        addEntityMeltingRecipe(
+                net.minecraft.world.entity.EntityType.MAGMA_CUBE,
+                Identifier.fromNamespaceAndPath("minecraft", "lava"),
+                100, 2, "magma_cube");
+    }
+
+    private void addEntityMeltingRecipe(net.minecraft.world.entity.EntityType<?> entityType,
+                                        Identifier fluidId, int amount, int damage,
+                                        String savePath) {
+        com.titammods.setup.ModRecipes.EntityMeltingRecipe recipe =
+                new com.titammods.setup.ModRecipes.EntityMeltingRecipe(entityType, fluidId, amount, damage);
+        this.output.accept(
+                ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "entity_melting/" + savePath)),
+                recipe, null);
     }
 
     private Identifier fuelId(int temp) {

@@ -346,5 +346,8 @@
   "gui.hephaestus.melting.no_tank": "Sem Tanque de Combustível",
   "gui.hephaestus.tank.bucket.auto.title": "Encher/Esvaziar Auto",
   "gui.hephaestus.shift_hint": "[Shift] para detalhes",
-  "gui.hephaestus.tank_free": "Livre: %s mB"
+  "gui.hephaestus.tank_free": "Livre: %s mB",
+  "gui.hephaestus.entity_melting": "Fusão de Entidade",
+  "gui.hephaestus.entity_melting.per_heart": "%s♥ por acerto"
+
 }

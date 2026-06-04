@@ -45,6 +45,10 @@ public class TitamMods {
         modEventBus.addListener(com.titammods.network.ModNetworking::register);
 
         DataGenerators.register(modEventBus);
+
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(
+                (net.neoforged.neoforge.event.OnDatapackSyncEvent e) ->
+                        com.titammods.common.blockentities.module.EntityMeltingModule.invalidateCache());
     }
 
 }

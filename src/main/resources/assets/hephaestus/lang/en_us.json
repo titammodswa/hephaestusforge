@@ -346,5 +346,7 @@
   "gui.hephaestus.melting.no_tank": "No Fuel Tank",
   "gui.hephaestus.tank.bucket.auto.title": "Auto Fill/Drain",
   "gui.hephaestus.shift_hint": "[Shift] for details",
-  "gui.hephaestus.tank_free": "Free: %s mB"
+  "gui.hephaestus.tank_free": "Free: %s mB",
+  "gui.hephaestus.entity_melting": "Entity Melting",
+  "gui.hephaestus.entity_melting.per_heart": "%s♥ per hit"
 }

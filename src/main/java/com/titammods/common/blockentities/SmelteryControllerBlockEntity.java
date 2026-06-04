@@ -18,6 +18,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
+import net.minecraft.world.phys.AABB;
+import com.titammods.common.blockentities.module.EntityMeltingModule;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -50,6 +52,8 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
     public final SmelteryFluidHandler fluidTank = new SmelteryFluidHandler();
 
+    private EntityMeltingModule entityMeltingModule;
+
     public int inventoryVersion = 0;
     @SuppressWarnings("removal")
     public ItemStackHandler itemHandler = new ItemStackHandler(0) {
@@ -68,9 +72,25 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     public FluidStack currentFuel  = FluidStack.EMPTY;
     public int fuelCapacity        = 0;
     public FluidStack displayFluid = FluidStack.EMPTY;
-
+    @SuppressWarnings("removal")
     public SmelteryControllerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.SMELTERY_CONTROLLER.get(), pos, state);
+        entityMeltingModule = new EntityMeltingModule(
+                new EntityMeltingModule.SmelteryParent() {
+                    @Override public net.minecraft.world.level.Level getLevel() { return level; }
+                    @Override public net.minecraft.core.BlockPos getBlockPos() { return worldPosition; }
+                    @Override public boolean isFormed() { return isFormed; }
+                    @Override public boolean hasFuel() { return !currentFuel.isEmpty() || fuel > 0; }
+                },
+                fluidTank,
+                stack -> {
+                    for (int i = 0; i < itemHandler.getSlots(); i++) {
+                        stack = itemHandler.insertItem(i, stack, false);
+                        if (stack.isEmpty()) return ItemStack.EMPTY;
+                    }
+                    return stack;
+                }
+        );
     }
 
     @Override public FluidStack getDisplayFluid() { return displayFluid; }
@@ -107,6 +127,12 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 updateFuelInfo();
                 updateDisplayFluidSync();
                 processAlloying();
+                if (multiblock != null && multiblock.minInner != null) {
+                    BlockPos mn = multiblock.minInner, mx = multiblock.maxInner.offset(1, 1, 1);
+                    AABB inner = new AABB(mn.getX(), mn.getY(), mn.getZ(),
+                            mx.getX(), mx.getY(), mx.getZ());
+                    entityMeltingModule.interactWithEntities(inner);
+                }
             } else {
                 this.currentFuel  = FluidStack.EMPTY;
                 this.fuelCapacity = 0;

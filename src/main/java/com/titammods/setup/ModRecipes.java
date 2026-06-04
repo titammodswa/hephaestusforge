@@ -182,6 +182,71 @@ public class ModRecipes {
         @Override public PlacementInfo placementInfo() { return PLACEMENT; }
     }
 
+    public static final Supplier<RecipeType<EntityMeltingRecipe>> ENTITY_MELTING_TYPE =
+            TYPES.register("entity_melting", () -> new RecipeType<EntityMeltingRecipe>() {
+                @Override public String toString() { return "entity_melting"; }
+            });
+
+    public static final Supplier<RecipeSerializer<EntityMeltingRecipe>> ENTITY_MELTING_SERIALIZER =
+            SERIALIZERS.register("entity_melting",
+                    () -> new RecipeSerializer<>(EntityMeltingRecipe.CODEC, EntityMeltingRecipe.STREAM_CODEC));
+
+    public record EntityMeltingRecipe(
+            net.minecraft.world.entity.EntityType<?> entityType,
+            Identifier resultId,
+            int resultAmount,
+            int damage
+    ) implements Recipe<SingleRecipeInput> {
+
+        public net.neoforged.neoforge.fluids.FluidStack output() {
+            net.minecraft.world.level.material.Fluid f = BuiltInRegistries.FLUID.getValue(resultId);
+            return (f == null || f.isSame(net.minecraft.world.level.material.Fluids.EMPTY))
+                    ? net.neoforged.neoforge.fluids.FluidStack.EMPTY
+                    : new net.neoforged.neoforge.fluids.FluidStack(f, resultAmount);
+        }
+
+        public boolean matches(net.minecraft.world.entity.EntityType<?> type) {
+            return this.entityType == type;
+        }
+
+        public static final MapCodec<EntityMeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+                BuiltInRegistries.ENTITY_TYPE.byNameCodec()
+                        .fieldOf("entity").forGetter(EntityMeltingRecipe::entityType),
+                Identifier.CODEC.fieldOf("result_id").forGetter(EntityMeltingRecipe::resultId),
+                Codec.INT.fieldOf("result_amount").forGetter(EntityMeltingRecipe::resultAmount),
+                Codec.INT.optionalFieldOf("damage", 2).forGetter(EntityMeltingRecipe::damage)
+        ).apply(inst, EntityMeltingRecipe::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, EntityMeltingRecipe> STREAM_CODEC =
+                StreamCodec.of(
+                        (buf, r) -> {
+                            Identifier entityId = BuiltInRegistries.ENTITY_TYPE.getKey(r.entityType());
+                            buf.writeUtf(entityId.getNamespace()); buf.writeUtf(entityId.getPath());
+                            buf.writeUtf(r.resultId().getNamespace()); buf.writeUtf(r.resultId().getPath());
+                            buf.writeVarInt(r.resultAmount());
+                            buf.writeVarInt(r.damage());
+                        },
+                        buf -> new EntityMeltingRecipe(
+                                BuiltInRegistries.ENTITY_TYPE.getValue(
+                                        Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf())),
+                                Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()),
+                                buf.readVarInt(),
+                                buf.readVarInt()
+                        )
+                );
+
+        @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
+        @Override public ItemStack assemble(SingleRecipeInput inv) { return ItemStack.EMPTY; }
+        @Override public RecipeSerializer<EntityMeltingRecipe> getSerializer() { return ENTITY_MELTING_SERIALIZER.get(); }
+        @Override public RecipeType<EntityMeltingRecipe> getType() { return ENTITY_MELTING_TYPE.get(); }
+        @Override public RecipeBookCategory recipeBookCategory() { return HEPHAESTUS_CATEGORY.get(); }
+        @Override public String group() { return ""; }
+        @Override public boolean showNotification() { return false; }
+        @Override public List<net.minecraft.world.item.crafting.display.RecipeDisplay> display() { return List.of(); }
+        private static final PlacementInfo PLACEMENT = PlacementInfo.createFromOptionals(List.of());
+        @Override public PlacementInfo placementInfo() { return PLACEMENT; }
+    }
+
     public static final Supplier<RecipeType<CastingTableRecipe>> CASTING_TABLE_TYPE =
             TYPES.register("casting_table", () -> new RecipeType<CastingTableRecipe>() {
                 @Override public String toString() { return "casting_table"; }

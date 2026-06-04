@@ -41,6 +41,10 @@ public class TitamModsJEIPlugin implements IModPlugin {
     public static final RecipeType<ModRecipes.CastingBasinRecipe> CASTING_BASIN_TYPE =
             RecipeType.create(TitamMods.MODID, "casting_basin", ModRecipes.CastingBasinRecipe.class);
 
+    @SuppressWarnings("removal")
+    public static final RecipeType<ModRecipes.EntityMeltingRecipe> ENTITY_MELTING_TYPE =
+            RecipeType.create(TitamMods.MODID, "entity_melting", ModRecipes.EntityMeltingRecipe.class);
+
     @Override
     public Identifier getPluginUid() {
         return Identifier.fromNamespaceAndPath(TitamMods.MODID, "jei_plugin");
@@ -54,7 +58,8 @@ public class TitamModsJEIPlugin implements IModPlugin {
                 new CastingTableCategory(gui),
                 new CastingBasinCategory(gui),
                 new AlloyCategory(gui),
-                new SmelteryCategory(gui)
+                new SmelteryCategory(gui),
+                new EntityMeltingCategory(gui)
         );
     }
 
@@ -84,6 +89,11 @@ public class TitamModsJEIPlugin implements IModPlugin {
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(ALLOY_TYPE, alloy);
         registration.addRecipes(SMELTERY_TYPE, melting);
+
+        List<ModRecipes.EntityMeltingRecipe> entityMelting = rm.recipeMap()
+                .byType(ModRecipes.ENTITY_MELTING_TYPE.get())
+                .stream().map(RecipeHolder::value).toList();
+        registration.addRecipes(ENTITY_MELTING_TYPE, entityMelting);
     }
 
     @SuppressWarnings("removal")
@@ -100,5 +110,6 @@ public class TitamModsJEIPlugin implements IModPlugin {
                 CASTING_BASIN_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.SMELTERY_CONTROLLER.get()), ALLOY_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.SMELTERY_CONTROLLER.get()), SMELTERY_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.SMELTERY_CONTROLLER.get()), ENTITY_MELTING_TYPE);
     }
 }

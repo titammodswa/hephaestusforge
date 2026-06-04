@@ -1,0 +1,6 @@
+{
+  "type": "hephaestus:entity_melting",
+  "entity": "minecraft:magma_cube",
+  "result_amount": 100,
+  "result_id": "minecraft:lava"
+}
