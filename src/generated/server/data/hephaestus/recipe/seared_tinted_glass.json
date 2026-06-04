@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "hephaestus:forge_brick",
+    "G": "minecraft:tinted_glass"
+  },
+  "pattern": [
+    "GGG",
+    "GBG",
+    "GGG"
+  ],
+  "result": {
+    "count": 4,
+    "id": "hephaestus:seared_tinted_glass"
+  }
+}

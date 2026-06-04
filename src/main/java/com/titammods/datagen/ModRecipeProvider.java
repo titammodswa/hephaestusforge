@@ -234,6 +234,49 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('S', Items.BLAST_FURNACE)
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("smeltery_controller"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_GLASS.get(), 4)
+                .pattern("GGG")
+                .pattern("GBG")
+                .pattern("GGG")
+                .define('G', Items.GLASS)
+                .define('B', ModItems.FORGE_BRICK.get())
+                .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
+                .save(this.output, rk("seared_glass"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_TINTED_GLASS.get(), 4)
+                .pattern("GGG")
+                .pattern("GBG")
+                .pattern("GGG")
+                .define('G', Items.TINTED_GLASS)
+                .define('B', ModItems.FORGE_BRICK.get())
+                .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
+                .save(this.output, rk("seared_tinted_glass"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CLEAR_GLASS.get(), 4)
+                .pattern("GG")
+                .pattern("GG")
+                .define('G', Items.GLASS)
+                .unlockedBy("has_glass", this.has(Items.GLASS))
+                .save(this.output, rk("clear_glass"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CLEAR_STAINED_GLASS.get(), 8)
+                .pattern("GGG")
+                .pattern("GDG")
+                .pattern("GGG")
+                .define('G', ModBlocks.CLEAR_GLASS.get())
+                .define('D', ItemTags.create(Identifier.fromNamespaceAndPath("c", "dyes")))
+                .unlockedBy("has_clear_glass", this.has(ModBlocks.CLEAR_GLASS.get()))
+                .save(this.output, rk("clear_stained_glass"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CLEAR_TINTED_GLASS.get(), 2)
+                .pattern(" A ")
+                .pattern("AGA")
+                .pattern(" A ")
+                .define('G', ModBlocks.CLEAR_GLASS.get())
+                .define('A', Items.AMETHYST_SHARD)
+                .unlockedBy("has_clear_glass", this.has(ModBlocks.CLEAR_GLASS.get()))
+                .save(this.output, rk("clear_tinted_glass"));
     }
 
     private void registerAllTheOresCompat() {

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/glass",
+  "ambientocclusion": false,
+  "textures": {
+    "all": "hephaestus:block/smeltery/glass/clear_tinted_glass"
+  }
+}

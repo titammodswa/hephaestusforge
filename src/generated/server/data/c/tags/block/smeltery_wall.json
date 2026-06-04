@@ -2,6 +2,11 @@
   "values": [
     "#c:smeltery_floor",
     "hephaestus:seared_chute",
-    "hephaestus:seared_drain"
+    "hephaestus:seared_drain",
+    "hephaestus:clear_glass",
+    "hephaestus:clear_stained_glass",
+    "hephaestus:clear_tinted_glass",
+    "hephaestus:seared_glass",
+    "hephaestus:seared_tinted_glass"
   ]
 }

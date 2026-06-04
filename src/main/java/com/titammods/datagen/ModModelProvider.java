@@ -35,6 +35,14 @@ public class ModModelProvider implements DataProvider {
             Map.entry("seared_tile",            "block/smeltery/seared/tile")
     );
 
+    private static final Map<String, String> GLASS_TEX = Map.of(
+            "clear_glass",         "block/smeltery/glass/clear_glass",
+            "clear_stained_glass", "block/smeltery/glass/clear_stained_glass",
+            "clear_tinted_glass",  "block/smeltery/glass/clear_tinted_glass",
+            "seared_glass",        "block/smeltery/glass/seared_glass",
+            "seared_tinted_glass", "block/smeltery/glass/seared_tinted_glass"
+    );
+
     private static final String[] FLAT_ITEMS = {
             "raw_cobalt", "cobalt_ingot", "cobalt_nugget", "cobalt_powder",
             "raw_steel",  "steel_ingot",  "steel_nugget",  "steel_powder",
@@ -43,7 +51,7 @@ public class ModModelProvider implements DataProvider {
             "ingot_cast", "nugget_cast", "plate_cast", "rod_cast"
     };
 
-    private static final java.util.Map<String, String> TANK_MODELS = java.util.Map.of(
+    private static final Map<String, String> TANK_MODELS = Map.of(
             "seared_ingot_tank", "block/smeltery/tank/ingot_tank",
             "seared_fuel_tank",  "block/smeltery/tank/fuel_tank"
     );
@@ -92,8 +100,8 @@ public class ModModelProvider implements DataProvider {
             String name      = entry.getKey();
             String modelPath = entry.getValue();
             Identifier id = id(name);
-            futures.add(save(cache, tankBlockstate(modelPath),        blockstatePath.json(id)));
-            futures.add(save(cache, tankClientItem(name, modelPath),  itemPath.json(id)));
+            futures.add(save(cache, tankBlockstate(modelPath),       blockstatePath.json(id)));
+            futures.add(save(cache, tankClientItem(name, modelPath), itemPath.json(id)));
         }
 
         for (String name : COMPLEX_BLOCKS) {
@@ -102,9 +110,19 @@ public class ModModelProvider implements DataProvider {
 
         for (var e : BLOCK_TEX.entrySet()) {
             Identifier id = id(e.getKey());
-            futures.add(save(cache, blockModel(e.getValue()),   modelBlockPath.json(id)));
+            futures.add(save(cache, blockModel(e.getValue()),    modelBlockPath.json(id)));
             futures.add(save(cache, blockstate(e.getKey()),      blockstatePath.json(id)));
             futures.add(save(cache, blockClientItem(e.getKey()), itemPath.json(id)));
+        }
+
+        for (var e : GLASS_TEX.entrySet()) {
+            String name = e.getKey();
+            String tex  = e.getValue();
+            Identifier id = id(name);
+            futures.add(save(cache, glassBlockModel(tex),  modelBlockPath.json(id)));
+            futures.add(save(cache, glassItemModel(name, tex), modelItemPath.json(id)));
+            futures.add(save(cache, blockstate(name),       blockstatePath.json(id)));
+            futures.add(save(cache, glassClientItem(name),  itemPath.json(id)));
         }
 
         for (String name : FLAT_ITEMS) {
@@ -119,10 +137,7 @@ public class ModModelProvider implements DataProvider {
             String bucketName = fluidReg + "_bucket";
 
             futures.add(save(cache, blockstate(blockName), blockstatePath.json(id(blockName))));
-
-            futures.add(save(cache,
-                    fluidContainerItem(fluidReg),
-                    itemPath.json(id(bucketName))));
+            futures.add(save(cache, fluidContainerItem(fluidReg), itemPath.json(id(bucketName))));
         }
 
         for (var e : MOD_FLUID_STILL.entrySet()) {
@@ -131,10 +146,7 @@ public class ModModelProvider implements DataProvider {
             String bucketName = name + "_bucket";
 
             futures.add(save(cache, blockstate(blockName), blockstatePath.json(id(blockName))));
-
-            futures.add(save(cache,
-                    fluidContainerItem(name),
-                    itemPath.json(id(bucketName))));
+            futures.add(save(cache, fluidContainerItem(name), itemPath.json(id(bucketName))));
         }
 
         return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
@@ -143,32 +155,39 @@ public class ModModelProvider implements DataProvider {
     @Override
     public String getName() { return "Hephaestus Models"; }
 
-    private JsonObject fluidAtlas() {
-        JsonObject j = new JsonObject();
-        JsonArray sources = new JsonArray();
-        JsonObject dir = new JsonObject();
-        dir.addProperty("type", "directory");
-        dir.addProperty("source", "fluid");
-        dir.addProperty("prefix", "fluid/");
-        sources.add(dir);
-        j.add("sources", sources);
-        return j;
-    }
-
-    private JsonObject complexBlockClientItem(String name) {
-        JsonObject j = new JsonObject();
-        JsonObject m = new JsonObject();
-        m.addProperty("type",  "minecraft:model");
-        m.addProperty("model", TitamMods.MODID + ":item/" + name);
-        j.add("model", m);
-        return j;
-    }
-
     private JsonObject blockModel(String tex) {
         JsonObject j = new JsonObject();
         j.addProperty("parent", "minecraft:block/cube_all");
         JsonObject t = new JsonObject();
         t.addProperty("all", TitamMods.MODID + ":" + tex);
+        j.add("textures", t);
+        return j;
+    }
+
+    private JsonObject glassBlockModel(String tex) {
+        JsonObject j = new JsonObject();
+        j.addProperty("parent", "minecraft:block/glass");
+        j.addProperty("ambientocclusion", false);
+        JsonObject t = new JsonObject();
+        t.addProperty("all", TitamMods.MODID + ":" + tex);
+        j.add("textures", t);
+        return j;
+    }
+
+    private JsonObject glassItemModel(String name, String tex) {
+        JsonObject j = new JsonObject();
+        j.addProperty("parent", "minecraft:item/generated");
+        JsonObject t = new JsonObject();
+        t.addProperty("layer0", TitamMods.MODID + ":" + tex);
+        j.add("textures", t);
+        return j;
+    }
+
+    private JsonObject flatItemModel(String name) {
+        JsonObject j = new JsonObject();
+        j.addProperty("parent", "minecraft:item/generated");
+        JsonObject t = new JsonObject();
+        t.addProperty("layer0", TitamMods.MODID + ":item/" + name);
         j.add("textures", t);
         return j;
     }
@@ -192,12 +211,12 @@ public class ModModelProvider implements DataProvider {
         return j;
     }
 
-    private JsonObject flatItemModel(String name) {
+    private JsonObject glassClientItem(String name) {
         JsonObject j = new JsonObject();
-        j.addProperty("parent", "minecraft:item/generated");
-        JsonObject t = new JsonObject();
-        t.addProperty("layer0", TitamMods.MODID + ":item/" + name);
-        j.add("textures", t);
+        JsonObject m = new JsonObject();
+        m.addProperty("type", "minecraft:model");
+        m.addProperty("model", TitamMods.MODID + ":item/" + name);
+        j.add("model", m);
         return j;
     }
 
@@ -207,6 +226,27 @@ public class ModModelProvider implements DataProvider {
         m.addProperty("type", "minecraft:model");
         m.addProperty("model", TitamMods.MODID + ":item/" + name);
         j.add("model", m);
+        return j;
+    }
+
+    private JsonObject complexBlockClientItem(String name) {
+        JsonObject j = new JsonObject();
+        JsonObject m = new JsonObject();
+        m.addProperty("type",  "minecraft:model");
+        m.addProperty("model", TitamMods.MODID + ":item/" + name);
+        j.add("model", m);
+        return j;
+    }
+
+    private JsonObject fluidAtlas() {
+        JsonObject j = new JsonObject();
+        JsonArray sources = new JsonArray();
+        JsonObject dir = new JsonObject();
+        dir.addProperty("type", "directory");
+        dir.addProperty("source", "fluid");
+        dir.addProperty("prefix", "fluid/");
+        sources.add(dir);
+        j.add("sources", sources);
         return j;
     }
 
@@ -230,7 +270,6 @@ public class ModModelProvider implements DataProvider {
         JsonObject composite = new JsonObject();
         composite.addProperty("type", "minecraft:composite");
         JsonArray models = new JsonArray();
-        // Special: renderer do fluido
         JsonObject special = new JsonObject();
         special.addProperty("type", "minecraft:special");
         special.addProperty("base", fullModel);
@@ -238,7 +277,6 @@ public class ModModelProvider implements DataProvider {
         specialModel.addProperty("type", TitamMods.MODID + ":seared_tank_fluid");
         special.add("model", specialModel);
         models.add(special);
-        // Model: textura do bloco do tanque
         JsonObject regular = new JsonObject();
         regular.addProperty("type", "minecraft:model");
         regular.addProperty("model", fullModel);

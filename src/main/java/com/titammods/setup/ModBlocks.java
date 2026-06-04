@@ -41,6 +41,51 @@ public class ModBlocks {
     public static final DeferredBlock<Block> SEARED_CRACKED_BRICKS  = searedBlock("seared_cracked_bricks");
     public static final DeferredBlock<Block> SEARED_CREEPER         = searedBlock("seared_creeper");
 
+    public static final DeferredBlock<Block> CLEAR_GLASS = registerBlock("clear_glass",
+            k -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+                    .noOcclusion()
+                    .isValidSpawn((state, getter, pos, type) -> false)
+                    .isRedstoneConductor((state, getter, pos) -> false)
+                    .isSuffocating((state, getter, pos) -> false)
+                    .isViewBlocking((state, getter, pos) -> false)
+                    .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<Block> CLEAR_STAINED_GLASS = registerBlock("clear_stained_glass",
+            k -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+                    .noOcclusion()
+                    .isValidSpawn((state, getter, pos, type) -> false)
+                    .isRedstoneConductor((state, getter, pos) -> false)
+                    .isSuffocating((state, getter, pos) -> false)
+                    .isViewBlocking((state, getter, pos) -> false)
+                    .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<Block> CLEAR_TINTED_GLASS = registerBlock("clear_tinted_glass",
+            k -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.TINTED_GLASS)
+                    .noOcclusion()
+                    .isValidSpawn((state, getter, pos, type) -> false)
+                    .isRedstoneConductor((state, getter, pos) -> false)
+                    .isSuffocating((state, getter, pos) -> false)
+                    .isViewBlocking((state, getter, pos) -> false)
+                    .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<Block> SEARED_GLASS = registerBlock("seared_glass",
+            k -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+                    .noOcclusion()
+                    .isValidSpawn((state, getter, pos, type) -> false)
+                    .isRedstoneConductor((state, getter, pos) -> false)
+                    .isSuffocating((state, getter, pos) -> false)
+                    .isViewBlocking((state, getter, pos) -> false)
+                    .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<Block> SEARED_TINTED_GLASS = registerBlock("seared_tinted_glass",
+            k -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.TINTED_GLASS)
+                    .noOcclusion()
+                    .isValidSpawn((state, getter, pos, type) -> false)
+                    .isRedstoneConductor((state, getter, pos) -> false)
+                    .isSuffocating((state, getter, pos) -> false)
+                    .isViewBlocking((state, getter, pos) -> false)
+                    .setId(ResourceKey.create(Registries.BLOCK, k))));
+
     public static final DeferredBlock<SearedTankBlock> SEARED_INGOT_TANK = registerBlock("seared_ingot_tank",
             k -> new SearedTankBlock(
                     BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)

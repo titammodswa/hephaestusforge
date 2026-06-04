@@ -69,6 +69,13 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(smelteryWall).addTag(smelteryFloor)
                 .add(ModBlocks.SEARED_CHUTE.get())
                 .add(ModBlocks.SEARED_DRAIN.get());
+
+        tag(smelteryWall)
+                .add(ModBlocks.CLEAR_GLASS.get())
+                .add(ModBlocks.CLEAR_STAINED_GLASS.get())
+                .add(ModBlocks.CLEAR_TINTED_GLASS.get())
+                .add(ModBlocks.SEARED_GLASS.get())
+                .add(ModBlocks.SEARED_TINTED_GLASS.get());
     }
 
     private net.minecraft.tags.TagKey<Block> bTag(String namespace, String path) {
