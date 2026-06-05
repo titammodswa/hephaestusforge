@@ -1,4 +1,4 @@
-// 26.1.2	2026-06-04T22:32:07.1988122	Loot Tables
+// 26.1.2	2026-06-05T01:17:30.9504393	Loot Tables
 bfecac4668deb1ef4549e4fcef21b3de1d6b7e63 data/hephaestus/loot_table/blocks/clear_glass.json
 f1917c7ac5259e0e0fed35d8bd325815f31243cf data/hephaestus/loot_table/blocks/clear_stained_glass.json
 1e9a93679ae67beaedfa451ea5bbb0131f10d22d data/hephaestus/loot_table/blocks/clear_tinted_glass.json
@@ -31,6 +31,8 @@ f1f1a69a9e1f2c7fe2ceebbeaeb0fba581e2dfd8 data/hephaestus/loot_table/blocks/seare
 4f5c47ef6878074c8ba2d9f7288b1729d29c6255 data/hephaestus/loot_table/blocks/seared_fuel_tank.json
 d44846a621a981d9aec82b7b6ee48c823a229cec data/hephaestus/loot_table/blocks/seared_glass.json
 4260d9f92ce9d307c60b59acf41bc8d6c21e1814 data/hephaestus/loot_table/blocks/seared_ingot_tank.json
+be788bb3bc65f46ff88f440ab5f0f6260ef534ac data/hephaestus/loot_table/blocks/seared_ladder.json
+9f15b6d26415d633d78fecfe6df0bab6e17ad3cf data/hephaestus/loot_table/blocks/seared_lamp.json
 d14de7982023d9a64fa4161bc1c87ab5017a6c69 data/hephaestus/loot_table/blocks/seared_melter.json
 49a48066c180c8957b872d257c7e6fdafffdfe8c data/hephaestus/loot_table/blocks/seared_paver.json
 0f6340e43a77292ad5be9fabec0e5542e2a14b1d data/hephaestus/loot_table/blocks/seared_paver_slab.json

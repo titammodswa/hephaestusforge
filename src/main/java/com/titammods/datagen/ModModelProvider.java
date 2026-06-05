@@ -32,7 +32,8 @@ public class ModModelProvider implements DataProvider {
             Map.entry("seared_road",            "block/smeltery/seared/road"),
             Map.entry("seared_small_bricks",    "block/smeltery/seared/small_bricks"),
             Map.entry("seared_square_bricks",   "block/smeltery/seared/square_bricks"),
-            Map.entry("seared_tile",            "block/smeltery/seared/tile")
+            Map.entry("seared_tile",            "block/smeltery/seared/tile"),
+            Map.entry("seared_lamp",            "block/smeltery/seared/lamp")
     );
 
     private static final Map<String, String> GLASS_TEX = Map.of(
@@ -150,6 +151,7 @@ public class ModModelProvider implements DataProvider {
         }
 
 
+        futures.addAll(searedLadder(cache));
         futures.addAll(searedStairs(cache, "seared_stone_stairs", "hephaestus:block/smeltery/seared/stone"));
         futures.addAll(searedStairs(cache, "seared_cobble_stairs", "hephaestus:block/smeltery/seared/cobble"));
         futures.addAll(searedStairs(cache, "seared_paver_stairs", "hephaestus:block/smeltery/seared/paver"));
@@ -382,30 +384,64 @@ public class ModModelProvider implements DataProvider {
     private com.google.gson.JsonObject stairsBlockstate(String name) {
         var j = new com.google.gson.JsonObject();
         var variants = new com.google.gson.JsonObject();
-        String[][] facing = {{"east","90"},{"north","180"},{"south","0"},{"west","270"}};
-        String[][] half   = {{"bottom","0"},{"top","180"}};
-        String[][] shape  = {{"inner_left","0"},{"inner_right","0"},{"outer_left","0"},{"outer_right","0"},{"straight","0"}};
-        for (var f : facing) for (var h : half) for (var s : shape) {
-            String key = "facing=" + f[0] + ",half=" + h[0] + ",shape=" + s[0];
+        String base  = "hephaestus:block/" + name;
+        String inner = base + "_inner";
+        String outer = base + "_outer";
+        Object[][] table = {
+                // facing=east
+                {"east","bottom","inner_left",  inner, 0,   270, true },
+                {"east","bottom","inner_right", inner, 0,   0,   false},
+                {"east","bottom","outer_left",  outer, 0,   270, true },
+                {"east","bottom","outer_right", outer, 0,   0,   false},
+                {"east","bottom","straight",    base,  0,   0,   false},
+                {"east","top",   "inner_left",  inner, 180, 0,   true },
+                {"east","top",   "inner_right", inner, 180, 90,  true },
+                {"east","top",   "outer_left",  outer, 180, 0,   true },
+                {"east","top",   "outer_right", outer, 180, 90,  true },
+                {"east","top",   "straight",    base,  180, 0,   true },
+                // facing=north
+                {"north","bottom","inner_left",  inner, 0,   180, true },
+                {"north","bottom","inner_right", inner, 0,   270, true },
+                {"north","bottom","outer_left",  outer, 0,   180, true },
+                {"north","bottom","outer_right", outer, 0,   270, true },
+                {"north","bottom","straight",    base,  0,   270, true },
+                {"north","top",   "inner_left",  inner, 180, 270, true },
+                {"north","top",   "inner_right", inner, 180, 0,   true },
+                {"north","top",   "outer_left",  outer, 180, 270, true },
+                {"north","top",   "outer_right", outer, 180, 0,   true },
+                {"north","top",   "straight",    base,  180, 270, true },
+                // facing=south
+                {"south","bottom","inner_left",  inner, 0,   0,   false},
+                {"south","bottom","inner_right", inner, 0,   90,  false},
+                {"south","bottom","outer_left",  outer, 0,   0,   false},
+                {"south","bottom","outer_right", outer, 0,   90,  false},
+                {"south","bottom","straight",    base,  0,   90,  false},
+                {"south","top",   "inner_left",  inner, 180, 90,  true },
+                {"south","top",   "inner_right", inner, 180, 180, true },
+                {"south","top",   "outer_left",  outer, 180, 90,  true },
+                {"south","top",   "outer_right", outer, 180, 180, true },
+                {"south","top",   "straight",    base,  180, 90,  true },
+                // facing=west
+                {"west","bottom","inner_left",  inner, 0,   90,  false},
+                {"west","bottom","inner_right", inner, 0,   180, true },
+                {"west","bottom","outer_left",  outer, 0,   90,  false},
+                {"west","bottom","outer_right", outer, 0,   180, true },
+                {"west","bottom","straight",    base,  0,   180, true },
+                {"west","top",   "inner_left",  inner, 180, 180, true },
+                {"west","top",   "inner_right", inner, 180, 270, true },
+                {"west","top",   "outer_left",  outer, 180, 180, true },
+                {"west","top",   "outer_right", outer, 180, 270, true },
+                {"west","top",   "straight",    base,  180, 180, true },
+        };
+        for (var row : table) {
+            String key = "facing=" + row[0] + ",half=" + row[1] + ",shape=" + row[2];
             var model = new com.google.gson.JsonObject();
-            String mname = "hephaestus:block/" + name;
-            boolean inner = s[0].startsWith("inner"), outer = s[0].startsWith("outer");
-            if (inner) mname += "_inner"; else if (outer) mname += "_outer";
-            model.addProperty("model", mname);
-            int y = Integer.parseInt(f[1]);
-            boolean top = h[0].equals("top");
-            if (outer || s[0].equals("straight")) {
-                if (s[0].contains("left")) y = (y + 270) % 360;
-            } else if (inner) {
-                if (s[0].contains("left")) y = (y + 270) % 360;
-            }
+            model.addProperty("model", (String) row[3]);
+            int x = (int) row[4], y = (int) row[5];
+            boolean uv = (boolean) row[6];
+            if (x != 0) model.addProperty("x", x);
             if (y != 0) model.addProperty("y", y);
-            if (top) model.addProperty("x", 180);
-            if (top && (inner || outer || s[0].equals("straight"))) {
-                boolean uv = false;
-                if (s[0].equals("straight") || outer) uv = true;
-                if (uv) model.addProperty("uvlock", true);
-            }
+            if (uv)     model.addProperty("uvlock", true);
             variants.add(key, model);
         }
         j.add("variants", variants);
@@ -519,6 +555,54 @@ public class ModModelProvider implements DataProvider {
         model.addProperty("model", "hephaestus:block/" + name + "_inventory");
         j.add("model", model);
         return j;
+    }
+
+    private List<CompletableFuture<?>> searedLadder(CachedOutput cache) {
+        String tex = "hephaestus:block/smeltery/seared/ladder";
+        String texTop = "hephaestus:block/smeltery/seared/fancy_bricks";
+
+        var modelNormal = new com.google.gson.JsonObject();
+        modelNormal.addProperty("parent", "hephaestus:block/template/ladder");
+        var texN = new com.google.gson.JsonObject();
+        texN.addProperty("top", texTop);
+        texN.addProperty("side", tex);
+        texN.addProperty("bottom", tex);
+        modelNormal.add("textures", texN);
+
+        var modelBase = new com.google.gson.JsonObject();
+        modelBase.addProperty("parent", "hephaestus:block/template/ladder_base");
+        var texB = new com.google.gson.JsonObject();
+        texB.addProperty("top", texTop);
+        texB.addProperty("side", tex);
+        texB.addProperty("bottom", tex);
+        modelBase.add("textures", texB);
+
+        var bs = new com.google.gson.JsonObject();
+        var variants = new com.google.gson.JsonObject();
+        int[][] facings = {{0, 0}, {90, 270}, {180, 0}, {270, 90}};
+        String[] dirs = {"north", "east", "south", "west"};
+        int[] yRots = {0, 90, 180, 270};
+        for (int i = 0; i < 4; i++) {
+            for (boolean bot : new boolean[]{true, false}) {
+                var v = new com.google.gson.JsonObject();
+                v.addProperty("model", bot
+                        ? "hephaestus:block/seared_ladder_base"
+                        : "hephaestus:block/seared_ladder");
+                if (yRots[i] != 0) v.addProperty("y", yRots[i]);
+                variants.add("bottom=" + bot + ",facing=" + dirs[i], v);
+            }
+        }
+        bs.add("variants", variants);
+
+        Identifier ladId = id("seared_ladder");
+        Identifier ladBaseId = Identifier.fromNamespaceAndPath(TitamMods.MODID, "seared_ladder_base");
+
+        return List.of(
+                save(cache, bs, blockstatePath.json(ladId)),
+                save(cache, modelNormal, modelBlockPath.json(ladId)),
+                save(cache, modelBase, modelBlockPath.json(ladBaseId)),
+                save(cache, blockClientItem("seared_ladder"), itemPath.json(ladId))
+        );
     }
 
 }

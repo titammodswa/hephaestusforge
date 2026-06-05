@@ -328,6 +328,22 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('A', Items.AMETHYST_SHARD)
                 .unlockedBy("has_clear_glass", this.has(ModBlocks.CLEAR_GLASS.get()))
                 .save(this.output, rk("clear_tinted_glass"));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_LAMP.get(), 2)
+                .pattern(" B ").pattern("BGB").pattern(" B ")
+                .define('B', ModBlocks.SEARED_BRICKS.get())
+                .define('G', net.minecraft.world.item.Items.GLOWSTONE)
+                .unlockedBy("has_seared_bricks", has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "seared_lamp")));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_LADDER.get(), 3)
+                .pattern("B B").pattern("BSB").pattern("B B")
+                .define('B', ModBlocks.SEARED_BRICKS.get())
+                .define('S', net.minecraft.world.item.Items.STICK)
+                .unlockedBy("has_seared_bricks", has(ModBlocks.SEARED_BRICKS.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "seared_ladder")));
     }
 
     private void registerAllTheOresCompat() {

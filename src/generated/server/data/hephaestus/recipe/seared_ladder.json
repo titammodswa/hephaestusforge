@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "hephaestus:seared_bricks",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "B B",
+    "BSB",
+    "B B"
+  ],
+  "result": {
+    "count": 3,
+    "id": "hephaestus:seared_ladder"
+  }
+}

@@ -187,6 +187,19 @@ public class ModBlocks {
     public static final DeferredBlock<Block> SEARED_SQUARE_BRICKS_WALL   = searedWall("seared_square_bricks_wall",   SEARED_SQUARE_BRICKS);
     public static final DeferredBlock<Block> SEARED_TILE_WALL   = searedWall("seared_tile_wall",   SEARED_TILE);
 
+    public static final DeferredBlock<Block> SEARED_LAMP = registerBlock("seared_lamp",
+            k -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS)
+                    .strength(3.0f, 15.0f)
+                    .lightLevel(state -> 15)
+                    .setId(ResourceKey.create(Registries.BLOCK, k))));
+
+    public static final DeferredBlock<Block> SEARED_LADDER = registerBlock("seared_ladder",
+            k -> new com.titammods.common.blocks.SearedLadderBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS)
+                            .strength(3.0f, 15.0f)
+                            .noOcclusion()
+                            .setId(ResourceKey.create(Registries.BLOCK, k))));
+
 
     private static DeferredBlock<Block> searedStairs(String name, DeferredBlock<Block> base) {
         return registerBlock(name,

@@ -1,4 +1,4 @@
-// 26.1.2	2026-06-04T22:32:07.187604	hephaestus recipes
+// 26.1.2	2026-06-05T01:17:30.9443522	hephaestus recipes
 371560adf3887729d8033475aeece05cb5addb4a data/hephaestus/advancement/recipes/building_blocks/clear_glass.json
 2be6223ab48b7588c625c7ff1e50f83ee9003ec4 data/hephaestus/advancement/recipes/building_blocks/clear_stained_glass.json
 1f1cc550746b01526ba38f599f42ba000f895ee4 data/hephaestus/advancement/recipes/building_blocks/clear_tinted_glass.json
@@ -51,6 +51,8 @@ f8ce61cca6681ee3a56336719c7bfbe210f9b60f data/hephaestus/advancement/recipes/bui
 a9d7e042be8812dc8bd8b846609e2860f27e47b3 data/hephaestus/advancement/recipes/building_blocks/seared_fuel_tank.json
 b32e89b40a8ee31e09a13f4e4308684e5e8d47cb data/hephaestus/advancement/recipes/building_blocks/seared_glass.json
 79bede5b2af1e69120da431bc570df4ab619eb72 data/hephaestus/advancement/recipes/building_blocks/seared_ingot_tank.json
+0392a8864e51e7e314a9c1e99e8d56b44c72f0a7 data/hephaestus/advancement/recipes/building_blocks/seared_ladder.json
+728c00eda0e9c8ab06b2296dcc12ca9f1c955ab0 data/hephaestus/advancement/recipes/building_blocks/seared_lamp.json
 2e7583d8edbb7f878949c91f668b4b84d3b261de data/hephaestus/advancement/recipes/building_blocks/seared_melter.json
 0f766ccf49fe69ca915072b71015379730bf370a data/hephaestus/advancement/recipes/building_blocks/seared_paver_from_smelting.json
 9a93f88370ae889652e9fce885368c0e8a74fb00 data/hephaestus/advancement/recipes/building_blocks/seared_road.json
@@ -116,6 +118,8 @@ c89ed9810d244d286308214423aeabe3996019c2 data/hephaestus/recipe/seared_faucet.js
 71ed225857cb381c3a128adadb96e090ee9056b1 data/hephaestus/recipe/seared_fuel_tank.json
 987c016dc66a5c0e70fc94ed83b2f8beee187aec data/hephaestus/recipe/seared_glass.json
 56acadb537ba61a3de3839167ac07b329ed4797f data/hephaestus/recipe/seared_ingot_tank.json
+368912643257372e56cfeb65829ab0e67d948b54 data/hephaestus/recipe/seared_ladder.json
+87213dad9cc647a400c50918eed8c7fe328df9f5 data/hephaestus/recipe/seared_lamp.json
 fbe3410116f967cb1eebc9154682f189553f8b10 data/hephaestus/recipe/seared_melter.json
 118351f31948b0a89e7450f5db7affc7e775cb43 data/hephaestus/recipe/seared_paver_from_smelting.json
 bd6068876727f005e93176ffbdb720eb3f445b42 data/hephaestus/recipe/seared_road.json

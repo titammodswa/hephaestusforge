@@ -39,6 +39,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             else if (name.endsWith("_slab"))   slabs.add(block);
         }
 
+        tag(BlockTags.CLIMBABLE).add(ModBlocks.SEARED_LADDER.get());
+
         tag(bTag("c", "storage_blocks"))
                 .add(ModBlocks.COBALT_BLOCK.get(),
                         ModBlocks.RAW_COBALT_BLOCK.get(),
