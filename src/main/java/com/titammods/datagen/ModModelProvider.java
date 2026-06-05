@@ -149,6 +149,46 @@ public class ModModelProvider implements DataProvider {
             futures.add(save(cache, fluidContainerItem(name), itemPath.json(id(bucketName))));
         }
 
+
+        futures.addAll(searedStairs(cache, "seared_stone_stairs", "hephaestus:block/smeltery/seared/stone"));
+        futures.addAll(searedStairs(cache, "seared_cobble_stairs", "hephaestus:block/smeltery/seared/cobble"));
+        futures.addAll(searedStairs(cache, "seared_paver_stairs", "hephaestus:block/smeltery/seared/paver"));
+        futures.addAll(searedStairs(cache, "seared_bricks_stairs", "hephaestus:block/smeltery/seared/bricks"));
+        futures.addAll(searedStairs(cache, "seared_cracked_bricks_stairs", "hephaestus:block/smeltery/seared/cracked_bricks"));
+        futures.addAll(searedStairs(cache, "seared_fancy_bricks_stairs", "hephaestus:block/smeltery/seared/fancy_bricks"));
+        futures.addAll(searedStairs(cache, "seared_triangle_bricks_stairs", "hephaestus:block/smeltery/seared/triangle_bricks"));
+        futures.addAll(searedStairs(cache, "seared_creeper_stairs", "hephaestus:block/smeltery/seared/creeper"));
+        futures.addAll(searedStairs(cache, "seared_road_stairs", "hephaestus:block/smeltery/seared/road"));
+        futures.addAll(searedStairs(cache, "seared_small_bricks_stairs", "hephaestus:block/smeltery/seared/small_bricks"));
+        futures.addAll(searedStairs(cache, "seared_square_bricks_stairs", "hephaestus:block/smeltery/seared/square_bricks"));
+        futures.addAll(searedStairs(cache, "seared_tile_stairs", "hephaestus:block/smeltery/seared/tile"));
+
+        futures.addAll(searedSlab(cache, "seared_stone_slab", "hephaestus:block/smeltery/seared/stone", "hephaestus:block/seared_stone"));
+        futures.addAll(searedSlab(cache, "seared_cobble_slab", "hephaestus:block/smeltery/seared/cobble", "hephaestus:block/seared_cobble"));
+        futures.addAll(searedSlab(cache, "seared_paver_slab", "hephaestus:block/smeltery/seared/paver", "hephaestus:block/seared_paver"));
+        futures.addAll(searedSlab(cache, "seared_bricks_slab", "hephaestus:block/smeltery/seared/bricks", "hephaestus:block/seared_bricks"));
+        futures.addAll(searedSlab(cache, "seared_cracked_bricks_slab", "hephaestus:block/smeltery/seared/cracked_bricks", "hephaestus:block/seared_cracked_bricks"));
+        futures.addAll(searedSlab(cache, "seared_fancy_bricks_slab", "hephaestus:block/smeltery/seared/fancy_bricks", "hephaestus:block/seared_fancy_bricks"));
+        futures.addAll(searedSlab(cache, "seared_triangle_bricks_slab", "hephaestus:block/smeltery/seared/triangle_bricks", "hephaestus:block/seared_triangle_bricks"));
+        futures.addAll(searedSlab(cache, "seared_creeper_slab", "hephaestus:block/smeltery/seared/creeper", "hephaestus:block/seared_creeper"));
+        futures.addAll(searedSlab(cache, "seared_road_slab", "hephaestus:block/smeltery/seared/road", "hephaestus:block/seared_road"));
+        futures.addAll(searedSlab(cache, "seared_small_bricks_slab", "hephaestus:block/smeltery/seared/small_bricks", "hephaestus:block/seared_small_bricks"));
+        futures.addAll(searedSlab(cache, "seared_square_bricks_slab", "hephaestus:block/smeltery/seared/square_bricks", "hephaestus:block/seared_square_bricks"));
+        futures.addAll(searedSlab(cache, "seared_tile_slab", "hephaestus:block/smeltery/seared/tile", "hephaestus:block/seared_tile"));
+
+        futures.addAll(searedWall(cache, "seared_stone_wall", "hephaestus:block/smeltery/seared/stone"));
+        futures.addAll(searedWall(cache, "seared_cobble_wall", "hephaestus:block/smeltery/seared/cobble"));
+        futures.addAll(searedWall(cache, "seared_paver_wall", "hephaestus:block/smeltery/seared/paver"));
+        futures.addAll(searedWall(cache, "seared_bricks_wall", "hephaestus:block/smeltery/seared/bricks"));
+        futures.addAll(searedWall(cache, "seared_cracked_bricks_wall", "hephaestus:block/smeltery/seared/cracked_bricks"));
+        futures.addAll(searedWall(cache, "seared_fancy_bricks_wall", "hephaestus:block/smeltery/seared/fancy_bricks"));
+        futures.addAll(searedWall(cache, "seared_triangle_bricks_wall", "hephaestus:block/smeltery/seared/triangle_bricks"));
+        futures.addAll(searedWall(cache, "seared_creeper_wall", "hephaestus:block/smeltery/seared/creeper"));
+        futures.addAll(searedWall(cache, "seared_road_wall", "hephaestus:block/smeltery/seared/road"));
+        futures.addAll(searedWall(cache, "seared_small_bricks_wall", "hephaestus:block/smeltery/seared/small_bricks"));
+        futures.addAll(searedWall(cache, "seared_square_bricks_wall", "hephaestus:block/smeltery/seared/square_bricks"));
+        futures.addAll(searedWall(cache, "seared_tile_wall", "hephaestus:block/smeltery/seared/tile"));
+
         return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
     }
 
@@ -305,4 +345,180 @@ public class ModModelProvider implements DataProvider {
     private CompletableFuture<?> save(CachedOutput cache, JsonObject json, Path path) {
         return DataProvider.saveStable(cache, json, path);
     }
+
+    private List<CompletableFuture<?>> searedStairs(CachedOutput cache, String name, String tex) {
+        Identifier id = id(name);
+        return List.of(
+                save(cache, stairsBlockstate(name),           blockstatePath.json(id)),
+                save(cache, stairsModel(name, tex, ""),       modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name))),
+                save(cache, stairsModel(name, tex, "_inner"), modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name + "_inner"))),
+                save(cache, stairsModel(name, tex, "_outer"), modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name + "_outer"))),
+                save(cache, blockClientItem(name),            itemPath.json(id))
+        );
+    }
+
+    private List<CompletableFuture<?>> searedSlab(CachedOutput cache, String name, String tex, String fullBlock) {
+        Identifier id = id(name);
+        return List.of(
+                save(cache, slabBlockstate(name, fullBlock),      blockstatePath.json(id)),
+                save(cache, slabModel(name, tex, ""),             modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name))),
+                save(cache, slabModel(name, tex, "_top"),         modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name + "_top"))),
+                save(cache, blockClientItem(name),                itemPath.json(id))
+        );
+    }
+
+    private List<CompletableFuture<?>> searedWall(CachedOutput cache, String name, String tex) {
+        Identifier id = id(name);
+        return List.of(
+                save(cache, wallBlockstate(name),                        blockstatePath.json(id)),
+                save(cache, wallModel(name, tex, "_post"),               modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name + "_post"))),
+                save(cache, wallModel(name, tex, "_side"),               modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name + "_side"))),
+                save(cache, wallModel(name, tex, "_side_tall"),          modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name + "_side_tall"))),
+                save(cache, wallInventoryModel(name, tex),               modelBlockPath.json(Identifier.fromNamespaceAndPath(TitamMods.MODID, name + "_inventory"))),
+                save(cache, wallClientItem(name),                        itemPath.json(id))
+        );
+    }
+
+    private com.google.gson.JsonObject stairsBlockstate(String name) {
+        var j = new com.google.gson.JsonObject();
+        var variants = new com.google.gson.JsonObject();
+        String[][] facing = {{"east","90"},{"north","180"},{"south","0"},{"west","270"}};
+        String[][] half   = {{"bottom","0"},{"top","180"}};
+        String[][] shape  = {{"inner_left","0"},{"inner_right","0"},{"outer_left","0"},{"outer_right","0"},{"straight","0"}};
+        for (var f : facing) for (var h : half) for (var s : shape) {
+            String key = "facing=" + f[0] + ",half=" + h[0] + ",shape=" + s[0];
+            var model = new com.google.gson.JsonObject();
+            String mname = "hephaestus:block/" + name;
+            boolean inner = s[0].startsWith("inner"), outer = s[0].startsWith("outer");
+            if (inner) mname += "_inner"; else if (outer) mname += "_outer";
+            model.addProperty("model", mname);
+            int y = Integer.parseInt(f[1]);
+            boolean top = h[0].equals("top");
+            if (outer || s[0].equals("straight")) {
+                if (s[0].contains("left")) y = (y + 270) % 360;
+            } else if (inner) {
+                if (s[0].contains("left")) y = (y + 270) % 360;
+            }
+            if (y != 0) model.addProperty("y", y);
+            if (top) model.addProperty("x", 180);
+            if (top && (inner || outer || s[0].equals("straight"))) {
+                boolean uv = false;
+                if (s[0].equals("straight") || outer) uv = true;
+                if (uv) model.addProperty("uvlock", true);
+            }
+            variants.add(key, model);
+        }
+        j.add("variants", variants);
+        return j;
+    }
+
+    private com.google.gson.JsonObject stairsModel(String name, String tex, String suffix) {
+        var j = new com.google.gson.JsonObject();
+        String parent = suffix.isEmpty() ? "minecraft:block/stairs"
+                : suffix.equals("_inner") ? "minecraft:block/inner_stairs"
+                : "minecraft:block/outer_stairs";
+        j.addProperty("parent", parent);
+        var textures = new com.google.gson.JsonObject();
+        textures.addProperty("bottom", tex);
+        textures.addProperty("top",    tex);
+        textures.addProperty("side",   tex);
+        j.add("textures", textures);
+        return j;
+    }
+
+    private com.google.gson.JsonObject slabBlockstate(String name, String fullBlock) {
+        var j = new com.google.gson.JsonObject();
+        var variants = new com.google.gson.JsonObject();
+        var bottom = new com.google.gson.JsonObject(); bottom.addProperty("model", "hephaestus:block/" + name);
+        var top    = new com.google.gson.JsonObject(); top.addProperty("model",    "hephaestus:block/" + name + "_top");
+        var dbl    = new com.google.gson.JsonObject(); dbl.addProperty("model",    fullBlock);
+        variants.add("type=bottom", bottom);
+        variants.add("type=top",    top);
+        variants.add("type=double", dbl);
+        j.add("variants", variants);
+        return j;
+    }
+
+    private com.google.gson.JsonObject slabModel(String name, String tex, String suffix) {
+        var j = new com.google.gson.JsonObject();
+        j.addProperty("parent", suffix.isEmpty() ? "minecraft:block/slab" : "minecraft:block/slab_top");
+        var textures = new com.google.gson.JsonObject();
+        textures.addProperty("bottom", tex);
+        textures.addProperty("top",    tex);
+        textures.addProperty("side",   tex);
+        j.add("textures", textures);
+        return j;
+    }
+
+    private com.google.gson.JsonObject wallBlockstate(String name) {
+        var j = new com.google.gson.JsonObject();
+        var mp = new com.google.gson.JsonObject();
+        var apply = new com.google.gson.JsonObject();
+        apply.addProperty("model", "hephaestus:block/" + name + "_post");
+        var when = new com.google.gson.JsonObject();
+        when.addProperty("up", "true");
+        var postEntry = new com.google.gson.JsonObject();
+        postEntry.add("when", when); postEntry.add("apply", apply);
+        var multipart = new com.google.gson.JsonArray();
+        var post = new com.google.gson.JsonObject();
+        post.add("apply", apply);
+        multipart.add(post);
+        String[][] sides = {{"north","0"},{"east","90"},{"south","180"},{"west","270"}};
+        for (var s : sides) {
+            var sideApply = new com.google.gson.JsonObject();
+            sideApply.addProperty("model", "hephaestus:block/" + name + "_side");
+            if (!s[1].equals("0")) sideApply.addProperty("y", Integer.parseInt(s[1]));
+            sideApply.addProperty("uvlock", true);
+            var sideWhen = new com.google.gson.JsonObject();
+            sideWhen.addProperty(s[0], "low");
+            var sideEntry = new com.google.gson.JsonObject();
+            sideEntry.add("when", sideWhen); sideEntry.add("apply", sideApply);
+            multipart.add(sideEntry);
+            var tallApply = new com.google.gson.JsonObject();
+            tallApply.addProperty("model", "hephaestus:block/" + name + "_side_tall");
+            if (!s[1].equals("0")) tallApply.addProperty("y", Integer.parseInt(s[1]));
+            tallApply.addProperty("uvlock", true);
+            var tallWhen = new com.google.gson.JsonObject();
+            tallWhen.addProperty(s[0], "tall");
+            var tallEntry = new com.google.gson.JsonObject();
+            tallEntry.add("when", tallWhen); tallEntry.add("apply", tallApply);
+            multipart.add(tallEntry);
+        }
+        j.add("multipart", multipart);
+        return j;
+    }
+
+    private com.google.gson.JsonObject wallModel(String name, String tex, String suffix) {
+        var j = new com.google.gson.JsonObject();
+        String parent = switch (suffix) {
+            case "_post"      -> "minecraft:block/template_wall_post";
+            case "_side"      -> "minecraft:block/template_wall_side";
+            case "_side_tall" -> "minecraft:block/template_wall_side_tall";
+            default           -> "minecraft:block/template_wall_post";
+        };
+        j.addProperty("parent", parent);
+        var textures = new com.google.gson.JsonObject();
+        textures.addProperty("wall", tex);
+        j.add("textures", textures);
+        return j;
+    }
+
+    private com.google.gson.JsonObject wallInventoryModel(String name, String tex) {
+        var j = new com.google.gson.JsonObject();
+        j.addProperty("parent", "minecraft:block/wall_inventory");
+        var textures = new com.google.gson.JsonObject();
+        textures.addProperty("wall", tex);
+        j.add("textures", textures);
+        return j;
+    }
+
+    private com.google.gson.JsonObject wallClientItem(String name) {
+        var j = new com.google.gson.JsonObject();
+        var model = new com.google.gson.JsonObject();
+        model.addProperty("type", "minecraft:model");
+        model.addProperty("model", "hephaestus:block/" + name + "_inventory");
+        j.add("model", model);
+        return j;
+    }
+
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "hephaestus:block/smeltery/seared/paver",
+    "side": "hephaestus:block/smeltery/seared/paver",
+    "top": "hephaestus:block/smeltery/seared/paver"
+  }
+}

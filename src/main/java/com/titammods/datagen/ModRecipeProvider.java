@@ -7,6 +7,7 @@ import com.titammods.setup.ModItems;
 import com.titammods.setup.ModBlocks;
 import com.titammods.setup.ModRecipes;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -64,6 +65,56 @@ public class ModRecipeProvider extends RecipeProvider {
         registerFtbMaterialsCompat();
         addVanillaRecipes();
         addMeltingMiscRecipes();
+
+        generateDecorative(items, ModBlocks.SEARED_STONE.get(),
+                ModBlocks.SEARED_STONE_SLAB.get(),
+                ModBlocks.SEARED_STONE_STAIRS.get(),
+                ModBlocks.SEARED_STONE_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_COBBLE.get(),
+                ModBlocks.SEARED_COBBLE_SLAB.get(),
+                ModBlocks.SEARED_COBBLE_STAIRS.get(),
+                ModBlocks.SEARED_COBBLE_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_PAVER.get(),
+                ModBlocks.SEARED_PAVER_SLAB.get(),
+                ModBlocks.SEARED_PAVER_STAIRS.get(),
+                ModBlocks.SEARED_PAVER_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_BRICKS.get(),
+                ModBlocks.SEARED_BRICKS_SLAB.get(),
+                ModBlocks.SEARED_BRICKS_STAIRS.get(),
+                ModBlocks.SEARED_BRICKS_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_CRACKED_BRICKS.get(),
+                ModBlocks.SEARED_CRACKED_BRICKS_SLAB.get(),
+                ModBlocks.SEARED_CRACKED_BRICKS_STAIRS.get(),
+                ModBlocks.SEARED_CRACKED_BRICKS_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_FANCY_BRICKS.get(),
+                ModBlocks.SEARED_FANCY_BRICKS_SLAB.get(),
+                ModBlocks.SEARED_FANCY_BRICKS_STAIRS.get(),
+                ModBlocks.SEARED_FANCY_BRICKS_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_TRIANGLE_BRICKS.get(),
+                ModBlocks.SEARED_TRIANGLE_BRICKS_SLAB.get(),
+                ModBlocks.SEARED_TRIANGLE_BRICKS_STAIRS.get(),
+                ModBlocks.SEARED_TRIANGLE_BRICKS_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_CREEPER.get(),
+                ModBlocks.SEARED_CREEPER_SLAB.get(),
+                ModBlocks.SEARED_CREEPER_STAIRS.get(),
+                ModBlocks.SEARED_CREEPER_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_ROAD.get(),
+                ModBlocks.SEARED_ROAD_SLAB.get(),
+                ModBlocks.SEARED_ROAD_STAIRS.get(),
+                ModBlocks.SEARED_ROAD_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_SMALL_BRICKS.get(),
+                ModBlocks.SEARED_SMALL_BRICKS_SLAB.get(),
+                ModBlocks.SEARED_SMALL_BRICKS_STAIRS.get(),
+                ModBlocks.SEARED_SMALL_BRICKS_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_SQUARE_BRICKS.get(),
+                ModBlocks.SEARED_SQUARE_BRICKS_SLAB.get(),
+                ModBlocks.SEARED_SQUARE_BRICKS_STAIRS.get(),
+                ModBlocks.SEARED_SQUARE_BRICKS_WALL.get());
+        generateDecorative(items, ModBlocks.SEARED_TILE.get(),
+                ModBlocks.SEARED_TILE_SLAB.get(),
+                ModBlocks.SEARED_TILE_STAIRS.get(),
+                ModBlocks.SEARED_TILE_WALL.get());
+
         addAlloyRecipes();
         addEntityMeltingRecipes();
 
@@ -626,4 +677,33 @@ public class ModRecipeProvider extends RecipeProvider {
                         Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/alloying/" + savePath)),
                 recipe, null);
     }
+
+    private void generateDecorative(net.minecraft.core.HolderGetter<net.minecraft.world.item.Item> items,
+                                    Block baseBlock,
+                                    Block slab, Block stairs, Block wall) {
+        String baseName = BuiltInRegistries.BLOCK.getKey(baseBlock).getPath();
+        String base = "has_" + baseName;
+        if (slab != null)
+            ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, slab, 6)
+                    .pattern("BBB").define('B', baseBlock)
+                    .unlockedBy(base, has(baseBlock))
+                    .save(this.output, ResourceKey.create(Registries.RECIPE,
+                            Identifier.fromNamespaceAndPath(TitamMods.MODID,
+                                    "decoration/" + BuiltInRegistries.BLOCK.getKey(slab).getPath())));
+        if (stairs != null)
+            ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, stairs, 4)
+                    .pattern("B  ").pattern("BB ").pattern("BBB").define('B', baseBlock)
+                    .unlockedBy(base, has(baseBlock))
+                    .save(this.output, ResourceKey.create(Registries.RECIPE,
+                            Identifier.fromNamespaceAndPath(TitamMods.MODID,
+                                    "decoration/" + BuiltInRegistries.BLOCK.getKey(stairs).getPath())));
+        if (wall != null)
+            ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, wall, 6)
+                    .pattern("BBB").pattern("BBB").define('B', baseBlock)
+                    .unlockedBy(base, has(baseBlock))
+                    .save(this.output, ResourceKey.create(Registries.RECIPE,
+                            Identifier.fromNamespaceAndPath(TitamMods.MODID,
+                                    "decoration/" + BuiltInRegistries.BLOCK.getKey(wall).getPath())));
+    }
+
 }

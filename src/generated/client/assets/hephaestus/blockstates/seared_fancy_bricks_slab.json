@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hephaestus:block/seared_fancy_bricks_slab"
+    },
+    "type=double": {
+      "model": "hephaestus:block/seared_fancy_bricks"
+    },
+    "type=top": {
+      "model": "hephaestus:block/seared_fancy_bricks_slab_top"
+    }
+  }
+}

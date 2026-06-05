@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_seared_tile": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hephaestus:seared_tile"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hephaestus:decoration/seared_tile_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_seared_tile"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hephaestus:decoration/seared_tile_wall"
+    ]
+  }
+}
