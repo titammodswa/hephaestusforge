@@ -396,10 +396,10 @@ public class ModRecipeProvider extends RecipeProvider {
                                            boolean hasRaw, String prefix, ICondition cond) {
         int bt = 100;
 
-        addMeltingTag("storage_blocks/" + name, fluid, 900, temp, bt * 2,
+        addMeltingTag("storage_blocks/" + name, fluid, 810, temp, bt * 2,
                 prefix + "metal/" + name + "/block", cond);
         if (hasRaw && !name.equals("steel") && !name.equals("brass"))
-            addMeltingTag("storage_blocks/raw_" + name, fluid, 900, temp, (int)(bt * 2.5),
+            addMeltingTag("storage_blocks/raw_" + name, fluid, 810, temp, (int)(bt * 2.5),
                     prefix + "metal/" + name + "/raw_block", cond);
         addMeltingTag("ingots/" + name,   fluid,  90, temp, bt,
                 prefix + "metal/" + name + "/ingot",  cond);
@@ -449,19 +449,19 @@ public class ModRecipeProvider extends RecipeProvider {
 
         this.output.withConditions(cond).accept(
                 rk("smeltery/casting/basin/" + prefix + "metal/" + name + "/block_cast"),
-                new ModRecipes.CastingBasinRecipe(fluidId, 900, blockId, 1, bt * 2),                      null);
+                new ModRecipes.CastingBasinRecipe(fluidId, 810, blockId, 1, bt * 2),                      null);
     }
 
     private void addEntityMeltingRecipes() {
         addEntityMeltingRecipe(
                 net.minecraft.world.entity.EntityType.BLAZE,
                 Identifier.fromNamespaceAndPath(TitamMods.MODID, "molten_blaze"),
-                250, 2, "blaze");
+                90, 2, "blaze");
 
         addEntityMeltingRecipe(
                 net.minecraft.world.entity.EntityType.MAGMA_CUBE,
                 Identifier.fromNamespaceAndPath("minecraft", "lava"),
-                100, 2, "magma_cube");
+                45, 2, "magma_cube");
     }
 
     private void addEntityMeltingRecipe(net.minecraft.world.entity.EntityType<?> entityType,
@@ -589,9 +589,9 @@ public class ModRecipeProvider extends RecipeProvider {
                                String prefix, ICondition... conditions) {
         int bt = 100;
 
-        addMeltingTag("storage_blocks/" + name, fluid, 900, temp, bt * 2,        prefix + "metal/" + name + "/block",    conditions);
+        addMeltingTag("storage_blocks/" + name, fluid, 810, temp, bt * 2,        prefix + "metal/" + name + "/block",    conditions);
         if (raw != null && !name.equals("steel") && !name.equals("brass"))
-            addMeltingTag("storage_blocks/raw_" + name, fluid, 900, temp, (int)(bt * 2.5), prefix + "metal/" + name + "/raw_block", conditions);
+            addMeltingTag("storage_blocks/raw_" + name, fluid, 810, temp, (int)(bt * 2.5), prefix + "metal/" + name + "/raw_block", conditions);
         addMeltingTag("ingots/" + name,           fluid,  90, temp, bt,            prefix + "metal/" + name + "/ingot",   conditions);
         if (raw != null && !name.equals("brass"))
             addMeltingTag("raw_materials/" + name, fluid,  90, temp, (int)(bt * 1.5), prefix + "metal/" + name + "/raw",      conditions);
@@ -606,7 +606,7 @@ public class ModRecipeProvider extends RecipeProvider {
         if (plate  != null) addCastingTable(fluid,  90, ModItems.PLATE_CAST.get(),  false, plate,  bt,       prefix + "metal/" + name + "/plate_cast",  conditions);
         if (gear   != null) addCastingTable(fluid, 360, ModItems.GEAR_CAST.get(),   false, gear,   bt * 2,   prefix + "metal/" + name + "/gear_cast",   conditions);
         if (rod    != null) addCastingTable(fluid,  45, ModItems.ROD_CAST.get(),    false, rod,    bt / 2,   prefix + "metal/" + name + "/rod_cast",    conditions);
-        if (block  != null) addCastingBasin(fluid, 900, block, bt * 2, prefix + "metal/" + name + "/block_cast", conditions);
+        if (block  != null) addCastingBasin(fluid, 810, block, bt * 2, prefix + "metal/" + name + "/block_cast", conditions);
     }
 
     private void registerGem(Fluid fluid, int temp, String name, String blockTag, String gemTag,
@@ -614,17 +614,17 @@ public class ModRecipeProvider extends RecipeProvider {
         int bt = 120;
 
         if (blockTag != null && !blockTag.isEmpty())
-            addMeltingTag(blockTag, fluid, 900, temp, bt * 2, "gem/" + name + "/block", conditions);
+            addMeltingTag(blockTag, fluid, 810, temp, bt * 2, "gem/" + name + "/block", conditions);
         else if (block != null)
-            addMeltingItem(block, fluid, 900, temp, bt * 2, "gem/" + name + "/block", conditions);
+            addMeltingItem(block, fluid, 810, temp, bt * 2, "gem/" + name + "/block", conditions);
 
         if (gemTag != null && !gemTag.isEmpty())
-            addMeltingTag(gemTag, fluid, 100, temp, bt, "gem/" + name + "/gem", conditions);
+            addMeltingTag(gemTag, fluid, 90, temp, bt, "gem/" + name + "/gem", conditions);
         else if (gem != null)
-            addMeltingItem(gem, fluid, 100, temp, bt, "gem/" + name + "/gem", conditions);
+            addMeltingItem(gem, fluid, 90, temp, bt, "gem/" + name + "/gem", conditions);
 
-        if (gem   != null) addCastingTable(fluid, 100, ModItems.GEM_CAST.get(), false, gem,  bt,       "gem/" + name + "/gem_cast",   conditions);
-        if (block != null) addCastingBasin(fluid, 900, block, bt * 2, "gem/" + name + "/block_cast", conditions);
+        if (gem   != null) addCastingTable(fluid, 90, ModItems.GEM_CAST.get(), false, gem,  bt,       "gem/" + name + "/gem_cast",   conditions);
+        if (block != null) addCastingBasin(fluid, 810, block, bt * 2, "gem/" + name + "/block_cast", conditions);
     }
 
     private void registerExternalMetal(Fluid fluid, int temp, String name,

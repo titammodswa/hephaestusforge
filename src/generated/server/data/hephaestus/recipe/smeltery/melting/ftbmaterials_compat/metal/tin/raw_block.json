@@ -12,7 +12,7 @@
   },
   "ingredient": "#c:storage_blocks/raw_tin",
   "result": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_tin"
   },
   "temperature": 230,

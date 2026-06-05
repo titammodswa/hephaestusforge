@@ -6,7 +6,7 @@
   },
   "ingredient": "#c:gems/amethyst",
   "result": {
-    "amount": 100,
+    "amount": 90,
     "id": "hephaestus:molten_amethyst"
   },
   "temperature": 1000,

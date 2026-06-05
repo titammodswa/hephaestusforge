@@ -8,7 +8,7 @@
   "type": "hephaestus:casting_basin",
   "cooling_time": 200,
   "fluid": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_electrum"
   },
   "result": {

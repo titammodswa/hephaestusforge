@@ -6,7 +6,7 @@
   },
   "ingredient": "minecraft:amethyst_block",
   "result": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_amethyst"
   },
   "temperature": 1000,

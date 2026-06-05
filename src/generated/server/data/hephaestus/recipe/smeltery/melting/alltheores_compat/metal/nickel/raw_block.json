@@ -12,7 +12,7 @@
   },
   "ingredient": "#c:storage_blocks/raw_nickel",
   "result": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_nickel"
   },
   "temperature": 1450,
