@@ -19,12 +19,15 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.lwjgl.glfw.GLFW;
 
 public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
 
     private static final Identifier TEXTURE =
             Identifier.fromNamespaceAndPath(TitamMods.MODID, "textures/gui/melter.png");
     private static final int TEX = 256;
+
+    private boolean shiftHeld = false;
 
     public MelterScreen(MelterMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -107,29 +110,80 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
             if (!fluid.isEmpty()) {
                 int amount = fluid.getAmount();
                 int cap    = getMenu().getBlockEntity().tank.getCapacity();
-
-                int blocks  = amount / 900;
-                int ingots  = (amount % 900) / 90;
-                int nuggets = (amount % 90) / 10;
-                int mb      = amount % 10;
-
-                StringBuilder sb = new StringBuilder();
-                if (blocks  > 0) sb.append(blocks).append(" ").append(Component.translatable("gui.hephaestus.unit.blocks").getString()).append(" ");
-                if (ingots  > 0) sb.append(ingots).append(" ").append(Component.translatable("gui.hephaestus.unit.ingots").getString()).append(" ");
-                if (nuggets > 0) sb.append(nuggets).append(" ").append(Component.translatable("gui.hephaestus.unit.nuggets").getString()).append(" ");
-                if (mb > 0 || sb.isEmpty()) sb.append(mb).append(" mB");
-
                 List<Component> tooltip = new ArrayList<>();
                 tooltip.add(fluid.getHoverName());
-                tooltip.add(Component.literal(sb.toString().trim()).withStyle(ChatFormatting.GRAY));
-                tooltip.add(Component.translatable("gui.hephaestus.fluid_amount", amount, cap).withStyle(ChatFormatting.DARK_GRAY));
+                tooltip.add(Component.translatable("gui.hephaestus.fluid_amount", amount, cap)
+                        .withStyle(ChatFormatting.GRAY));
+                if (shiftHeld) {
+                    tooltip.add(fluidBreakdown(amount).withStyle(ChatFormatting.DARK_GRAY));
+                    int free = cap - amount;
+                    tooltip.add(Component.translatable("gui.hephaestus.tank_free", free)
+                            .withStyle(ChatFormatting.DARK_GRAY));
+                } else {
+                    tooltip.add(Component.translatable("gui.hephaestus.shift_hint")
+                            .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+                }
                 graphics.setComponentTooltipForNextFrame(this.font, tooltip, mouseX, mouseY);
             } else {
                 graphics.setComponentTooltipForNextFrame(this.font,
-                        List.of(Component.translatable("gui.hephaestus.tank_capacity", getMenu().getBlockEntity().tank.getCapacity()).withStyle(ChatFormatting.GRAY)),
+                        List.of(Component.translatable("gui.hephaestus.tank_capacity",
+                                        0, getMenu().getBlockEntity().tank.getCapacity())
+                                .withStyle(ChatFormatting.GRAY)),
                         mouseX, mouseY);
             }
         }
+
+        if (minecraft != null && minecraft.level != null) {
+            BlockEntity below = minecraft.level.getBlockEntity(
+                    getMenu().getBlockEntity().getBlockPos().below());
+            if (below instanceof SearedTankBlockEntity fuelBE) {
+                int fx = leftPos + 152, fy = topPos + 31;
+                if (mouseX >= fx && mouseX < fx + 14 && mouseY >= fy && mouseY < fy + 38) {
+                    FluidStack fuelFluid = fuelBE.getFluidTank().getFluid();
+                    int fuelCap = fuelBE.getFluidTank().getCapacity();
+                    List<Component> tips = new ArrayList<>();
+                    if (!fuelFluid.isEmpty()) {
+                        tips.add(Component.translatable(fuelFluid.getDescriptionId())
+                                .withStyle(ChatFormatting.GOLD));
+                        tips.add(Component.translatable("gui.hephaestus.fluid_amount",
+                                fuelFluid.getAmount(), fuelCap).withStyle(ChatFormatting.GRAY));
+                    } else {
+                        tips.add(Component.translatable("gui.hephaestus.melting.no_fuel")
+                                .withStyle(ChatFormatting.RED));
+                        tips.add(Component.translatable("gui.hephaestus.fluid_amount", 0, fuelCap)
+                                .withStyle(ChatFormatting.GRAY));
+                    }
+                    graphics.setComponentTooltipForNextFrame(this.font, tips, mouseX, mouseY);
+                }
+            }
+        }
+    }
+
+    private net.minecraft.network.chat.MutableComponent fluidBreakdown(int amount) {
+        int blocks  = amount / 900;
+        int ingots  = (amount % 900) / 90;
+        int nuggets = (amount % 90) / 10;
+        int mb      = amount % 10;
+        StringBuilder sb = new StringBuilder();
+        if (blocks  > 0) sb.append(blocks).append(" ").append(Component.translatable("gui.hephaestus.unit.blocks").getString()).append(" ");
+        if (ingots  > 0) sb.append(ingots).append(" ").append(Component.translatable("gui.hephaestus.unit.ingots").getString()).append(" ");
+        if (nuggets > 0) sb.append(nuggets).append(" ").append(Component.translatable("gui.hephaestus.unit.nuggets").getString()).append(" ");
+        if (mb > 0 || sb.isEmpty()) sb.append(mb).append(" mB");
+        return Component.literal(sb.toString().trim());
+    }
+
+    @Override
+    public boolean keyPressed(net.minecraft.client.input.KeyEvent event) {
+        if (event.key() == GLFW.GLFW_KEY_LEFT_SHIFT || event.key() == GLFW.GLFW_KEY_RIGHT_SHIFT)
+            shiftHeld = true;
+        return super.keyPressed(event);
+    }
+
+    @Override
+    public boolean keyReleased(net.minecraft.client.input.KeyEvent event) {
+        if (event.key() == GLFW.GLFW_KEY_LEFT_SHIFT || event.key() == GLFW.GLFW_KEY_RIGHT_SHIFT)
+            shiftHeld = false;
+        return super.keyReleased(event);
     }
 
     private void blit(GuiGraphicsExtractor g, int x, int y, int u, int v, int w, int h) {
