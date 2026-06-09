@@ -7,12 +7,9 @@
   ],
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_enderium"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:enderium_block"
-  },
+  "result": "alltheores:enderium_block",
   "time": 200
 }

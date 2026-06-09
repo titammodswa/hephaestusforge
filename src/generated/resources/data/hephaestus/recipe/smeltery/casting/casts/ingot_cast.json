@@ -9,8 +9,5 @@
     "amount": 90,
     "id": "hephaestus:molten_copper"
   },
-  "result": {
-    "count": 1,
-    "id": "hephaestus:ingot_cast"
-  }
+  "result": "hephaestus:ingot_cast"
 }

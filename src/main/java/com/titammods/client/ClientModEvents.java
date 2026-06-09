@@ -144,7 +144,7 @@ public class ClientModEvents {
         event.registerBlockEntityRenderer(ModBlockEntities.MELTER.get(), MelterRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.BASIN.get(), BasinRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.TABLE.get(), TableRenderer::new);
-        event.registerBlockEntityRenderer(ModBlockEntities.SMELTERY_CONTROLLER.get(), com.titammods.client.render.SmelteryIORenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.SMELTERY_CONTROLLER.get(), com.titammods.client.render.SmelteryControllerRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.SEARED_DRAIN.get(), com.titammods.client.render.SmelteryIORenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.SEARED_CHUTE.get(), com.titammods.client.render.SmelteryIORenderer::new);
     }

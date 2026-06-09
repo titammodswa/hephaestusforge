@@ -14,8 +14,5 @@
     "amount": 90,
     "id": "hephaestus:molten_electrum"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:electrum_ingot"
-  }
+  "result": "alltheores:electrum_ingot"
 }

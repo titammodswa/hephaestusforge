@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ftbmaterials"
+    }
+  ],
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "hephaestus:molten_blaze"
+  },
+  "ingredient": {
+    "tag": "c:storage_blocks/iridium"
+  },
+  "result": {
+    "amount": 810,
+    "id": "hephaestus:molten_iridium"
+  },
+  "temperature": 2440,
+  "time": 200
+}

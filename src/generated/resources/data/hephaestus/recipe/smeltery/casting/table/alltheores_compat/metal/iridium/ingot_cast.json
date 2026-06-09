@@ -14,8 +14,5 @@
     "amount": 90,
     "id": "hephaestus:molten_iridium"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:iridium_ingot"
-  }
+  "result": "alltheores:iridium_ingot"
 }

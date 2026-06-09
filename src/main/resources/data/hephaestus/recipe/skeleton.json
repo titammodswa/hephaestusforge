@@ -1,0 +1,8 @@
+{
+  "type": "hephaestus:entity_melting",
+  "entity": "minecraft:skeleton",
+  "result": {
+    "amount": 25,
+    "id": "minecraft:milk"
+  }
+}

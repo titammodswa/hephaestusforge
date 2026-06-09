@@ -14,8 +14,5 @@
     "amount": 45,
     "id": "hephaestus:molten_uranium"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:uranium_rod"
-  }
+  "result": "alltheores:uranium_rod"
 }

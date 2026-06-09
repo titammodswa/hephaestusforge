@@ -19,12 +19,15 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.joml.Matrix4f;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "textures/gui/melter.png");
+
+    private boolean shiftHeld = false;
 
     public MelterScreen(MelterMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -158,33 +161,81 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
 
         if (mouseX >= tankX && mouseX < tankX + 52 && mouseY >= tankY && mouseY < tankY + 52) {
             FluidStack fluid = this.menu.getBlockEntity().tank.getFluid();
-
             if (!fluid.isEmpty()) {
                 int amount = fluid.getAmount();
-                int cap = this.menu.getBlockEntity().tank.getCapacity();
+                int cap    = this.menu.getBlockEntity().tank.getCapacity();
                 List<Component> tooltip = new ArrayList<>();
-
-                tooltip.add(fluid.getHoverName());
-
-                int blocks = amount / 900;
-                int ingots = (amount % 900) / 90;
-                int nuggets = (amount % 90) / 10;
-                int mb = amount % 10;
-
-                StringBuilder sb = new StringBuilder();
-                if (blocks > 0) sb.append(blocks).append(" Blocos ");
-                if (ingots > 0) sb.append(ingots).append(" Barras ");
-                if (nuggets > 0) sb.append(nuggets).append(" Pepitas ");
-                if (mb > 0 || sb.length() == 0) sb.append(mb).append(" mB");
-
-                tooltip.add(Component.literal(sb.toString().trim()).withStyle(ChatFormatting.GRAY));
-                tooltip.add(Component.literal(amount + " / " + cap + " mB").withStyle(ChatFormatting.DARK_GRAY));
-
+                tooltip.add(fluid.getHoverName().copy().withStyle(ChatFormatting.GOLD));
+                if (shiftHeld) {
+                    tooltip.add(fluidBreakdown(amount).withStyle(ChatFormatting.GRAY));
+                    tooltip.add(Component.translatable("gui.hephaestus.fluid_amount", amount, cap)
+                            .withStyle(ChatFormatting.DARK_GRAY));
+                } else {
+                    tooltip.add(Component.translatable("gui.hephaestus.fluid_amount", amount, cap)
+                            .withStyle(ChatFormatting.GRAY));
+                    tooltip.add(Component.translatable("gui.hephaestus.shift_hint")
+                            .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+                }
                 graphics.renderComponentTooltip(font, tooltip, mouseX, mouseY);
             } else {
-                graphics.renderTooltip(font, Component.literal("Capacidade: 2700 mB").withStyle(ChatFormatting.GRAY), mouseX, mouseY);
+                graphics.renderTooltip(font,
+                        Component.translatable("gui.hephaestus.melter.tank_empty", this.menu.getBlockEntity().tank.getCapacity())
+                                .withStyle(ChatFormatting.GRAY),
+                        mouseX, mouseY);
             }
         }
+
+        Level level = this.menu.getBlockEntity().getLevel();
+        if (level != null) {
+            BlockPos posBelow = this.menu.getBlockEntity().getBlockPos().below();
+            IFluidHandler fuelTank = level.getCapability(Capabilities.FluidHandler.BLOCK, posBelow, Direction.UP);
+            if (fuelTank != null) {
+                int fuelX = leftPos + 152, fuelY = topPos + 31;
+                if (mouseX >= fuelX && mouseX < fuelX + 14 && mouseY >= fuelY && mouseY < fuelY + 38) {
+                    FluidStack fuelFluid = fuelTank.getFluidInTank(0);
+                    List<Component> tooltip = new ArrayList<>();
+                    if (!fuelFluid.isEmpty()) {
+                        tooltip.add(fuelFluid.getHoverName().copy().withStyle(ChatFormatting.GOLD));
+                        tooltip.add(Component.translatable("gui.hephaestus.fluid_amount",
+                                        fuelFluid.getAmount(), fuelTank.getTankCapacity(0))
+                                .withStyle(ChatFormatting.GRAY));
+                    } else {
+                        tooltip.add(Component.translatable("gui.hephaestus.melting.no_fuel").withStyle(ChatFormatting.RED));
+                    }
+                    graphics.renderComponentTooltip(font, tooltip, mouseX, mouseY);
+                }
+            }
+        }
+    }
+
+    private net.minecraft.network.chat.MutableComponent fluidBreakdown(int mb) {
+        int blocks  = mb / 1296;
+        int ingots  = (mb % 1296) / 144;
+        int nuggets = (mb % 144) / 16;
+        int rem     = mb % 16;
+        var sb = new StringBuilder();
+        if (blocks  > 0) sb.append(blocks).append(" ")
+                .append(Component.translatable("gui.hephaestus.unit.blocks").getString()).append("  ");
+        if (ingots  > 0) sb.append(ingots).append(" ")
+                .append(Component.translatable("gui.hephaestus.unit.ingots").getString()).append("  ");
+        if (nuggets > 0) sb.append(nuggets).append(" ")
+                .append(Component.translatable("gui.hephaestus.unit.nuggets").getString()).append("  ");
+        if (rem > 0 || sb.isEmpty()) sb.append(rem).append(" mB");
+        return Component.literal(sb.toString().trim());
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT)
+            shiftHeld = true;
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT)
+            shiftHeld = false;
+        return super.keyReleased(keyCode, scanCode, modifiers);
     }
 
     @Override

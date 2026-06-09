@@ -34,16 +34,19 @@ public class SmelteryTankItem extends BlockItem {
                     FluidStack fluid = dummyTank.getFluid();
                     if (!fluid.isEmpty()) {
                         tooltip.add(fluid.getHoverName().plainCopy()
-                                .withStyle(ChatFormatting.GRAY)
-                                .append(Component.literal(": " + fluid.getAmount() + " / " + dummyTank.getCapacity() + " mB")
-                                        .withStyle(ChatFormatting.DARK_GRAY)));
+                                .withStyle(ChatFormatting.GRAY));
+                        tooltip.add(Component.translatable("gui.hephaestus.fluid_amount",
+                                        fluid.getAmount(), dummyTank.getCapacity())
+                                .withStyle(ChatFormatting.DARK_GRAY));
                     } else {
-                        tooltip.add(Component.literal("Vazio").withStyle(ChatFormatting.DARK_GRAY));
+                        tooltip.add(Component.translatable("item.hephaestus.tank.empty")
+                                .withStyle(ChatFormatting.DARK_GRAY));
                     }
                 }
             }
         } else {
-            tooltip.add(Component.literal("Capacidade: 4000 mB").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.translatable("gui.hephaestus.melter.tank_empty", 4000)
+                    .withStyle(ChatFormatting.DARK_GRAY));
         }
     }
 }

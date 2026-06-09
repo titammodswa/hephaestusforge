@@ -8,8 +8,5 @@
     "amount": 10,
     "id": "hephaestus:molten_iron"
   },
-  "result": {
-    "count": 1,
-    "id": "minecraft:iron_nugget"
-  }
+  "result": "minecraft:iron_nugget"
 }

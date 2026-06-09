@@ -2,7 +2,7 @@
   "type": "hephaestus:melting",
   "fuel": {
     "amount": 50,
-    "id": "hephaestus:molten_blaze"
+    "id": "minecraft:lava"
   },
   "ingredient": {
     "tag": "c:ingots/copper"
@@ -11,6 +11,6 @@
     "amount": 90,
     "id": "hephaestus:molten_copper"
   },
-  "temperature": 1080,
+  "temperature": 900,
   "time": 100
 }

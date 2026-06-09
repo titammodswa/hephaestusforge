@@ -14,8 +14,5 @@
     "amount": 360,
     "id": "hephaestus:molten_zinc"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:zinc_gear"
-  }
+  "result": "alltheores:zinc_gear"
 }

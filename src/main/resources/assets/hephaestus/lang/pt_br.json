@@ -238,10 +238,23 @@
   "item.hephaestus.molten_blaze_bucket": "Balde de Blaze Derretido",
   "block.hephaestus.molten_blaze_block": "Blaze Derretido",
 
+  "item.hephaestus.tank.empty": "Vazio",
+
   "gui.hephaestus.tank.bucket.auto.title": "Modo automatico",
   "block.titammods.smeltery_controller": "Smeltery Controller",
   "gui.hephaestus.melting.no_fuel": "Sem combustivel",
   "gui.hephaestus.melting.no_tank": "Sem tanque instalado",
   "gui.hephaestus.alloying": "Alloying",
-  "gui.hephaestus.temperature": "Calor Necessário: %s°C"
+  "gui.hephaestus.entity_melting": "Fusão de Entidades",
+  "gui.hephaestus.entity_melting.per_heart": "%s de dano por coração",
+  "gui.hephaestus.fluid_mb": "%s mB",
+  "gui.hephaestus.temperature": "Requer combustível",
+  "gui.hephaestus.shift_hint": "Segure Shift para detalhes",
+  "gui.hephaestus.tank_capacity": "%s / %s mB",
+  "gui.hephaestus.tank_free": "Livre: %s mB",
+  "gui.hephaestus.fluid_amount": "%s / %s mB",
+  "gui.hephaestus.unit.blocks": "Blocos",
+  "gui.hephaestus.unit.ingots": "Barras",
+  "gui.hephaestus.unit.nuggets": "Pepitas",
+  "gui.hephaestus.melter.tank_empty": "Capacidade: %s mB"
 }

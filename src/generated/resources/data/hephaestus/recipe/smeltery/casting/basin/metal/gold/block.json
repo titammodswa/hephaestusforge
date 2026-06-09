@@ -1,12 +1,9 @@
 {
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_gold"
   },
-  "result": {
-    "count": 1,
-    "id": "minecraft:gold_block"
-  },
+  "result": "minecraft:gold_block",
   "time": 200
 }

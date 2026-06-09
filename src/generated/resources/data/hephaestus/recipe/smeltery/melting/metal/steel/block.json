@@ -8,9 +8,9 @@
     "tag": "c:storage_blocks/steel"
   },
   "result": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_steel"
   },
-  "temperature": 1000,
+  "temperature": 900,
   "time": 200
 }

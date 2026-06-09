@@ -7,12 +7,9 @@
   ],
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_lead"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:lead_block"
-  },
+  "result": "alltheores:lead_block",
   "time": 200
 }

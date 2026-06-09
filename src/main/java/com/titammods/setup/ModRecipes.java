@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.titammods.TitamMods;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -78,25 +79,38 @@ public class ModRecipes {
         @Override public StreamCodec<RegistryFriendlyByteBuf, CastingBasinRecipe> streamCodec() { return CastingBasinRecipe.STREAM_CODEC; }
     });
 
-    public record CastingBasinRecipe(FluidStack input, ItemStack output, int time) implements Recipe<SingleRecipeInput> {
+    public record CastingBasinRecipe(FluidStack input, ResourceLocation resultId, int resultCount, int time) implements Recipe<SingleRecipeInput> {
+
+        public CastingBasinRecipe(FluidStack input, ItemStack output, int time) {
+            this(input, BuiltInRegistries.ITEM.getKey(output.getItem()), output.getCount(), time);
+        }
+
+        public ItemStack result() {
+            net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.get(resultId);
+            return item == net.minecraft.world.item.Items.AIR ? ItemStack.EMPTY : new ItemStack(item, resultCount);
+        }
+
+        public ItemStack output() { return result(); }
 
         public static final MapCodec<CastingBasinRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 FluidStack.CODEC.fieldOf("input").forGetter(CastingBasinRecipe::input),
-                ItemStack.CODEC.fieldOf("result").forGetter(CastingBasinRecipe::output),
+                ResourceLocation.CODEC.fieldOf("result").forGetter(CastingBasinRecipe::resultId),
+                Codec.INT.optionalFieldOf("count", 1).forGetter(CastingBasinRecipe::resultCount),
                 Codec.INT.fieldOf("time").forGetter(CastingBasinRecipe::time)
         ).apply(inst, CastingBasinRecipe::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, CastingBasinRecipe> STREAM_CODEC = StreamCodec.composite(
                 FluidStack.STREAM_CODEC, CastingBasinRecipe::input,
-                ItemStack.STREAM_CODEC, CastingBasinRecipe::output,
+                net.minecraft.network.codec.ByteBufCodecs.fromCodec(ResourceLocation.CODEC), CastingBasinRecipe::resultId,
+                ByteBufCodecs.INT, CastingBasinRecipe::resultCount,
                 ByteBufCodecs.INT, CastingBasinRecipe::time,
                 CastingBasinRecipe::new
         );
 
         @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
-        @Override public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider lookup) { return output.copy(); }
+        @Override public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider lookup) { return result(); }
         @Override public boolean canCraftInDimensions(int w, int h) { return true; }
-        @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return output.copy(); }
+        @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return result(); }
         @Override public RecipeSerializer<?> getSerializer() { return CASTING_BASIN_SERIALIZER.get(); }
         @Override public RecipeType<?> getType() { return CASTING_BASIN_TYPE.get(); }
     }
@@ -110,12 +124,23 @@ public class ModRecipes {
         @Override public StreamCodec<RegistryFriendlyByteBuf, CastingTableRecipe> streamCodec() { return CastingTableRecipe.STREAM_CODEC; }
     });
 
-    public record CastingTableRecipe(Ingredient cast, boolean castConsumed, FluidStack fluid, ItemStack result, int coolingTime) implements Recipe<SingleRecipeInput> {
+    public record CastingTableRecipe(Ingredient cast, boolean castConsumed, FluidStack fluid, ResourceLocation resultId, int resultCount, int coolingTime) implements Recipe<SingleRecipeInput> {
+
+        public CastingTableRecipe(Ingredient cast, boolean castConsumed, FluidStack fluid, ItemStack result, int coolingTime) {
+            this(cast, castConsumed, fluid, BuiltInRegistries.ITEM.getKey(result.getItem()), result.getCount(), coolingTime);
+        }
+
+        public ItemStack result() {
+            net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.get(resultId);
+            return item == net.minecraft.world.item.Items.AIR ? ItemStack.EMPTY : new ItemStack(item, resultCount);
+        }
+
         public static final MapCodec<CastingTableRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 Ingredient.CODEC.optionalFieldOf("cast", Ingredient.EMPTY).forGetter(CastingTableRecipe::cast),
                 Codec.BOOL.optionalFieldOf("cast_consumed", false).forGetter(CastingTableRecipe::castConsumed),
                 FluidStack.CODEC.fieldOf("fluid").forGetter(CastingTableRecipe::fluid),
-                ItemStack.CODEC.fieldOf("result").forGetter(CastingTableRecipe::result),
+                ResourceLocation.CODEC.fieldOf("result").forGetter(CastingTableRecipe::resultId),
+                Codec.INT.optionalFieldOf("count", 1).forGetter(CastingTableRecipe::resultCount),
                 Codec.INT.fieldOf("cooling_time").forGetter(CastingTableRecipe::coolingTime)
         ).apply(inst, CastingTableRecipe::new));
 
@@ -123,16 +148,69 @@ public class ModRecipes {
                 Ingredient.CONTENTS_STREAM_CODEC, CastingTableRecipe::cast,
                 ByteBufCodecs.BOOL, CastingTableRecipe::castConsumed,
                 FluidStack.STREAM_CODEC, CastingTableRecipe::fluid,
-                ItemStack.STREAM_CODEC, CastingTableRecipe::result,
+                net.minecraft.network.codec.ByteBufCodecs.fromCodec(ResourceLocation.CODEC), CastingTableRecipe::resultId,
+                ByteBufCodecs.INT, CastingTableRecipe::resultCount,
                 ByteBufCodecs.INT, CastingTableRecipe::coolingTime,
                 CastingTableRecipe::new
         );
 
         @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
-        @Override public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider lookup) { return result.copy(); }
+        @Override public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider lookup) { return result(); }
         @Override public boolean canCraftInDimensions(int w, int h) { return true; }
-        @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return result.copy(); }
+        @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return result(); }
         @Override public RecipeSerializer<?> getSerializer() { return CASTING_TABLE_SERIALIZER.get(); }
         @Override public RecipeType<?> getType() { return CASTING_TABLE_TYPE.get(); }
+    }
+
+    public static final Supplier<RecipeType<EntityMeltingRecipe>> ENTITY_MELTING_TYPE =
+            TYPES.register("entity_melting", () -> new RecipeType<EntityMeltingRecipe>() {
+                @Override public String toString() { return "entity_melting"; }
+            });
+
+    public static final Supplier<RecipeSerializer<EntityMeltingRecipe>> ENTITY_MELTING_SERIALIZER =
+            SERIALIZERS.register("entity_melting", () -> new RecipeSerializer<EntityMeltingRecipe>() {
+                @Override public MapCodec<EntityMeltingRecipe> codec() { return EntityMeltingRecipe.CODEC; }
+                @Override public StreamCodec<RegistryFriendlyByteBuf, EntityMeltingRecipe> streamCodec() { return EntityMeltingRecipe.STREAM_CODEC; }
+            });
+
+    public record EntityMeltingRecipe(
+            net.minecraft.world.entity.EntityType<?> entityType,
+            FluidStack output,
+            int damage
+    ) implements Recipe<SingleRecipeInput> {
+
+        public boolean matches(net.minecraft.world.entity.EntityType<?> type) {
+            return this.entityType == type;
+        }
+
+        public static final MapCodec<EntityMeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+                net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.byNameCodec()
+                        .fieldOf("entity").forGetter(EntityMeltingRecipe::entityType),
+                FluidStack.CODEC.fieldOf("result").forGetter(EntityMeltingRecipe::output),
+                Codec.INT.optionalFieldOf("damage", 2).forGetter(EntityMeltingRecipe::damage)
+        ).apply(inst, EntityMeltingRecipe::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, EntityMeltingRecipe> STREAM_CODEC =
+                StreamCodec.of(
+                        (buf, r) -> {
+                            net.minecraft.resources.ResourceLocation entityId =
+                                    net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(r.entityType());
+                            buf.writeResourceLocation(entityId);
+                            FluidStack.STREAM_CODEC.encode(buf, r.output());
+                            buf.writeVarInt(r.damage());
+                        },
+                        buf -> new EntityMeltingRecipe(
+                                net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.get(buf.readResourceLocation()),
+                                FluidStack.STREAM_CODEC.decode(buf),
+                                buf.readVarInt()
+                        )
+                );
+
+        @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }
+        @Override public ItemStack assemble(SingleRecipeInput inv, HolderLookup.Provider lookup) { return ItemStack.EMPTY; }
+        @Override public boolean canCraftInDimensions(int w, int h) { return true; }
+        @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return ItemStack.EMPTY; }
+        @Override public RecipeSerializer<?> getSerializer() { return ENTITY_MELTING_SERIALIZER.get(); }
+        @Override public RecipeType<?> getType() { return ENTITY_MELTING_TYPE.get(); }
     }
 }

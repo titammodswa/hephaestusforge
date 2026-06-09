@@ -8,9 +8,9 @@
     "tag": "c:storage_blocks/netherite"
   },
   "result": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_netherite"
   },
-  "temperature": 2000,
+  "temperature": 1500,
   "time": 200
 }

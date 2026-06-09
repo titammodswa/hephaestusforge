@@ -8,8 +8,5 @@
     "amount": 90,
     "id": "hephaestus:molten_copper"
   },
-  "result": {
-    "count": 1,
-    "id": "minecraft:copper_ingot"
-  }
+  "result": "minecraft:copper_ingot"
 }

@@ -14,8 +14,5 @@
     "amount": 360,
     "id": "hephaestus:molten_iridium"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:iridium_gear"
-  }
+  "result": "alltheores:iridium_gear"
 }

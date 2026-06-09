@@ -7,12 +7,9 @@
   ],
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_bronze"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:bronze_block"
-  },
+  "result": "alltheores:bronze_block",
   "time": 200
 }

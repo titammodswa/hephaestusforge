@@ -14,8 +14,5 @@
     "amount": 90,
     "id": "hephaestus:molten_osmium"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:osmium_plate"
-  }
+  "result": "alltheores:osmium_plate"
 }

@@ -1,7 +1,7 @@
-// 1.21.1	2026-05-18T23:09:55.4861434	Tags for minecraft:block mod id hephaestus
+// 1.21.1	2026-06-09T05:25:41.5994275	Tags for minecraft:block mod id hephaestus
 aabfe42c1ecd0ff086ade435e0c5ba38441280d6 data/c/tags/block/smeltery_floor.json
 588de50b3601dc8b85bf09babf102031fe2394d4 data/c/tags/block/smeltery_tanks.json
-899bb10a08ec565e85bd1508ac5439ddbcf6207a data/c/tags/block/smeltery_wall.json
+427d8bf2baef2de7d87126117667fcdeced94be3 data/c/tags/block/smeltery_wall.json
 d576522f437705c1cf137e1f4252c5f9afd3e844 data/c/tags/block/storage_blocks.json
 45442aec3ad6727c52ddb2676a15ccc1eac834a6 data/c/tags/block/storage_blocks/cobalt.json
 4d4e95e56c130788ff5ea41009611171ac14427e data/c/tags/block/storage_blocks/raw_cobalt.json

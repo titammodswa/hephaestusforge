@@ -14,8 +14,5 @@
     "amount": 45,
     "id": "hephaestus:molten_brass"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:brass_rod"
-  }
+  "result": "alltheores:brass_rod"
 }

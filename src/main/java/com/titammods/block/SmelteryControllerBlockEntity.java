@@ -1,5 +1,6 @@
 package com.titammods.block;
 
+import com.titammods.block.module.EntityMeltingModule;
 import com.titammods.block.multiblock.IDisplayFluidListener;
 import com.titammods.block.multiblock.SmelteryFluidHandler;
 import com.titammods.block.multiblock.SmelteryMultiblock;
@@ -40,7 +41,12 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     private int tickCounter = 0;
     private boolean isFormed = false;
 
+    public BlockPos syncedMinInner = null;
+    public BlockPos syncedMaxInner = null;
+
     public final SmelteryFluidHandler fluidTank = new SmelteryFluidHandler();
+
+    private EntityMeltingModule entityMeltingModule;
 
     public int inventoryVersion = 0;
 
@@ -71,6 +77,22 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
     public SmelteryControllerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.SMELTERY_CONTROLLER.get(), pos, state);
+        entityMeltingModule = new EntityMeltingModule(
+                new EntityMeltingModule.SmelteryParent() {
+                    @Override public Level getLevel() { return level; }
+                    @Override public BlockPos getBlockPos() { return worldPosition; }
+                    @Override public boolean isFormed() { return isFormed; }
+                    @Override public boolean hasFuel() { return !currentFuel.isEmpty() || fuel > 0; }
+                },
+                fluidTank,
+                stack -> {
+                    for (int i = 0; i < itemHandler.getSlots(); i++) {
+                        stack = itemHandler.insertItem(i, stack, false);
+                        if (stack.isEmpty()) return ItemStack.EMPTY;
+                    }
+                    return stack;
+                }
+        );
     }
 
     @Override
@@ -124,6 +146,14 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
         if (multiblock != null) {
             tag.putInt("InternalVolume", multiblock.internalVolume);
+            if (multiblock.minInner != null) {
+                tag.putIntArray("MinInner", new int[]{
+                        multiblock.minInner.getX(), multiblock.minInner.getY(), multiblock.minInner.getZ()});
+            }
+            if (multiblock.maxInner != null) {
+                tag.putIntArray("MaxInner", new int[]{
+                        multiblock.maxInner.getX(), multiblock.maxInner.getY(), multiblock.maxInner.getZ()});
+            }
         }
 
         tag.putInt("FuelCapacity", fuelCapacity);
@@ -180,6 +210,15 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
         if (isFormed) {
             fluidTank.setCapacity(itemHandler.getSlots() * 8000);
         }
+
+        if (tag.contains("MinInner")) {
+            int[] a = tag.getIntArray("MinInner");
+            if (a.length == 3) syncedMinInner = new BlockPos(a[0], a[1], a[2]);
+        } else { syncedMinInner = null; }
+        if (tag.contains("MaxInner")) {
+            int[] a = tag.getIntArray("MaxInner");
+            if (a.length == 3) syncedMaxInner = new BlockPos(a[0], a[1], a[2]);
+        } else { syncedMaxInner = null; }
     }
 
     @Override
@@ -217,6 +256,12 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 updateFuelInfo();
                 updateDisplayFluidSync();
                 processAlloying();
+                if (multiblock != null && multiblock.minInner != null && multiblock.maxInner != null) {
+                    net.minecraft.world.phys.AABB innerBounds = new net.minecraft.world.phys.AABB(
+                            multiblock.minInner.getX(), multiblock.minInner.getY(), multiblock.minInner.getZ(),
+                            multiblock.maxInner.getX() + 1, multiblock.maxInner.getY() + 1, multiblock.maxInner.getZ() + 1);
+                    entityMeltingModule.interactWithEntities(innerBounds);
+                }
             } else {
                 this.currentFuel = FluidStack.EMPTY;
                 this.fuelCapacity = 0;

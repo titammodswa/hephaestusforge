@@ -8,8 +8,5 @@
     "amount": 90,
     "id": "hephaestus:molten_cobalt"
   },
-  "result": {
-    "count": 1,
-    "id": "hephaestus:cobalt_ingot"
-  }
+  "result": "hephaestus:cobalt_ingot"
 }

@@ -14,8 +14,5 @@
     "amount": 90,
     "id": "hephaestus:molten_constantan"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:constantan_ingot"
-  }
+  "result": "alltheores:constantan_ingot"
 }

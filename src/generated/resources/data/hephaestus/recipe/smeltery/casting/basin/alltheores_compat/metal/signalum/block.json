@@ -7,12 +7,9 @@
   ],
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_signalum"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:signalum_block"
-  },
+  "result": "alltheores:signalum_block",
   "time": 200
 }

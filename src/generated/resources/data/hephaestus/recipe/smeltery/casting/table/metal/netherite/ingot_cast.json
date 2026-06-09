@@ -8,8 +8,5 @@
     "amount": 90,
     "id": "hephaestus:molten_netherite"
   },
-  "result": {
-    "count": 1,
-    "id": "minecraft:netherite_ingot"
-  }
+  "result": "minecraft:netherite_ingot"
 }

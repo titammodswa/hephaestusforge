@@ -5,11 +5,8 @@
   },
   "cooling_time": 120,
   "fluid": {
-    "amount": 100,
+    "amount": 90,
     "id": "hephaestus:molten_diamond"
   },
-  "result": {
-    "count": 1,
-    "id": "minecraft:diamond"
-  }
+  "result": "minecraft:diamond"
 }

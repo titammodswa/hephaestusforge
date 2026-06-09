@@ -52,6 +52,18 @@ public class TitamMods {
 
         modEventBus.addListener(ModNetworking::register);
 
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(
+                (net.neoforged.neoforge.event.AddReloadListenerEvent e) ->
+                        e.addListener(new net.minecraft.server.packs.resources.SimplePreparableReloadListener<Void>() {
+                            @Override protected Void prepare(net.minecraft.server.packs.resources.ResourceManager r,
+                                    net.minecraft.util.profiling.ProfilerFiller p) { return null; }
+                            @Override protected void apply(Void v, net.minecraft.server.packs.resources.ResourceManager r,
+                                    net.minecraft.util.profiling.ProfilerFiller p) {
+                                com.titammods.block.module.EntityMeltingModule.invalidateCache();
+                            }
+                        })
+        );
+
         if (FMLEnvironment.dist == Dist.CLIENT) {
             ClientModEvents.register(modEventBus);
         }

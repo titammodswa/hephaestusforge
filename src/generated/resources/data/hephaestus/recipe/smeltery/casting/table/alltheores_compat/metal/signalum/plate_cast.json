@@ -14,8 +14,5 @@
     "amount": 90,
     "id": "hephaestus:molten_signalum"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:signalum_plate"
-  }
+  "result": "alltheores:signalum_plate"
 }

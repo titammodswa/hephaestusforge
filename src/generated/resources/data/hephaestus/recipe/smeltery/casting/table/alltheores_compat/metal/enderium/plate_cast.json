@@ -14,8 +14,5 @@
     "amount": 90,
     "id": "hephaestus:molten_enderium"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:enderium_plate"
-  }
+  "result": "alltheores:enderium_plate"
 }

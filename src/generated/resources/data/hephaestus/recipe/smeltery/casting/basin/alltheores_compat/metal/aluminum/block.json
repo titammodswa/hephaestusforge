@@ -7,12 +7,9 @@
   ],
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_aluminum"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:aluminum_block"
-  },
+  "result": "alltheores:aluminum_block",
   "time": 200
 }

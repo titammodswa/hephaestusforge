@@ -76,7 +76,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(smelteryWall)
                 .addTag(smelteryFloor)
-                .add(ModBlocks.SEARED_DRAIN.get(), ModBlocks.SEARED_CHUTE.get());
+                .add(ModBlocks.SEARED_DRAIN.get(), ModBlocks.SEARED_CHUTE.get())
+                .add(ModBlocks.CLEAR_GLASS.get(), ModBlocks.CLEAR_STAINED_GLASS.get(), ModBlocks.CLEAR_TINTED_GLASS.get(), ModBlocks.SEARED_GLASS.get(), ModBlocks.SEARED_TINTED_GLASS.get());
 
         for (var tankHolder : com.titammods.setup.ModTanks.BLOCKS.getEntries()) {
             net.minecraft.world.level.block.Block block = tankHolder.get();

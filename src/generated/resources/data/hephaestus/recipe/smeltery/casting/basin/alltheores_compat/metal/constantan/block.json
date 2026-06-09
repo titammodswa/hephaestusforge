@@ -7,12 +7,9 @@
   ],
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_constantan"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:constantan_block"
-  },
+  "result": "alltheores:constantan_block",
   "time": 200
 }

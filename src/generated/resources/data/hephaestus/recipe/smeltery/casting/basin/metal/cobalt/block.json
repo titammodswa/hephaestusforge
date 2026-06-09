@@ -1,12 +1,9 @@
 {
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 900,
+    "amount": 810,
     "id": "hephaestus:molten_cobalt"
   },
-  "result": {
-    "count": 1,
-    "id": "hephaestus:cobalt_block"
-  },
+  "result": "hephaestus:cobalt_block",
   "time": 200
 }

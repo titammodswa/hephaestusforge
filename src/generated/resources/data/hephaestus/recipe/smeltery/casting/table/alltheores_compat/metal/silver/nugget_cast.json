@@ -14,8 +14,5 @@
     "amount": 10,
     "id": "hephaestus:molten_silver"
   },
-  "result": {
-    "count": 1,
-    "id": "alltheores:silver_nugget"
-  }
+  "result": "alltheores:silver_nugget"
 }
