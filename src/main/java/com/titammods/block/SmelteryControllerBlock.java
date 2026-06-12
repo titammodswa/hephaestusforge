@@ -51,7 +51,7 @@ public class SmelteryControllerBlock extends Block implements EntityBlock {
             if (entity instanceof SmelteryControllerBlockEntity controller && state.getValue(IN_STRUCTURE)) {
                 player.openMenu(controller, pos);
             } else {
-                player.displayClientMessage(net.minecraft.network.chat.Component.literal("§cA Forja está incompleta!"), true);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable("gui.hephaestus.smeltery.incomplete"), true);
             }
         }
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);

@@ -40,7 +40,6 @@ public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluid
         return displayFluid;
     }
 
-    // A MÁGICA ORIGINAL DO TINKERS: Passa o fluido para o BakedModel
     @Override
     public ModelData getModelData() {
         return ModelData.builder()
@@ -54,7 +53,6 @@ public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluid
             this.displayFluid = fluid.isEmpty() ? FluidStack.EMPTY : fluid.copy();
             this.setChanged();
 
-            // Força o Minecraft a reconstruir o modelo 3D imediatamente!
             requestModelDataUpdate();
 
             if (this.level != null) {
@@ -108,7 +106,6 @@ public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluid
     public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider provider) {
         super.handleUpdateTag(tag, provider);
 
-        // CRÍTICO PARA O CLIENTE: Quando recebe os dados novos, atualiza a textura no mundo
         requestModelDataUpdate();
 
         if (this.level != null && this.level.isClientSide) {

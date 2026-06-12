@@ -47,7 +47,7 @@ public record AlloyRecipe(List<FluidStack> inputs, FluidStack output, int temper
     );
 
     @Override
-    public boolean matches(RecipeInput input, Level level) { return false; } // Handled manually by Smeltery
+    public boolean matches(RecipeInput input, Level level) { return false; }
 
     @Override
     public ItemStack assemble(RecipeInput input, HolderLookup.Provider provider) { return ItemStack.EMPTY; }

@@ -98,9 +98,8 @@ public class EntityMeltingCategory implements IRecipeCategory<ModRecipes.EntityM
 
         Font font = Minecraft.getInstance().font;
         String dmg = Float.toString(recipe.damage() / 2f);
-        int tx = 68 - font.width(dmg);
-        graphics.drawString(font, Component.literal(dmg).withStyle(ChatFormatting.RED), tx, 8, Color.RED.getRGB(), false);
-        graphics.drawString(font, Component.literal("♥").withStyle(ChatFormatting.RED),
-                tx + font.width(dmg) + 1, 8, Color.RED.getRGB(), false);
+        int heartIconX = 85;
+        int tx = heartIconX - font.width(dmg) - 1;
+        graphics.drawString(font, Component.literal(dmg).withStyle(ChatFormatting.RED), tx, 7, Color.RED.getRGB(), false);
     }
 }

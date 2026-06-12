@@ -1,6 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "category": "blocks",
+  "category": "misc",
   "ingredient": {
     "item": "hephaestus:seared_bricks"
   },

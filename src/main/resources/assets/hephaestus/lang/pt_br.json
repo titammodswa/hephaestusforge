@@ -256,5 +256,6 @@
   "gui.hephaestus.unit.blocks": "Blocos",
   "gui.hephaestus.unit.ingots": "Barras",
   "gui.hephaestus.unit.nuggets": "Pepitas",
-  "gui.hephaestus.melter.tank_empty": "Capacidade: %s mB"
+  "gui.hephaestus.melter.tank_empty": "Capacidade: %s mB",
+  "gui.hephaestus.smeltery.incomplete": "§cA Forja está incompleta!"
 }

@@ -61,37 +61,31 @@ public class SmelteryTankRenderer implements BlockEntityRenderer<SmelteryTankBlo
         float vBottom = vMax - (vMax - vMin) * minY;
         float vTop = vMax - (vMax - vMin) * height;
 
-        // Norte (Z-)
         addVertex(builder, matrix, maxX, minY, minZ, uMin, vBottom, r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, minX, minY, minZ, uMax, vBottom, r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, minX, height, minZ, uMax, vTop, r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, maxX, height, minZ, uMin, vTop, r, g, b, a, light, 0, 0, -1);
 
-        // Sul (Z+)
         addVertex(builder, matrix, minX, minY, maxZ, uMin, vBottom, r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, maxX, minY, maxZ, uMax, vBottom, r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, maxX, height, maxZ, uMax, vTop, r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, minX, height, maxZ, uMin, vTop, r, g, b, a, light, 0, 0, 1);
 
-        // Oeste (X-)
         addVertex(builder, matrix, minX, minY, minZ, uMin, vBottom, r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, minY, maxZ, uMax, vBottom, r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, height, maxZ, uMax, vTop, r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, height, minZ, uMin, vTop, r, g, b, a, light, -1, 0, 0);
 
-        // Leste (X+)
         addVertex(builder, matrix, maxX, minY, maxZ, uMin, vBottom, r, g, b, a, light, 1, 0, 0);
         addVertex(builder, matrix, maxX, minY, minZ, uMax, vBottom, r, g, b, a, light, 1, 0, 0);
         addVertex(builder, matrix, maxX, height, minZ, uMax, vTop, r, g, b, a, light, 1, 0, 0);
         addVertex(builder, matrix, maxX, height, maxZ, uMin, vTop, r, g, b, a, light, 1, 0, 0);
 
-        // Topo (Y+)
         addVertex(builder, matrix, minX, height, maxZ, uMin, vMax, r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, maxX, height, maxZ, uMax, vMax, r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, maxX, height, minZ, uMax, vMin, r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, minX, height, minZ, uMin, vMin, r, g, b, a, light, 0, 1, 0);
 
-        // Fundo (Y-)
         addVertex(builder, matrix, minX, minY, minZ, uMin, vMin, r, g, b, a, light, 0, -1, 0);
         addVertex(builder, matrix, maxX, minY, minZ, uMax, vMin, r, g, b, a, light, 0, -1, 0);
         addVertex(builder, matrix, maxX, minY, maxZ, uMax, vMax, r, g, b, a, light, 0, -1, 0);

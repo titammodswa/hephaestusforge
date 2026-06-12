@@ -43,7 +43,7 @@ public class BasinBlockEntity extends BlockEntity {
         @Nonnull
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (renderTimer > 0) return ItemStack.EMPTY; // Item congelado na bacia!
+            if (renderTimer > 0) return ItemStack.EMPTY;
             return super.extractItem(slot, amount, simulate);
         }
     };

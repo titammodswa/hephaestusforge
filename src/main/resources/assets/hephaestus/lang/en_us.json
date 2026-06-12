@@ -256,5 +256,6 @@
   "gui.hephaestus.unit.blocks": "Blocks",
   "gui.hephaestus.unit.ingots": "Ingots",
   "gui.hephaestus.unit.nuggets": "Nuggets",
-  "gui.hephaestus.melter.tank_empty": "Capacity: %s mB"
+  "gui.hephaestus.melter.tank_empty": "Capacity: %s mB",
+  "gui.hephaestus.smeltery.incomplete": "§cThe Smeltery is incomplete!"
 }

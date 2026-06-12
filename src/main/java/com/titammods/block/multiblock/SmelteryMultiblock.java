@@ -20,6 +20,9 @@ public class SmelteryMultiblock {
     public BlockPos maxInner;
     public int internalVolume = 0;
 
+    @org.jetbrains.annotations.Nullable
+    public BlockPos errorPos = null;
+
     public final List<BlockPos> tanks = new ArrayList<>();
     public final List<BlockPos> walls = new ArrayList<>();
     public final List<BlockPos> floor = new ArrayList<>();
@@ -31,6 +34,7 @@ public class SmelteryMultiblock {
 
     public void scanStructure(Direction facing) {
         isValid = false;
+        errorPos = null;
         tanks.clear();
         walls.clear();
         floor.clear();
@@ -81,6 +85,7 @@ public class SmelteryMultiblock {
         while (currentY < floorY + 64) {
             boolean isLayerValid = true;
             boolean hasWallsThisLayer = false;
+            BlockPos firstError = null;
             tempWalls.clear();
             tempTanks.clear();
 
@@ -104,14 +109,14 @@ public class SmelteryMultiblock {
                         if (isValidWall(state)) {
                             tempWalls.add(pos);
                             hasWallsThisLayer = true;
-                            if (isTank(state)) {
-                                tempTanks.add(pos);
-                            }
+                            if (isTank(state)) tempTanks.add(pos);
                         } else {
+                            if (firstError == null) firstError = pos;
                             isLayerValid = false;
                         }
                     } else {
                         if (!isInnerBlock(state)) {
+                            if (firstError == null) firstError = pos;
                             isLayerValid = false;
                         }
                     }
@@ -123,6 +128,7 @@ public class SmelteryMultiblock {
                     walls.addAll(tempWalls);
                     tanks.addAll(tempTanks);
                 } else {
+                    errorPos = firstError;
                     return;
                 }
             } else {
@@ -134,10 +140,11 @@ public class SmelteryMultiblock {
 
         int height = (currentY - 1) - floorY;
         if (height > 0 && controllerFound) {
-            this.minInner = new BlockPos(minX, floorY + 1, minZ);
-            this.maxInner = new BlockPos(maxX, currentY - 1, maxZ);
+            this.minInner     = new BlockPos(minX, floorY + 1, minZ);
+            this.maxInner     = new BlockPos(maxX, currentY - 1, maxZ);
             this.internalVolume = ((maxX - minX + 1) * (maxZ - minZ + 1) * height);
-            this.isValid = true;
+            this.isValid      = true;
+            this.errorPos     = null;
         }
     }
 

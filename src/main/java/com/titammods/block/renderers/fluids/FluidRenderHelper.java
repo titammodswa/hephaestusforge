@@ -24,12 +24,6 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
 
-
-// Source: https://github.com/Creators-of-Create/Ponder/blob/mc1.21.1/dev/common/src/main/java/net/createmod/catnip/render/FluidRenderHelper.java
-// Condensated to a single portable-ish class
-
-
-
 public final class FluidRenderHelper {
 
 
@@ -214,7 +208,6 @@ public final class FluidRenderHelper {
         builder.addVertex(peek.pose(), x, y, z)
                 .setColor(r, g, b, a)
                 .setUv(u, v)
-                //.overlayCoords(OverlayTexture.NO_OVERLAY)
                 .setLight(light)
                 .setNormal(peek.copy(), normal.getX(), normal.getY(), normal.getZ())
         ;

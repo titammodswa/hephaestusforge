@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.titammods.block.SmelteryControllerBlockEntity;
 import com.titammods.block.SmelteryControllerBlock;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -23,12 +24,50 @@ public class SmelteryControllerRenderer implements BlockEntityRenderer<SmelteryC
 
     private static final float FLUID_OFFSET = 0.005f;
 
+    private static final RenderType ERROR_BLOCK = RenderType.create(
+            "hephaestus:error_block",
+            com.mojang.blaze3d.vertex.DefaultVertexFormat.POSITION_COLOR_NORMAL,
+            com.mojang.blaze3d.vertex.VertexFormat.Mode.LINES,
+            256, false, false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RenderType.RENDERTYPE_LINES_SHADER)
+                    .setLineState(new net.minecraft.client.renderer.RenderStateShard.LineStateShard(java.util.OptionalDouble.empty()))
+                    .setLayeringState(RenderType.VIEW_OFFSET_Z_LAYERING)
+                    .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
+                    .setOutputState(RenderType.ITEM_ENTITY_TARGET)
+                    .setWriteMaskState(RenderType.COLOR_DEPTH_WRITE)
+                    .setCullState(RenderType.NO_CULL)
+                    .setDepthTestState(RenderType.NO_DEPTH_TEST)
+                    .createCompositeState(false));
+
     public SmelteryControllerRenderer(BlockEntityRendererProvider.Context ctx) {}
 
     @Override
     public void render(SmelteryControllerBlockEntity entity, float partialTick,
                        PoseStack poseStack, MultiBufferSource bufferSource,
                        int packedLight, int packedOverlay) {
+
+        BlockPos errorPos = entity.errorPos;
+        if (errorPos != null && entity.isHighlightError()) {
+            BlockPos ctrl = entity.getBlockPos();
+            int dx = errorPos.getX() - ctrl.getX();
+            int dy = errorPos.getY() - ctrl.getY();
+            int dz = errorPos.getZ() - ctrl.getZ();
+
+            net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.player != null) {
+                net.minecraft.core.BlockPos playerPos = mc.player.blockPosition();
+                int pdx = playerPos.getX() - ctrl.getX();
+                int pdz = playerPos.getZ() - ctrl.getZ();
+                if (pdx * pdx + pdz * pdz < 512) {
+                    boolean structureValid = entity.getBlockState().getValue(SmelteryControllerBlock.IN_STRUCTURE);
+                    float r = 1f, g = structureValid ? 1f : 0f, b = 0f, a = 0.8f;
+
+                    com.mojang.blaze3d.vertex.VertexConsumer vc = bufferSource.getBuffer(ERROR_BLOCK);
+                    renderBlockOutline(poseStack, vc, dx, dy, dz, r, g, b, a);
+                }
+            }
+        }
 
         if (!entity.getBlockState().getValue(SmelteryControllerBlock.IN_STRUCTURE)) return;
 
@@ -58,8 +97,8 @@ public class SmelteryControllerRenderer implements BlockEntityRenderer<SmelteryC
 
         int blockLight = 0, skyLight = 0;
         if (entity.getLevel() != null) {
-            blockLight = entity.getLevel().getBrightness(LightLayer.BLOCK, ctrl);
-            skyLight   = entity.getLevel().getBrightness(LightLayer.SKY, ctrl);
+            blockLight = entity.getLevel().getBrightness(net.minecraft.world.level.LightLayer.BLOCK, ctrl);
+            skyLight   = entity.getLevel().getBrightness(net.minecraft.world.level.LightLayer.SKY, ctrl);
         }
 
         poseStack.pushPose();
@@ -215,6 +254,37 @@ public class SmelteryControllerRenderer implements BlockEntityRenderer<SmelteryC
             else break;
         } while (sum > totalMb);
         return h;
+    }
+
+    private static void renderBlockOutline(PoseStack poseStack, VertexConsumer vc,
+                                           double ox, double oy, double oz,
+                                           float r, float g, float b, float a) {
+        org.joml.Matrix4f m = poseStack.last().pose();
+
+        float x0 = (float) ox,       y0 = (float) oy,       z0 = (float) oz;
+        float x1 = (float)(ox + 1),  y1 = (float)(oy + 1),  z1 = (float)(oz + 1);
+
+        line(vc, m, x0,y0,z0, x1,y0,z0, r,g,b,a,  0,-1, 0);
+        line(vc, m, x1,y0,z0, x1,y0,z1, r,g,b,a,  0,-1, 0);
+        line(vc, m, x1,y0,z1, x0,y0,z1, r,g,b,a,  0,-1, 0);
+        line(vc, m, x0,y0,z1, x0,y0,z0, r,g,b,a,  0,-1, 0);
+        line(vc, m, x0,y1,z0, x1,y1,z0, r,g,b,a,  0, 1, 0);
+        line(vc, m, x1,y1,z0, x1,y1,z1, r,g,b,a,  0, 1, 0);
+        line(vc, m, x1,y1,z1, x0,y1,z1, r,g,b,a,  0, 1, 0);
+        line(vc, m, x0,y1,z1, x0,y1,z0, r,g,b,a,  0, 1, 0);
+        line(vc, m, x0,y0,z0, x0,y1,z0, r,g,b,a, -1, 0,-1);
+        line(vc, m, x1,y0,z0, x1,y1,z0, r,g,b,a,  1, 0,-1);
+        line(vc, m, x1,y0,z1, x1,y1,z1, r,g,b,a,  1, 0, 1);
+        line(vc, m, x0,y0,z1, x0,y1,z1, r,g,b,a, -1, 0, 1);
+    }
+
+    private static void line(VertexConsumer vc, org.joml.Matrix4f m,
+                             float x0, float y0, float z0,
+                             float x1, float y1, float z1,
+                             float r, float g, float b, float a,
+                             float nx, float ny, float nz) {
+        vc.addVertex(m, x0, y0, z0).setColor(r, g, b, a).setNormal(nx, ny, nz);
+        vc.addVertex(m, x1, y1, z1).setColor(r, g, b, a).setNormal(nx, ny, nz);
     }
 
     @Override

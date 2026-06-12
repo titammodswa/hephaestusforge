@@ -337,9 +337,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     private void generateDecorative(RecipeOutput output, Block baseBlock, Block slab, Block stairs, Block wall) {
         String baseName = BuiltInRegistries.BLOCK.getKey(baseBlock).getPath();
-        if (slab != null) ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6).pattern("BBB").define('B', baseBlock).unlockedBy("has_" + baseName, has(baseBlock)).save(output, ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "decoration/" + BuiltInRegistries.BLOCK.getKey(slab).getPath()));
-        if (stairs != null) ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4).pattern("B  ").pattern("BB ").pattern("BBB").define('B', baseBlock).unlockedBy("has_" + baseName, has(baseBlock)).save(output, ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "decoration/" + BuiltInRegistries.BLOCK.getKey(stairs).getPath()));
-        if (wall != null) ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, wall, 6).pattern("BBB").pattern("BBB").define('B', baseBlock).unlockedBy("has_" + baseName, has(baseBlock)).save(output, ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "decoration/" + BuiltInRegistries.BLOCK.getKey(wall).getPath()));
+        if (slab != null) ShapedRecipeBuilder.shaped(RecipeCategory.MISC, slab, 6).pattern("BBB").define('B', baseBlock).unlockedBy("has_" + baseName, has(baseBlock)).save(output, ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "decoration/" + BuiltInRegistries.BLOCK.getKey(slab).getPath()));
+        if (stairs != null) ShapedRecipeBuilder.shaped(RecipeCategory.MISC, stairs, 4).pattern("B  ").pattern("BB ").pattern("BBB").define('B', baseBlock).unlockedBy("has_" + baseName, has(baseBlock)).save(output, ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "decoration/" + BuiltInRegistries.BLOCK.getKey(stairs).getPath()));
+        if (wall != null) ShapedRecipeBuilder.shaped(RecipeCategory.MISC, wall, 6).pattern("BBB").pattern("BBB").define('B', baseBlock).unlockedBy("has_" + baseName, has(baseBlock)).save(output, ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "decoration/" + BuiltInRegistries.BLOCK.getKey(wall).getPath()));
     }
 
     private void addAlloyRecipe(RecipeOutput output, List<FluidStack> inputs, FluidStack result, int temperature, String savePath) {

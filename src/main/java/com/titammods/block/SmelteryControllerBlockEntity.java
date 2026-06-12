@@ -44,6 +44,11 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     public BlockPos syncedMinInner = null;
     public BlockPos syncedMaxInner = null;
 
+    @org.jetbrains.annotations.Nullable
+    public BlockPos errorPos = null;
+    private int errorVisibleFor = 0;
+    private static final int ERROR_VISIBLE_TICKS = 200;
+
     public final SmelteryFluidHandler fluidTank = new SmelteryFluidHandler();
 
     private EntityMeltingModule entityMeltingModule;
@@ -94,6 +99,13 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 }
         );
     }
+
+    public void setErrorPos(@org.jetbrains.annotations.Nullable BlockPos pos) {
+        this.errorPos = pos;
+        if (pos != null) this.errorVisibleFor = ERROR_VISIBLE_TICKS;
+    }
+
+    public boolean isHighlightError() { return errorVisibleFor > 0; }
 
     @Override
     public FluidStack getDisplayFluid() {
@@ -245,7 +257,10 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        if (level.isClientSide) return;
+        if (level.isClientSide) {
+            if (errorVisibleFor > 0) errorVisibleFor--;
+            return;
+        }
 
         tickCounter++;
         if (tickCounter >= 20) {
@@ -587,6 +602,21 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             this.setChanged();
             level.setBlockAndUpdate(worldPosition, currentState.setValue(SmelteryControllerBlock.IN_STRUCTURE, false).setValue(SmelteryControllerBlock.ACTIVE, false));
             linkIOBlocks(false);
+        }
+        syncErrorPos();
+    }
+
+    private BlockPos lastSentErrorPos = null;
+
+    private void syncErrorPos() {
+        BlockPos newError = multiblock != null ? multiblock.errorPos : null;
+        if (!java.util.Objects.equals(newError, lastSentErrorPos)) {
+            lastSentErrorPos = newError;
+            net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingChunk(
+                    (net.minecraft.server.level.ServerLevel) level,
+                    new net.minecraft.world.level.ChunkPos(worldPosition),
+                    new com.titammods.network.StructureErrorPayload(worldPosition, newError)
+            );
         }
     }
 

@@ -105,37 +105,31 @@ public class MelterRenderer implements BlockEntityRenderer<MelterBlockEntity> {
         VertexConsumer builder = bufferSource.getBuffer(RenderType.translucent());
         Matrix4f matrix = poseStack.last().pose();
 
-        // Face Norte
         addVertex(builder, matrix, maxX, minY, minZ, u(sprite, maxX), v(sprite, 1 - minY), r, g, b, a, itemLight, 0, 0, -1);
         addVertex(builder, matrix, minX, minY, minZ, u(sprite, minX), v(sprite, 1 - minY), r, g, b, a, itemLight, 0, 0, -1);
         addVertex(builder, matrix, minX, height, minZ, u(sprite, minX), v(sprite, 1 - height), r, g, b, a, itemLight, 0, 0, -1);
         addVertex(builder, matrix, maxX, height, minZ, u(sprite, maxX), v(sprite, 1 - height), r, g, b, a, itemLight, 0, 0, -1);
 
-        // Face Sul
         addVertex(builder, matrix, minX, minY, maxZ, u(sprite, minX), v(sprite, 1 - minY), r, g, b, a, itemLight, 0, 0, 1);
         addVertex(builder, matrix, maxX, minY, maxZ, u(sprite, maxX), v(sprite, 1 - minY), r, g, b, a, itemLight, 0, 0, 1);
         addVertex(builder, matrix, maxX, height, maxZ, u(sprite, maxX), v(sprite, 1 - height), r, g, b, a, itemLight, 0, 0, 1);
         addVertex(builder, matrix, minX, height, maxZ, u(sprite, minX), v(sprite, 1 - height), r, g, b, a, itemLight, 0, 0, 1);
 
-        // Face Oeste
         addVertex(builder, matrix, minX, minY, minZ, u(sprite, minZ), v(sprite, 1 - minY), r, g, b, a, itemLight, -1, 0, 0);
         addVertex(builder, matrix, minX, minY, maxZ, u(sprite, maxZ), v(sprite, 1 - minY), r, g, b, a, itemLight, -1, 0, 0);
         addVertex(builder, matrix, minX, height, maxZ, u(sprite, maxZ), v(sprite, 1 - height), r, g, b, a, itemLight, -1, 0, 0);
         addVertex(builder, matrix, minX, height, minZ, u(sprite, minZ), v(sprite, 1 - height), r, g, b, a, itemLight, -1, 0, 0);
 
-        // Face Leste
         addVertex(builder, matrix, maxX, minY, maxZ, u(sprite, maxZ), v(sprite, 1 - minY), r, g, b, a, itemLight, 1, 0, 0);
         addVertex(builder, matrix, maxX, minY, minZ, u(sprite, minZ), v(sprite, 1 - minY), r, g, b, a, itemLight, 1, 0, 0);
         addVertex(builder, matrix, maxX, height, minZ, u(sprite, minZ), v(sprite, 1 - height), r, g, b, a, itemLight, 1, 0, 0);
         addVertex(builder, matrix, maxX, height, maxZ, u(sprite, maxZ), v(sprite, 1 - height), r, g, b, a, itemLight, 1, 0, 0);
 
-        // Face Topo
         addVertex(builder, matrix, minX, height, maxZ, u(sprite, minX), v(sprite, maxZ), r, g, b, a, itemLight, 0, 1, 0);
         addVertex(builder, matrix, maxX, height, maxZ, u(sprite, maxX), v(sprite, maxZ), r, g, b, a, itemLight, 0, 1, 0);
         addVertex(builder, matrix, maxX, height, minZ, u(sprite, maxX), v(sprite, minZ), r, g, b, a, itemLight, 0, 1, 0);
         addVertex(builder, matrix, minX, height, minZ, u(sprite, minX), v(sprite, minZ), r, g, b, a, itemLight, 0, 1, 0);
 
-        // Face Fundo
         addVertex(builder, matrix, minX, minY, minZ, u(sprite, minX), v(sprite, minZ), r, g, b, a, itemLight, 0, -1, 0);
         addVertex(builder, matrix, maxX, minY, minZ, u(sprite, maxX), v(sprite, minZ), r, g, b, a, itemLight, 0, -1, 0);
         addVertex(builder, matrix, maxX, minY, maxZ, u(sprite, maxX), v(sprite, maxZ), r, g, b, a, itemLight, 0, -1, 0);

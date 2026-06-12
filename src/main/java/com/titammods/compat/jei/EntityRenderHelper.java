@@ -34,34 +34,31 @@ public class EntityRenderHelper {
         Entity entity = CACHE.computeIfAbsent(id, k -> {
             Entity e = type.create(mc.level);
             if (e instanceof LivingEntity le) {
-                le.yBodyRot  = 0;
-                le.yHeadRot  = 0;
-                le.yHeadRotO = 0;
-                le.setYRot(0);
-                le.setXRot(0);
+                le.yBodyRot  = 0; le.yHeadRot  = 0;
+                le.yHeadRotO = 0; le.setYRot(0); le.setXRot(0);
             }
             return e;
         });
         if (!(entity instanceof LivingEntity living)) return;
 
-        living.yBodyRot  = 0;
-        living.yHeadRot  = 0;
-        living.yHeadRotO = 0;
-        living.setYRot(0);
-        living.setXRot(0);
+        living.yBodyRot  = 0; living.yHeadRot  = 0;
+        living.yHeadRotO = 0; living.setYRot(0); living.setXRot(0);
         if (mc.player != null) living.tickCount = mc.player.tickCount;
 
-        float entityH  = Math.max(living.getBbHeight(), living.getBbWidth());
-        float dynScale = Math.max(1f, size * 0.6f / entityH);
+        float entitySize = Math.max(living.getBbHeight(), living.getBbWidth());
+        float maxPixels  = size * 0.75f;
+        float scale      = maxPixels / entitySize;
+
+        float floorY  = y + size * 0.88f;
+        float centerX = x + size / 2f;
 
         PoseStack poseStack = guiGraphics.pose();
         poseStack.pushPose();
 
-        poseStack.translate(x + size / 2f, y + size, 50f);
-        poseStack.scale(dynScale, dynScale, dynScale);
+        poseStack.translate(centerX, floorY, 50f);
+        poseStack.scale(scale, scale, scale);
         poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-
-        poseStack.translate(0.0F, living.getVehicleAttachmentPoint(living).y(), 0.0F);
+        poseStack.translate(0.0F, living.getBbHeight() / 5f, 0.0F);
 
         EntityRenderDispatcher dispatcher = mc.getEntityRenderDispatcher();
         dispatcher.overrideCameraOrientation(new Quaternionf(0f, 0f, 0f, 1f));

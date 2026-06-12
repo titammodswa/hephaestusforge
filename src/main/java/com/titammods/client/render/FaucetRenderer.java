@@ -83,13 +83,11 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity> {
         float v0 = sprite.getV0();
         float v1 = sprite.getV1();
 
-        // Face Superior
         addVertex(builder, matrix, minX, maxY, maxZ, u(u0, u1, minX), v(v0, v1, maxZ), r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, maxX, maxY, maxZ, u(u0, u1, maxX), v(v0, v1, maxZ), r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, maxX, maxY, minZ, u(u0, u1, maxX), v(v0, v1, minZ), r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, minX, maxY, minZ, u(u0, u1, minX), v(v0, v1, minZ), r, g, b, a, light, 0, 1, 0);
 
-        // Face Inferior
         addVertex(builder, matrix, minX, minY, minZ, u(u0, u1, minX), v(v0, v1, minZ), r, g, b, a, light, 0, -1, 0);
         addVertex(builder, matrix, maxX, minY, minZ, u(u0, u1, maxX), v(v0, v1, minZ), r, g, b, a, light, 0, -1, 0);
         addVertex(builder, matrix, maxX, minY, maxZ, u(u0, u1, maxX), v(v0, v1, maxZ), r, g, b, a, light, 0, -1, 0);
@@ -98,25 +96,21 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity> {
         float topV = v0;
         float botV = v1;
 
-        // Norte
         addVertex(builder, matrix, maxX, minY, minZ, u(u0, u1, 1), botV, r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, minX, minY, minZ, u(u0, u1, 0), botV, r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, minX, maxY, minZ, u(u0, u1, 0), topV, r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, maxX, maxY, minZ, u(u0, u1, 1), topV, r, g, b, a, light, 0, 0, -1);
 
-        // Sul
         addVertex(builder, matrix, minX, minY, maxZ, u(u0, u1, 0), botV, r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, maxX, minY, maxZ, u(u0, u1, 1), botV, r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, maxX, maxY, maxZ, u(u0, u1, 1), topV, r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, minX, maxY, maxZ, u(u0, u1, 0), topV, r, g, b, a, light, 0, 0, 1);
 
-        // Oeste
         addVertex(builder, matrix, minX, minY, minZ, u(u0, u1, 0), botV, r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, minY, maxZ, u(u0, u1, 1), botV, r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, maxY, maxZ, u(u0, u1, 1), topV, r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, maxY, minZ, u(u0, u1, 0), topV, r, g, b, a, light, -1, 0, 0);
 
-        // Leste
         addVertex(builder, matrix, maxX, minY, maxZ, u(u0, u1, 1), botV, r, g, b, a, light, 1, 0, 0);
         addVertex(builder, matrix, maxX, minY, minZ, u(u0, u1, 0), botV, r, g, b, a, light, 1, 0, 0);
         addVertex(builder, matrix, maxX, maxY, minZ, u(u0, u1, 0), topV, r, g, b, a, light, 1, 0, 0);

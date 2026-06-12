@@ -7,7 +7,7 @@ issueTrackerURL=""
 modId="${mod_id}"
 version="${mod_version}"
 displayName="Hephaestus Foundry"
-description="Um mod de forja multibloco inspirado em mecânicas clássicas."
+description="A multi-block forge mod inspired by classic mechanics."
 
 [[dependencies.${mod_id}]]
 modId="neoforge"

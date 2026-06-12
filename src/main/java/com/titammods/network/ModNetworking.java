@@ -21,6 +21,11 @@ public class ModNetworking {
                 ScrollSyncPayload.STREAM_CODEC,
                 ModNetworking::handleScrollSync
         );
+        registrar.playToClient(
+                StructureErrorPayload.TYPE,
+                StructureErrorPayload.STREAM_CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> StructureErrorPayload.handleClient(payload))
+        );
     }
 
     public static void handleFluidClick(final FluidClickPayload payload, final IPayloadContext context) {

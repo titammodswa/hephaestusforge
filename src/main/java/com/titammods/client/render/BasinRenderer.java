@@ -70,32 +70,26 @@ public class BasinRenderer implements BlockEntityRenderer<BasinBlockEntity> {
     }
 
     private void renderCuboid(VertexConsumer builder, Matrix4f matrix, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, TextureAtlasSprite sprite, float r, float g, float b, float a, int light) {
-        // Topo
         addVertex(builder, matrix, minX, maxY, maxZ, u(sprite, minX), v(sprite, maxZ), r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, maxX, maxY, maxZ, u(sprite, maxX), v(sprite, maxZ), r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, maxX, maxY, minZ, u(sprite, maxX), v(sprite, minZ), r, g, b, a, light, 0, 1, 0);
         addVertex(builder, matrix, minX, maxY, minZ, u(sprite, minX), v(sprite, minZ), r, g, b, a, light, 0, 1, 0);
-        // Fundo
         addVertex(builder, matrix, minX, minY, minZ, u(sprite, minX), v(sprite, minZ), r, g, b, a, light, 0, -1, 0);
         addVertex(builder, matrix, maxX, minY, minZ, u(sprite, maxX), v(sprite, minZ), r, g, b, a, light, 0, -1, 0);
         addVertex(builder, matrix, maxX, minY, maxZ, u(sprite, maxX), v(sprite, maxZ), r, g, b, a, light, 0, -1, 0);
         addVertex(builder, matrix, minX, minY, maxZ, u(sprite, minX), v(sprite, maxZ), r, g, b, a, light, 0, -1, 0);
-        // Norte
         addVertex(builder, matrix, maxX, minY, minZ, u(sprite, maxX), v(sprite, 1-minY), r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, minX, minY, minZ, u(sprite, minX), v(sprite, 1-minY), r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, minX, maxY, minZ, u(sprite, minX), v(sprite, 1-maxY), r, g, b, a, light, 0, 0, -1);
         addVertex(builder, matrix, maxX, maxY, minZ, u(sprite, maxX), v(sprite, 1-maxY), r, g, b, a, light, 0, 0, -1);
-        // Sul
         addVertex(builder, matrix, minX, minY, maxZ, u(sprite, minX), v(sprite, 1-minY), r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, maxX, minY, maxZ, u(sprite, maxX), v(sprite, 1-minY), r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, maxX, maxY, maxZ, u(sprite, maxX), v(sprite, 1-maxY), r, g, b, a, light, 0, 0, 1);
         addVertex(builder, matrix, minX, maxY, maxZ, u(sprite, minX), v(sprite, 1-maxY), r, g, b, a, light, 0, 0, 1);
-        // Oeste
         addVertex(builder, matrix, minX, minY, minZ, u(sprite, minZ), v(sprite, 1-minY), r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, minY, maxZ, u(sprite, maxZ), v(sprite, 1-minY), r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, maxY, maxZ, u(sprite, maxZ), v(sprite, 1-maxY), r, g, b, a, light, -1, 0, 0);
         addVertex(builder, matrix, minX, maxY, minZ, u(sprite, minZ), v(sprite, 1-maxY), r, g, b, a, light, -1, 0, 0);
-        // Leste
         addVertex(builder, matrix, maxX, minY, maxZ, u(sprite, maxZ), v(sprite, 1-minY), r, g, b, a, light, 1, 0, 0);
         addVertex(builder, matrix, maxX, minY, minZ, u(sprite, minZ), v(sprite, 1-minY), r, g, b, a, light, 1, 0, 0);
         addVertex(builder, matrix, maxX, maxY, minZ, u(sprite, minZ), v(sprite, 1-maxY), r, g, b, a, light, 1, 0, 0);
