@@ -70,8 +70,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //gems
         registerGem(output, ModFluids.MOLTEN_DIAMOND.source.get(), 1400, "diamond", "storage_blocks/diamond", "gems/diamond", Items.DIAMOND_BLOCK, Items.DIAMOND);
         registerGem(output, ModFluids.MOLTEN_EMERALD.source.get(), 1200, "emerald", "storage_blocks/emerald", "gems/emerald", Items.EMERALD_BLOCK, Items.EMERALD);
-        registerGem(output, ModFluids.MOLTEN_AMETHYST.source.get(), 1000, "amethyst", "", "gems/amethyst", Items.AMETHYST_BLOCK, Items.AMETHYST_SHARD);
-        registerGem(output, ModFluids.MOLTEN_QUARTZ.source.get(), 800, "quartz", "", "gems/quartz", Items.QUARTZ_BLOCK, Items.QUARTZ);
+        registerGem(output, ModFluids.MOLTEN_AMETHYST.source.get(), 1000, "amethyst", "", "gems/amethyst", Items.AMETHYST_BLOCK, Items.AMETHYST_SHARD, 360);
+        registerGem(output, ModFluids.MOLTEN_QUARTZ.source.get(), 800, "quartz", "", "gems/quartz", Items.QUARTZ_BLOCK, Items.QUARTZ, 360);
 
         //alltheores compat
         RecipeOutput atoOutput = output.withConditions(modLoaded("alltheores"));
@@ -110,7 +110,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         registerFtbMetalById(ftbOutput, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_URANIUM).source.get(),   1130, "uranium",    true);
         registerFtbMetalById(ftbOutput, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ZINC).source.get(),       419, "zinc",       true);
 
-        // 1. LATÃO (BRASS) - 1 Cobre + 1 Zinco = 2 Latão
         addAlloyRecipe(output,
                 List.of(
                         new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_COPPER).source.get(), 100),
@@ -119,8 +118,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_BRASS).source.get(), 200),
                 650,
                 "brass");
-
-        // 2. BRONZE - 3 Cobre + 1 Estanho = 4 Bronze
         addAlloyRecipe(output,
                 List.of(
                         new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_COPPER).source.get(), 300),
@@ -129,8 +126,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_BRONZE).source.get(), 400),
                 700,
                 "bronze");
-
-        // 3. ELECTRUM - 1 Ouro + 1 Prata = 2 Electrum
         addAlloyRecipe(output,
                 List.of(
                         new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GOLD).source.get(), 100),
@@ -139,8 +134,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ELECTRUM).source.get(), 200),
                 760,
                 "electrum");
-
-        // 4. INVAR - 2 Ferro + 1 Níquel = 3 Invar
         addAlloyRecipe(output,
                 List.of(
                         new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_IRON).source.get(), 200),
@@ -149,8 +142,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_INVAR).source.get(), 300),
                 810,
                 "invar");
-
-        // 5. CONSTANTAN - 1 Cobre + 1 Níquel = 2 Constantan
         addAlloyRecipe(output,
                 List.of(
                         new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_COPPER).source.get(), 100),
@@ -294,13 +285,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     private void registerGem(RecipeOutput output, Fluid fluid, int temp, String name, String blockTag, String gemTag, ItemLike block, ItemLike gem) {
+        registerGem(output, fluid, temp, name, blockTag, gemTag, block, gem, 810);
+    }
+
+    private void registerGem(RecipeOutput output, Fluid fluid, int temp, String name, String blockTag, String gemTag, ItemLike block, ItemLike gem, int blockAmount) {
         int baseTime = 120;
         if (blockTag != null && !blockTag.isEmpty()) {
-            addMeltingTag(output, blockTag, fluid, 810, temp, baseTime * 2, "gem/" + name + "/block"); } else if (block != null) {
-            addMeltingItem(output, block, fluid, 810, temp, baseTime * 2, "gem/" + name + "/block"); } if (gemTag != null && !gemTag.isEmpty()) {
+            addMeltingTag(output, blockTag, fluid, blockAmount, temp, baseTime * 2, "gem/" + name + "/block"); } else if (block != null) {
+            addMeltingItem(output, block, fluid, blockAmount, temp, baseTime * 2, "gem/" + name + "/block"); } if (gemTag != null && !gemTag.isEmpty()) {
             addMeltingTag(output, gemTag, fluid, 90, temp, baseTime, "gem/" + name + "/gem"); } else if (gem != null) {
             addMeltingItem(output, gem, fluid, 90, temp, baseTime, "gem/" + name + "/gem"); }
-        if (block != null) addCastingBasin(output, fluid, 810, block, baseTime * 2, "gem/" + name + "/block");
+        if (block != null) addCastingBasin(output, fluid, blockAmount, block, baseTime * 2, "gem/" + name + "/block");
         if (gem != null) addCastingTable(output, fluid, 90, ModItems.GEM_CAST.get(), false, gem, baseTime, "gem/" + name + "/gem_cast");
     }
 

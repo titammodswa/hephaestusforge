@@ -1,7 +1,7 @@
 {
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 810,
+    "amount": 360,
     "id": "hephaestus:molten_quartz"
   },
   "result": "minecraft:quartz_block",
