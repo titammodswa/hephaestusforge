@@ -290,9 +290,9 @@
   "item.hephaestus.molten_wax_bucket": "Balde de Cera Fundida",
   "block.hephaestus.molten_wax_block": "Cera Fundida",
 
-  "fluid_type.hephaestus.meat": "Carne Líquida",
-  "item.hephaestus.meat_bucket": "Balde de Carne Líquida",
-  "block.hephaestus.meat_block": "Carne Líquida",
+  "fluid_type.hephaestus.molten_meat": "Carne Líquida",
+  "item.hephaestus.molten_meat_bucket": "Balde de Carne Líquida",
+  "block.hephaestus.molten_meat_block": "Carne Líquida",
 
   "fluid_type.hephaestus.molten_refined_glowstone": "Glowstone Refinada Fundida",
   "item.hephaestus.molten_refined_glowstone_bucket": "Balde de Glowstone Refinada Fundida",

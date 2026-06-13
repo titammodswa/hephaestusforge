@@ -95,7 +95,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         addMeltingItem(output, Items.ENDER_PEARL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ENDER).source.get(), 90, 1000, 60, "misc/ender/pearl");
         addCastingTable(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ENDER).source.get(), 90, ModItems.GEM_CAST.get(), false, Items.ENDER_PEARL, 60, "misc/ender/pearl");
         // Ancient Debris
-        addMeltingItem(output, Items.ANCIENT_DEBRIS, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ANCIENT_DEBRIS).source.get(), 810, 2000, 180, "misc/ancient_debris");
+        addMeltingItem(output, Items.ANCIENT_DEBRIS, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ANCIENT_DEBRIS).source.get(), 180, 2000, 180, "misc/ancient_debris");
         // Shulker Shell
         addMeltingItem(output, Items.SHULKER_SHELL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SHULKER_SHELL).source.get(), 200, 1200, 60, "misc/shulker_shell");
         addCastingTable(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SHULKER_SHELL).source.get(), 200, null, false, Items.SHULKER_SHELL, 60, "misc/shulker_shell");
@@ -112,12 +112,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         // Carbon
         addMeltingItem(output, Items.CHARCOAL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 90, 600, 30, "misc/carbon/charcoal");
         addMeltingItem(output, Items.COAL,     HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 90, 600, 30, "misc/carbon/coal");
+        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 810, Items.COAL_BLOCK, 60, "misc/carbon/coal_block");
         // Refined Glowstone / Refined Obsidian
         RecipeOutput mekOutput = output.withConditions(modLoaded("mekanism"));
         addMeltingTag(mekOutput, "storage_blocks/refined_glowstone", HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_GLOWSTONE).source.get(), 810,  900, 120, "misc/refined_glowstone/block");
         addMeltingTag(mekOutput, "ingots/refined_glowstone",         HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_GLOWSTONE).source.get(),  90,  900,  60, "misc/refined_glowstone/ingot");
+        addCastingTableById(mekOutput, net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_GLOWSTONE).source.get()),  90, ModItems.INGOT_CAST.get(), false, ResourceLocation.fromNamespaceAndPath("mekanism", "ingot_refined_glowstone"),  60, "misc/refined_glowstone/ingot_cast");
+        addCastingBasinById(mekOutput, net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_GLOWSTONE).source.get()), 810, ResourceLocation.fromNamespaceAndPath("mekanism", "block_refined_glowstone"), 120, "misc/refined_glowstone/block_cast");
         addMeltingTag(mekOutput, "storage_blocks/refined_obsidian",  HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_OBSIDIAN).source.get(),  810, 1400, 120, "misc/refined_obsidian/block");
         addMeltingTag(mekOutput, "ingots/refined_obsidian",          HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_OBSIDIAN).source.get(),   90, 1400,  60, "misc/refined_obsidian/ingot");
+        addCastingTableById(mekOutput, net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_OBSIDIAN).source.get()),  90, ModItems.INGOT_CAST.get(), false, ResourceLocation.fromNamespaceAndPath("mekanism", "ingot_refined_obsidian"),  60, "misc/refined_obsidian/ingot_cast");
+        addCastingBasinById(mekOutput, net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_OBSIDIAN).source.get()), 810, ResourceLocation.fromNamespaceAndPath("mekanism", "block_refined_obsidian"), 120, "misc/refined_obsidian/block_cast");
         // Meat
         addMeltingItem(output, Items.BEEF,     HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 100, 200, 20, "misc/meat/beef");
         addMeltingItem(output, Items.PORKCHOP, HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 100, 200, 20, "misc/meat/porkchop");
@@ -202,6 +207,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CONSTANTAN).source.get(), 200),
                 920,
                 "constantan");
+        addAlloyRecipe(output,
+                List.of(
+                        new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ANCIENT_DEBRIS).source.get(), 270),
+                        new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GOLD).source.get(), 270)
+                ),
+                new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_NETHERITE).source.get(), 270),
+                2000,
+                "netherite");
 
         addEntityMelting(output, net.minecraft.world.entity.EntityType.BLAZE,
                 new FluidStack(ModFluids.MOLTEN_BLAZE.source.get(), 45), 2, "blaze");

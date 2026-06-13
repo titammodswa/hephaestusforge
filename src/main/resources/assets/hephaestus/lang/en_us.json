@@ -290,9 +290,9 @@
   "item.hephaestus.molten_wax_bucket": "Molten Wax Bucket",
   "block.hephaestus.molten_wax_block": "Molten Wax",
 
-  "fluid_type.hephaestus.meat": "Liquid Meat",
-  "item.hephaestus.meat_bucket": "Liquid Meat Bucket",
-  "block.hephaestus.meat_block": "Liquid Meat",
+  "fluid_type.hephaestus.molten_meat": "Liquid Meat",
+  "item.hephaestus.molten_meat_bucket": "Liquid Meat Bucket",
+  "block.hephaestus.molten_meat_block": "Liquid Meat",
 
   "fluid_type.hephaestus.molten_refined_glowstone": "Molten Refined Glowstone",
   "item.hephaestus.molten_refined_glowstone_bucket": "Molten Refined Glowstone Bucket",

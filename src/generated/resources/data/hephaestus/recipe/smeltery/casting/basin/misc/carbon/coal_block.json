@@ -1,0 +1,9 @@
+{
+  "type": "hephaestus:casting_basin",
+  "input": {
+    "amount": 810,
+    "id": "hephaestus:molten_carbon"
+  },
+  "result": "minecraft:coal_block",
+  "time": 60
+}
