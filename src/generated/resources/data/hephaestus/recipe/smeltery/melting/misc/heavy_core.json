@@ -1,0 +1,16 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "hephaestus:molten_blaze"
+  },
+  "ingredient": {
+    "item": "minecraft:heavy_core"
+  },
+  "result": {
+    "amount": 810,
+    "id": "hephaestus:molten_heavy_core"
+  },
+  "temperature": 2000,
+  "time": 180
+}

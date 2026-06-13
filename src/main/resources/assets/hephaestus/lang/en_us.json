@@ -238,6 +238,70 @@
   "item.hephaestus.molten_blaze_bucket": "Molten Blaze Bucket",
   "block.hephaestus.molten_blaze_block": "Molten Blaze",
 
+  "fluid_type.hephaestus.molten_heavy_core": "Molten Heavy Core",
+  "item.hephaestus.molten_heavy_core_bucket": "Molten Heavy Core Bucket",
+  "block.hephaestus.molten_heavy_core_block": "Molten Heavy Core",
+
+  "fluid_type.hephaestus.molten_glowstone": "Molten Glowstone",
+  "item.hephaestus.molten_glowstone_bucket": "Molten Glowstone Bucket",
+  "block.hephaestus.molten_glowstone_block": "Molten Glowstone",
+
+  "fluid_type.hephaestus.molten_redstone": "Molten Redstone",
+  "item.hephaestus.molten_redstone_bucket": "Molten Redstone Bucket",
+  "block.hephaestus.molten_redstone_block": "Molten Redstone",
+
+  "fluid_type.hephaestus.molten_obsidian": "Molten Obsidian",
+  "item.hephaestus.molten_obsidian_bucket": "Molten Obsidian Bucket",
+  "block.hephaestus.molten_obsidian_block": "Molten Obsidian",
+
+  "fluid_type.hephaestus.molten_glass": "Molten Glass",
+  "item.hephaestus.molten_glass_bucket": "Molten Glass Bucket",
+  "block.hephaestus.molten_glass_block": "Molten Glass",
+
+  "fluid_type.hephaestus.molten_lapis": "Molten Lapis",
+  "item.hephaestus.molten_lapis_bucket": "Molten Lapis Bucket",
+  "block.hephaestus.molten_lapis_block": "Molten Lapis",
+
+  "fluid_type.hephaestus.molten_carbon": "Molten Carbon",
+  "item.hephaestus.molten_carbon_bucket": "Molten Carbon Bucket",
+  "block.hephaestus.molten_carbon_block": "Molten Carbon",
+
+  "fluid_type.hephaestus.molten_ender": "Molten Ender",
+  "item.hephaestus.molten_ender_bucket": "Molten Ender Bucket",
+  "block.hephaestus.molten_ender_block": "Molten Ender",
+
+  "fluid_type.hephaestus.molten_ancient_debris": "Molten Ancient Debris",
+  "item.hephaestus.molten_ancient_debris_bucket": "Molten Ancient Debris Bucket",
+  "block.hephaestus.molten_ancient_debris_block": "Molten Ancient Debris",
+
+  "fluid_type.hephaestus.molten_shulker_shell": "Molten Shulker Shell",
+  "item.hephaestus.molten_shulker_shell_bucket": "Molten Shulker Shell Bucket",
+  "block.hephaestus.molten_shulker_shell_block": "Molten Shulker Shell",
+
+  "fluid_type.hephaestus.molten_slime": "Molten Slime",
+  "item.hephaestus.molten_slime_bucket": "Molten Slime Bucket",
+  "block.hephaestus.molten_slime_block": "Molten Slime",
+
+  "fluid_type.hephaestus.molten_magma_cream": "Molten Magma Cream",
+  "item.hephaestus.molten_magma_cream_bucket": "Molten Magma Cream Bucket",
+  "block.hephaestus.molten_magma_cream_block": "Molten Magma Cream",
+
+  "fluid_type.hephaestus.molten_wax": "Molten Wax",
+  "item.hephaestus.molten_wax_bucket": "Molten Wax Bucket",
+  "block.hephaestus.molten_wax_block": "Molten Wax",
+
+  "fluid_type.hephaestus.meat": "Liquid Meat",
+  "item.hephaestus.meat_bucket": "Liquid Meat Bucket",
+  "block.hephaestus.meat_block": "Liquid Meat",
+
+  "fluid_type.hephaestus.molten_refined_glowstone": "Molten Refined Glowstone",
+  "item.hephaestus.molten_refined_glowstone_bucket": "Molten Refined Glowstone Bucket",
+  "block.hephaestus.molten_refined_glowstone_block": "Molten Refined Glowstone",
+
+  "fluid_type.hephaestus.molten_refined_obsidian": "Molten Refined Obsidian",
+  "item.hephaestus.molten_refined_obsidian_bucket": "Molten Refined Obsidian Bucket",
+  "block.hephaestus.molten_refined_obsidian_block": "Molten Refined Obsidian",
+
   "item.hephaestus.tank.empty": "Empty",
 
   "gui.hephaestus.tank.bucket.auto.title": "Auto mode",

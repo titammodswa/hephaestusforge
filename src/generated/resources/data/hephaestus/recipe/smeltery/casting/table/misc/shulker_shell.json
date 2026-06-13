@@ -1,0 +1,9 @@
+{
+  "type": "hephaestus:casting_table",
+  "cooling_time": 60,
+  "fluid": {
+    "amount": 200,
+    "id": "hephaestus:molten_shulker_shell"
+  },
+  "result": "minecraft:shulker_shell"
+}

@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -48,7 +50,36 @@ public class BasinBlockEntity extends BlockEntity {
         }
     };
 
-    public final FluidTank tank = new FluidTank(900) {
+    public final FluidTank tank = new FluidTank(Integer.MAX_VALUE) {
+
+        @Override
+        public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
+            if (!inventory.getStackInSlot(0).isEmpty() || renderTimer > 0) return 0;
+
+            if (!fluid.isEmpty() && !FluidStack.isSameFluidSameComponents(fluid, resource)) return 0;
+
+            if (level == null) return 0;
+            ModRecipes.CastingBasinRecipe matchedRecipe = null;
+            for (var recipeHolder : level.getRecipeManager().getAllRecipesFor(ModRecipes.CASTING_BASIN_TYPE.get())) {
+                ModRecipes.CastingBasinRecipe recipe = recipeHolder.value();
+                if (recipe.input().getFluid() == resource.getFluid()) {
+                    matchedRecipe = recipe;
+                    break;
+                }
+            }
+
+            if (matchedRecipe == null) return 0;
+
+            int requiredAmount = matchedRecipe.input().getAmount();
+            int spaceLeft = requiredAmount - fluid.getAmount();
+            if (spaceLeft <= 0) return 0;
+
+            FluidStack limitedFill = resource.copy();
+            limitedFill.setAmount(Math.min(resource.getAmount(), spaceLeft));
+
+            return super.fill(limitedFill, action);
+        }
+
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -61,6 +92,17 @@ public class BasinBlockEntity extends BlockEntity {
     public BasinBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.BASIN.get(), pos, state);
     }
+
+    public final net.neoforged.neoforge.fluids.capability.IFluidHandler externalFluidHandler =
+            new net.neoforged.neoforge.fluids.capability.IFluidHandler() {
+                @Override public int getTanks() { return 0; }
+                @Override public FluidStack getFluidInTank(int t) { return FluidStack.EMPTY; }
+                @Override public int getTankCapacity(int t) { return 0; }
+                @Override public boolean isFluidValid(int t, FluidStack s) { return false; }
+                @Override public int fill(FluidStack resource, FluidAction action) { return tank.fill(resource, action); }
+                @Override public FluidStack drain(FluidStack resource, FluidAction action) { return FluidStack.EMPTY; }
+                @Override public FluidStack drain(int maxDrain, FluidAction action) { return FluidStack.EMPTY; }
+            };
 
     public void extractItem(Player player) {
         if (renderTimer > 0) return;

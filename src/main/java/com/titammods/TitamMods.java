@@ -56,9 +56,9 @@ public class TitamMods {
                 (net.neoforged.neoforge.event.AddReloadListenerEvent e) ->
                         e.addListener(new net.minecraft.server.packs.resources.SimplePreparableReloadListener<Void>() {
                             @Override protected Void prepare(net.minecraft.server.packs.resources.ResourceManager r,
-                                    net.minecraft.util.profiling.ProfilerFiller p) { return null; }
+                                                             net.minecraft.util.profiling.ProfilerFiller p) { return null; }
                             @Override protected void apply(Void v, net.minecraft.server.packs.resources.ResourceManager r,
-                                    net.minecraft.util.profiling.ProfilerFiller p) {
+                                                           net.minecraft.util.profiling.ProfilerFiller p) {
                                 com.titammods.block.module.EntityMeltingModule.invalidateCache();
                             }
                         })
@@ -72,7 +72,7 @@ public class TitamMods {
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SMELETRY_TANK.get(), (be, side) -> be.getTank());
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BASIN.get(), (be, side) -> be.tank);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BASIN.get(), (be, side) -> be.externalFluidHandler);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BASIN.get(), (be, side) -> be.inventory);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.TABLE.get(), (be, side) -> be.externalFluidHandler);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.TABLE.get(), (be, side) -> be.externalHandler);

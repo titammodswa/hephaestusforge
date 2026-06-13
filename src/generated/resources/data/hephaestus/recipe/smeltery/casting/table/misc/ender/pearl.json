@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:casting_table",
+  "cast": {
+    "item": "hephaestus:gem_cast"
+  },
+  "cooling_time": 60,
+  "fluid": {
+    "amount": 90,
+    "id": "hephaestus:molten_ender"
+  },
+  "result": "minecraft:ender_pearl"
+}

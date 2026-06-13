@@ -13,6 +13,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import java.util.ArrayList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -74,5 +75,40 @@ public class TitamModsJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.SMELTERY_CONTROLLER.get()), ENTITY_MELTING_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.SEARED_TABLE.get()), CASTING_TABLE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.SEARED_BASIN.get()), CASTING_BASIN_TYPE);
+    }
+
+    @Override
+    public void registerRuntime(mezz.jei.api.registration.IRuntimeRegistration registration) {
+        if (!net.neoforged.fml.ModList.get().isLoaded("alltheores")) return;
+
+        mezz.jei.api.runtime.IIngredientManager ingredientManager = registration.getIngredientManager();
+
+        List<net.minecraft.world.item.ItemStack> itemsToHide = new ArrayList<>();
+        for (net.minecraft.world.item.Item item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+            net.minecraft.resources.ResourceLocation id =
+                    net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
+            if (!id.getNamespace().equals("alltheores")) continue;
+            String path = id.getPath();
+            if (path.endsWith("_bucket") || (path.contains("molten_") && path.endsWith("_block"))) {
+                itemsToHide.add(new net.minecraft.world.item.ItemStack(item));
+            }
+        }
+        if (!itemsToHide.isEmpty()) {
+            ingredientManager.removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, itemsToHide);
+        }
+
+        List<net.neoforged.neoforge.fluids.FluidStack> fluidsToHide = new ArrayList<>();
+        for (net.minecraft.world.level.material.Fluid fluid : net.minecraft.core.registries.BuiltInRegistries.FLUID) {
+            net.minecraft.resources.ResourceLocation id =
+                    net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(fluid);
+            if (!id.getNamespace().equals("alltheores")) continue;
+            String path = id.getPath();
+            if (path.startsWith("molten_") && !path.endsWith("_flowing")) {
+                fluidsToHide.add(new net.neoforged.neoforge.fluids.FluidStack(fluid, 1000));
+            }
+        }
+        if (!fluidsToHide.isEmpty()) {
+            ingredientManager.removeIngredientsAtRuntime(mezz.jei.api.neoforge.NeoForgeTypes.FLUID_STACK, fluidsToHide);
+        }
     }
 }

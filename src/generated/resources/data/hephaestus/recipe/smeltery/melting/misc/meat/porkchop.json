@@ -1,0 +1,16 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": {
+    "item": "minecraft:porkchop"
+  },
+  "result": {
+    "amount": 100,
+    "id": "hephaestus:molten_meat"
+  },
+  "temperature": 200,
+  "time": 20
+}

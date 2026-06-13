@@ -238,6 +238,70 @@
   "item.hephaestus.molten_blaze_bucket": "Balde de Blaze Derretido",
   "block.hephaestus.molten_blaze_block": "Blaze Derretido",
 
+  "fluid_type.hephaestus.molten_heavy_core": "Heavy Core Fundido",
+  "item.hephaestus.molten_heavy_core_bucket": "Balde de Heavy Core Fundido",
+  "block.hephaestus.molten_heavy_core_block": "Heavy Core Fundido",
+
+  "fluid_type.hephaestus.molten_glowstone": "Glowstone Fundida",
+  "item.hephaestus.molten_glowstone_bucket": "Balde de Glowstone Fundida",
+  "block.hephaestus.molten_glowstone_block": "Glowstone Fundida",
+
+  "fluid_type.hephaestus.molten_redstone": "Redstone Fundida",
+  "item.hephaestus.molten_redstone_bucket": "Balde de Redstone Fundida",
+  "block.hephaestus.molten_redstone_block": "Redstone Fundida",
+
+  "fluid_type.hephaestus.molten_obsidian": "Obsidiana Fundida",
+  "item.hephaestus.molten_obsidian_bucket": "Balde de Obsidiana Fundida",
+  "block.hephaestus.molten_obsidian_block": "Obsidiana Fundida",
+
+  "fluid_type.hephaestus.molten_glass": "Vidro Fundido",
+  "item.hephaestus.molten_glass_bucket": "Balde de Vidro Fundido",
+  "block.hephaestus.molten_glass_block": "Vidro Fundido",
+
+  "fluid_type.hephaestus.molten_lapis": "Lápis Fundido",
+  "item.hephaestus.molten_lapis_bucket": "Balde de Lápis Fundido",
+  "block.hephaestus.molten_lapis_block": "Lápis Fundido",
+
+  "fluid_type.hephaestus.molten_carbon": "Carbono Fundido",
+  "item.hephaestus.molten_carbon_bucket": "Balde de Carbono Fundido",
+  "block.hephaestus.molten_carbon_block": "Carbono Fundido",
+
+  "fluid_type.hephaestus.molten_ender": "Ender Fundido",
+  "item.hephaestus.molten_ender_bucket": "Balde de Ender Fundido",
+  "block.hephaestus.molten_ender_block": "Ender Fundido",
+
+  "fluid_type.hephaestus.molten_ancient_debris": "Destroços Antigos Fundidos",
+  "item.hephaestus.molten_ancient_debris_bucket": "Balde de Destroços Antigos Fundidos",
+  "block.hephaestus.molten_ancient_debris_block": "Destroços Antigos Fundidos",
+
+  "fluid_type.hephaestus.molten_shulker_shell": "Concha de Shulker Fundida",
+  "item.hephaestus.molten_shulker_shell_bucket": "Balde de Concha de Shulker Fundida",
+  "block.hephaestus.molten_shulker_shell_block": "Concha de Shulker Fundida",
+
+  "fluid_type.hephaestus.molten_slime": "Gosma Fundida",
+  "item.hephaestus.molten_slime_bucket": "Balde de Gosma Fundida",
+  "block.hephaestus.molten_slime_block": "Gosma Fundida",
+
+  "fluid_type.hephaestus.molten_magma_cream": "Creme de Magma Fundido",
+  "item.hephaestus.molten_magma_cream_bucket": "Balde de Creme de Magma Fundido",
+  "block.hephaestus.molten_magma_cream_block": "Creme de Magma Fundido",
+
+  "fluid_type.hephaestus.molten_wax": "Cera Fundida",
+  "item.hephaestus.molten_wax_bucket": "Balde de Cera Fundida",
+  "block.hephaestus.molten_wax_block": "Cera Fundida",
+
+  "fluid_type.hephaestus.meat": "Carne Líquida",
+  "item.hephaestus.meat_bucket": "Balde de Carne Líquida",
+  "block.hephaestus.meat_block": "Carne Líquida",
+
+  "fluid_type.hephaestus.molten_refined_glowstone": "Glowstone Refinada Fundida",
+  "item.hephaestus.molten_refined_glowstone_bucket": "Balde de Glowstone Refinada Fundida",
+  "block.hephaestus.molten_refined_glowstone_block": "Glowstone Refinada Fundida",
+
+  "fluid_type.hephaestus.molten_refined_obsidian": "Obsidiana Refinada Fundida",
+  "item.hephaestus.molten_refined_obsidian_bucket": "Balde de Obsidiana Refinada Fundida",
+  "block.hephaestus.molten_refined_obsidian_block": "Obsidiana Refinada Fundida",
+
   "item.hephaestus.tank.empty": "Vazio",
 
   "gui.hephaestus.tank.bucket.auto.title": "Modo automatico",

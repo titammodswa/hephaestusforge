@@ -43,8 +43,18 @@ public class BasinRenderer implements BlockEntityRenderer<BasinBlockEntity> {
         IClientFluidTypeExtensions clientFluid = IClientFluidTypeExtensions.of(fluidStack.getFluid());
         TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(clientFluid.getStillTexture(fluidStack));
 
-        float capacity = entity.tank.getCapacity();
-        float fillPercentage = (float) fluidStack.getAmount() / capacity;
+        int recipeAmount = fluidStack.getAmount();
+        if (entity.getLevel() != null) {
+            for (var holder : entity.getLevel().getRecipeManager()
+                    .getAllRecipesFor(com.titammods.setup.ModRecipes.CASTING_BASIN_TYPE.get())) {
+                var recipe = holder.value();
+                if (recipe.input().getFluid() == fluidStack.getFluid()) {
+                    recipeAmount = recipe.input().getAmount();
+                    break;
+                }
+            }
+        }
+        float fillPercentage = Math.min(1f, (float) fluidStack.getAmount() / recipeAmount);
 
         float minX = 0.126f, maxX = 0.874f;
         float minZ = 0.126f, maxZ = 0.874f;

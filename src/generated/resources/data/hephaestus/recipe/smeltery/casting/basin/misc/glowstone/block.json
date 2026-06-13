@@ -1,0 +1,9 @@
+{
+  "type": "hephaestus:casting_basin",
+  "input": {
+    "amount": 360,
+    "id": "hephaestus:molten_glowstone"
+  },
+  "result": "minecraft:glowstone",
+  "time": 60
+}

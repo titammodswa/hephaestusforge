@@ -1,0 +1,16 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": {
+    "item": "minecraft:coal"
+  },
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_carbon"
+  },
+  "temperature": 600,
+  "time": 30
+}

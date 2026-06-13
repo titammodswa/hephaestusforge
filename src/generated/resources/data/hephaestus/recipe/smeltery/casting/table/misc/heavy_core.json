@@ -1,0 +1,9 @@
+{
+  "type": "hephaestus:casting_table",
+  "cooling_time": 180,
+  "fluid": {
+    "amount": 810,
+    "id": "hephaestus:molten_heavy_core"
+  },
+  "result": "minecraft:heavy_core"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "hephaestus:molten_blaze"
+  },
+  "ingredient": {
+    "item": "minecraft:ancient_debris"
+  },
+  "result": {
+    "amount": 810,
+    "id": "hephaestus:molten_ancient_debris"
+  },
+  "temperature": 2000,
+  "time": 180
+}
