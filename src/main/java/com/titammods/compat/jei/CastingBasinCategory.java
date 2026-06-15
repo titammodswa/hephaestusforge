@@ -61,7 +61,9 @@ public class CastingBasinCategory implements IRecipeCategory<ModRecipes.CastingB
                 .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.input());
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 93, 18)
-                .addItemStack(recipe.output());
+                .addItemStack(recipe.output())
+                .addRichTooltipCallback((view, tooltip) ->
+                        TitamModsJEIPlugin.appendRecipeIdTooltip(recipe, tooltip::add));
     }
 
     @Override

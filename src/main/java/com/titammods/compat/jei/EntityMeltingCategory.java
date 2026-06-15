@@ -73,6 +73,7 @@ public class EntityMeltingCategory implements IRecipeCategory<ModRecipes.EntityM
                         float hearts = recipe.damage() / 2f;
                         tooltip.add(Component.translatable("gui.hephaestus.entity_melting.per_heart", hearts)
                                 .withStyle(ChatFormatting.RED));
+                        TitamModsJEIPlugin.appendRecipeIdTooltip(recipe, tooltip::add);
                     });
         }
 

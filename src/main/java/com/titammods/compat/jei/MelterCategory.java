@@ -86,6 +86,7 @@ public class MelterCategory implements IRecipeCategory<ModRecipes.MeltingRecipe>
                 .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.output())
                 .addRichTooltipCallback((view, tooltip) -> {
                     tooltip.add(Component.literal(recipe.output().getAmount() + " mB").withStyle(ChatFormatting.GRAY));
+                    TitamModsJEIPlugin.appendRecipeIdTooltip(recipe, tooltip::add);
                 });
     }
 

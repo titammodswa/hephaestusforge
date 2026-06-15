@@ -23,6 +23,36 @@ import java.util.List;
 @JeiPlugin
 public class TitamModsJEIPlugin implements IModPlugin {
 
+    public static final java.util.IdentityHashMap<Object, ResourceLocation> RecipeIdMap = new java.util.IdentityHashMap<>();
+
+    public static void appendRecipeIdTooltip(Object recipe, java.util.function.Consumer<net.minecraft.network.chat.Component> addLine) {
+        if (!net.minecraft.client.Minecraft.getInstance().options.advancedItemTooltips) return;
+        ResourceLocation id = RecipeIdMap.get(recipe);
+        if (id == null) return;
+
+        String full = id.toString();
+        int maxLen = 45;
+        if (full.length() <= maxLen) {
+            addLine.accept(net.minecraft.network.chat.Component.literal(full)
+                    .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        } else {
+            int split = full.lastIndexOf('/', maxLen);
+            if (split < 0) split = maxLen;
+            addLine.accept(net.minecraft.network.chat.Component.literal(full.substring(0, split))
+                    .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+            String rest = "  " + full.substring(split);
+            while (rest.length() > maxLen + 2) {
+                int s2 = rest.lastIndexOf('/', maxLen + 2);
+                if (s2 < 2) s2 = maxLen + 2;
+                addLine.accept(net.minecraft.network.chat.Component.literal(rest.substring(0, s2))
+                        .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+                rest = "  " + rest.substring(s2);
+            }
+            addLine.accept(net.minecraft.network.chat.Component.literal(rest)
+                    .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        }
+    }
+
     public static final RecipeType<ModRecipes.MeltingRecipe> MELTING_TYPE = RecipeType.create(TitamMods.MODID, "melting", ModRecipes.MeltingRecipe.class);
     public static final RecipeType<ModRecipes.MeltingRecipe> SMELTERY_TYPE = RecipeType.create(TitamMods.MODID, "smeltery", ModRecipes.MeltingRecipe.class);
     public static final RecipeType<AlloyRecipe> ALLOY_TYPE = RecipeType.create(TitamMods.MODID, "alloying", AlloyRecipe.class);
@@ -53,17 +83,29 @@ public class TitamModsJEIPlugin implements IModPlugin {
         if (Minecraft.getInstance().level == null) return;
         RecipeManager rm = Minecraft.getInstance().level.getRecipeManager();
 
-        List<ModRecipes.MeltingRecipe> melterRecipes = rm.getAllRecipesFor(ModRecipes.MELTING_TYPE.get()).stream().map(RecipeHolder::value).toList();
-        List<AlloyRecipe> alloyRecipes = rm.getAllRecipesFor(ModRecipes.ALLOY_TYPE.get()).stream().map(RecipeHolder::value).toList();
-        List<ModRecipes.CastingTableRecipe> tableRecipes = rm.getAllRecipesFor(ModRecipes.CASTING_TABLE_TYPE.get()).stream().map(RecipeHolder::value).toList();
-        List<ModRecipes.CastingBasinRecipe> basinRecipes = rm.getAllRecipesFor(ModRecipes.CASTING_BASIN_TYPE.get()).stream().map(RecipeHolder::value).toList();
-        List<ModRecipes.EntityMeltingRecipe> entityMeltingRecipes = rm.getAllRecipesFor(ModRecipes.ENTITY_MELTING_TYPE.get()).stream().map(RecipeHolder::value).toList();
+        RecipeIdMap.clear();
+        rm.getAllRecipesFor(ModRecipes.MELTING_TYPE.get())
+                .forEach(h -> RecipeIdMap.put(h.value(), h.id()));
+        rm.getAllRecipesFor(ModRecipes.ALLOY_TYPE.get())
+                .forEach(h -> RecipeIdMap.put(h.value(), h.id()));
+        rm.getAllRecipesFor(ModRecipes.CASTING_TABLE_TYPE.get())
+                .forEach(h -> RecipeIdMap.put(h.value(), h.id()));
+        rm.getAllRecipesFor(ModRecipes.CASTING_BASIN_TYPE.get())
+                .forEach(h -> RecipeIdMap.put(h.value(), h.id()));
+        rm.getAllRecipesFor(ModRecipes.ENTITY_MELTING_TYPE.get())
+                .forEach(h -> RecipeIdMap.put(h.value(), h.id()));
 
-        registration.addRecipes(MELTING_TYPE, melterRecipes);
-        registration.addRecipes(SMELTERY_TYPE, melterRecipes);
-        registration.addRecipes(ALLOY_TYPE, alloyRecipes);
-        registration.addRecipes(CASTING_TABLE_TYPE, tableRecipes);
-        registration.addRecipes(CASTING_BASIN_TYPE, basinRecipes);
+        var meltingRecipes      = rm.getAllRecipesFor(ModRecipes.MELTING_TYPE.get()).stream().map(RecipeHolder::value).toList();
+        var alloyRecipes        = rm.getAllRecipesFor(ModRecipes.ALLOY_TYPE.get()).stream().map(RecipeHolder::value).toList();
+        var tableRecipes        = rm.getAllRecipesFor(ModRecipes.CASTING_TABLE_TYPE.get()).stream().map(RecipeHolder::value).toList();
+        var basinRecipes        = rm.getAllRecipesFor(ModRecipes.CASTING_BASIN_TYPE.get()).stream().map(RecipeHolder::value).toList();
+        var entityMeltingRecipes = rm.getAllRecipesFor(ModRecipes.ENTITY_MELTING_TYPE.get()).stream().map(RecipeHolder::value).toList();
+
+        registration.addRecipes(MELTING_TYPE,        meltingRecipes);
+        registration.addRecipes(SMELTERY_TYPE,       meltingRecipes);
+        registration.addRecipes(ALLOY_TYPE,          alloyRecipes);
+        registration.addRecipes(CASTING_TABLE_TYPE,  tableRecipes);
+        registration.addRecipes(CASTING_BASIN_TYPE,  basinRecipes);
         registration.addRecipes(ENTITY_MELTING_TYPE, entityMeltingRecipes);
     }
 
