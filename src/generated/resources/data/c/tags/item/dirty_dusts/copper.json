@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:dirty_copper_dust"
+    {
+      "id": "alltheores:dirty_copper_dust",
+      "required": false
+    }
   ]
 }

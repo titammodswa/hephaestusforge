@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:silver_clump"
+    {
+      "id": "alltheores:silver_clump",
+      "required": false
+    }
   ]
 }

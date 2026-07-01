@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:iridium_crystal"
+    {
+      "id": "alltheores:iridium_crystal",
+      "required": false
+    }
   ]
 }

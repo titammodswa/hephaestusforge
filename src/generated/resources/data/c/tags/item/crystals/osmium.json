@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:osmium_crystal"
+    {
+      "id": "alltheores:osmium_crystal",
+      "required": false
+    }
   ]
 }

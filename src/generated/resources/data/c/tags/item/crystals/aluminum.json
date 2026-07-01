@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:aluminum_crystal"
+    {
+      "id": "alltheores:aluminum_crystal",
+      "required": false
+    }
   ]
 }

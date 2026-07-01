@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:lead_shard"
+    {
+      "id": "alltheores:lead_shard",
+      "required": false
+    }
   ]
 }

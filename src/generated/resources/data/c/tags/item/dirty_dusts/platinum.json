@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:dirty_platinum_dust"
+    {
+      "id": "alltheores:dirty_platinum_dust",
+      "required": false
+    }
   ]
 }

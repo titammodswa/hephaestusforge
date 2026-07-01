@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:dirty_iridium_dust"
+    {
+      "id": "alltheores:dirty_iridium_dust",
+      "required": false
+    }
   ]
 }

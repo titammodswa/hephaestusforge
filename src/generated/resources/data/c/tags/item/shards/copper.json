@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:copper_shard"
+    {
+      "id": "alltheores:copper_shard",
+      "required": false
+    }
   ]
 }

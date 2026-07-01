@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:tin_shard"
+    {
+      "id": "alltheores:tin_shard",
+      "required": false
+    }
   ]
 }

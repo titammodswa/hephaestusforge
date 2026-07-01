@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:tin_crystal"
+    {
+      "id": "alltheores:tin_crystal",
+      "required": false
+    }
   ]
 }

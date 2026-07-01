@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:copper_clump"
+    {
+      "id": "alltheores:copper_clump",
+      "required": false
+    }
   ]
 }

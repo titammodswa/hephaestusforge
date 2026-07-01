@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:nickel_clump"
+    {
+      "id": "alltheores:nickel_clump",
+      "required": false
+    }
   ]
 }

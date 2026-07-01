@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:copper_crystal"
+    {
+      "id": "alltheores:copper_crystal",
+      "required": false
+    }
   ]
 }

@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:nickel_crystal"
+    {
+      "id": "alltheores:nickel_crystal",
+      "required": false
+    }
   ]
 }

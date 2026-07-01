@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:dirty_uranium_dust"
+    {
+      "id": "alltheores:dirty_uranium_dust",
+      "required": false
+    }
   ]
 }

@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:tin_clump"
+    {
+      "id": "alltheores:tin_clump",
+      "required": false
+    }
   ]
 }

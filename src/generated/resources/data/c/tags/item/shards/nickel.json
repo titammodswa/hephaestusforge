@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:nickel_shard"
+    {
+      "id": "alltheores:nickel_shard",
+      "required": false
+    }
   ]
 }

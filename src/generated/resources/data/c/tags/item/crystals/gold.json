@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:gold_crystal"
+    {
+      "id": "alltheores:gold_crystal",
+      "required": false
+    }
   ]
 }

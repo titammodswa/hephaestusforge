@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:iron_crystal"
+    {
+      "id": "alltheores:iron_crystal",
+      "required": false
+    }
   ]
 }

@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:platinum_shard"
+    {
+      "id": "alltheores:platinum_shard",
+      "required": false
+    }
   ]
 }

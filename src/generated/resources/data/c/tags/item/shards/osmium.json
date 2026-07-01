@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:osmium_shard"
+    {
+      "id": "alltheores:osmium_shard",
+      "required": false
+    }
   ]
 }

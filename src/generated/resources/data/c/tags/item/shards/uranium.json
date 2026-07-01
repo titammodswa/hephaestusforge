@@ -1,5 +1,8 @@
 {
   "values": [
-    "alltheores:uranium_shard"
+    {
+      "id": "alltheores:uranium_shard",
+      "required": false
+    }
   ]
 }
