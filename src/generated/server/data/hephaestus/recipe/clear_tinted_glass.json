@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "building",
+  "category": "misc",
   "key": {
     "A": "minecraft:amethyst_shard",
     "G": "hephaestus:clear_glass"

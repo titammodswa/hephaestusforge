@@ -97,6 +97,22 @@
     "hephaestus:molten_steel_block",
     "hephaestus:molten_tin_block",
     "hephaestus:molten_uranium_block",
-    "hephaestus:molten_zinc_block"
+    "hephaestus:molten_zinc_block",
+    "hephaestus:molten_heavy_core_block",
+    "hephaestus:molten_glowstone_block",
+    "hephaestus:molten_redstone_block",
+    "hephaestus:molten_obsidian_block",
+    "hephaestus:molten_glass_block",
+    "hephaestus:molten_lapis_block",
+    "hephaestus:molten_carbon_block",
+    "hephaestus:molten_ender_block",
+    "hephaestus:molten_ancient_debris_block",
+    "hephaestus:molten_shulker_shell_block",
+    "hephaestus:molten_slime_block",
+    "hephaestus:molten_magma_cream_block",
+    "hephaestus:molten_wax_block",
+    "hephaestus:molten_meat_block",
+    "hephaestus:molten_refined_glowstone_block",
+    "hephaestus:molten_refined_obsidian_block"
   ]
 }

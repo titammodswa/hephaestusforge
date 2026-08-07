@@ -32,7 +32,23 @@ public class HephaestusFluids {
         MOLTEN_STEEL   ("steel",           0xFF565656, 1370),
         MOLTEN_TIN     ("tin",             0xFF9EACBB,  230),
         MOLTEN_URANIUM ("uranium",         0xFF4A554A, 1130),
-        MOLTEN_ZINC    ("zinc",            0xFFA1AC9E,  419);
+        MOLTEN_ZINC    ("zinc",            0xFFA1AC9E,  419),
+        MOLTEN_HEAVY_CORE      ("heavy_core",        0xFF636776, 2000),
+        MOLTEN_GLOWSTONE       ("glowstone",         0xFFFBDA74,  800),
+        MOLTEN_REDSTONE        ("redstone",          0xFFA41808,  600),
+        MOLTEN_OBSIDIAN        ("obsidian",          0xFF100C1C, 1400),
+        MOLTEN_GLASS           ("glass",             0xFFD0EAE9, 1000),
+        MOLTEN_LAPIS           ("lapis",             0xFF1C3890,  900),
+        MOLTEN_CARBON          ("carbon",            0xFF0C0001,  600),
+        MOLTEN_ENDER           ("ender",             0xFF105E51, 1000),
+        MOLTEN_ANCIENT_DEBRIS  ("ancient_debris",    0xFF4A2C23, 2000),
+        MOLTEN_SHULKER_SHELL   ("shulker_shell",     0xFF956895, 1200),
+        MOLTEN_SLIME           ("slime",             0xFF568F4E,  300),
+        MOLTEN_MAGMA_CREAM     ("magma_cream",       0xFFE97823,  700),
+        MOLTEN_WAX             ("wax",               0xFFFFB808,  320),
+        LIQUID_MEAT            ("meat",              0xFFFC4E67,  200),
+        MOLTEN_REFINED_GLOWSTONE("refined_glowstone",0xFFB1AA56,  900),
+        MOLTEN_REFINED_OBSIDIAN ("refined_obsidian", 0xFF654C89, 1400);
 
         public final String name;
         public final int    color;

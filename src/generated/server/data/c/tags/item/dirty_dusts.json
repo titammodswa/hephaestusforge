@@ -1,0 +1,84 @@
+{
+  "values": [
+    {
+      "id": "alltheores:dirty_aluminum_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_bronze_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_constantan_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_electrum_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_enderium_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_invar_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_iridium_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_lead_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_lumium_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_nickel_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_osmium_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_platinum_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_signalum_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_silver_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_tin_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_uranium_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_iron_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_gold_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_copper_dust",
+      "required": false
+    },
+    {
+      "id": "alltheores:dirty_diamond_dust",
+      "required": false
+    }
+  ]
+}

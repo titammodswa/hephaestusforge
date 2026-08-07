@@ -1,0 +1,84 @@
+{
+  "values": [
+    {
+      "id": "alltheores:aluminum_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:bronze_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:constantan_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:electrum_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:enderium_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:invar_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:iridium_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:lead_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:lumium_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:nickel_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:osmium_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:platinum_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:signalum_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:silver_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:tin_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:uranium_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:iron_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:gold_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:copper_shard",
+      "required": false
+    },
+    {
+      "id": "alltheores:diamond_shard",
+      "required": false
+    }
+  ]
+}

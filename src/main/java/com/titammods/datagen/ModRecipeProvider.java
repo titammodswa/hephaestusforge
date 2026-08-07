@@ -130,44 +130,38 @@ public class ModRecipeProvider extends RecipeProvider {
     private void addVanillaRecipes() {
         var items = this.registries.lookupOrThrow(Registries.ITEM);
 
-        //Forge Brick
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModItems.FORGE_BRICK.get(), 16)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModItems.FORGE_BRICK.get(), 16)
                 .pattern("CCS").pattern("GLS").pattern("GCC")
                 .define('G', Items.GRAVEL).define('C', Items.COAL)
                 .define('S', Items.SAND).define('L', Items.CLAY_BALL)
                 .unlockedBy("has_clay", this.has(Items.CLAY_BALL))
                 .save(this.output, rk("forge_brick"));
 
-        //Seared Bricks
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_BRICKS.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_BRICKS.get(), 4)
                 .pattern("BB").pattern("BB")
                 .define('B', ModItems.FORGE_BRICK.get())
                 .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
                 .save(this.output, rk("seared_bricks"));
 
-        //Seared Cobble
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_COBBLE.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_COBBLE.get(), 4)
                 .pattern("BS").pattern("SB")
                 .define('B', ModItems.FORGE_BRICK.get()).define('S', Items.COBBLESTONE)
                 .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
                 .save(this.output, rk("seared_cobble"));
 
-        //Seared Ingot Tank
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_INGOT_TANK.get())
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_INGOT_TANK.get())
                 .pattern("BBB").pattern("B B").pattern("BBB")
                 .define('B', ModBlocks.SEARED_BRICKS.get())
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_ingot_tank"));
 
-        //Seared Fuel Tank
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_FUEL_TANK.get())
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_FUEL_TANK.get())
                 .pattern("BBB").pattern("BLB").pattern("BBB")
                 .define('B', ModBlocks.SEARED_BRICKS.get()).define('L', Items.LAVA_BUCKET)
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_fuel_tank"));
 
-        //Seared Melter
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_MELTER.get())
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_MELTER.get())
                 .pattern("BTB").pattern("BFB").pattern("BSB")
                 .define('B', ModItems.FORGE_BRICK.get())
                 .define('T', ModBlocks.SEARED_INGOT_TANK.get())
@@ -176,59 +170,55 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_melter"));
 
-        //Seared Faucet
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_FAUCET.get(), 2)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_FAUCET.get(), 2)
                 .pattern("B B").pattern(" C ")
                 .define('B', ModBlocks.SEARED_BRICKS.get()).define('C', Items.COPPER_INGOT)
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_faucet"));
 
-        //Seared Table
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_TABLE.get())
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_TABLE.get())
                 .pattern("BBB").pattern("B B").pattern("B B")
                 .define('B', ModBlocks.SEARED_BRICKS.get())
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_table"));
 
-        //Seared Basin
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_BASIN.get())
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_BASIN.get())
                 .pattern("B B").pattern("B B").pattern("BBB")
                 .define('B', ModBlocks.SEARED_BRICKS.get())
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_basin"));
 
-        //Decorativos
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_SMALL_BRICKS.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_SMALL_BRICKS.get(), 4)
                 .pattern("BB").pattern("BB")
                 .define('B', ModBlocks.SEARED_BRICKS.get())
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_small_bricks"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_SQUARE_BRICKS.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_SQUARE_BRICKS.get(), 4)
                 .pattern("BB").pattern("BB")
                 .define('B', ModBlocks.SEARED_SMALL_BRICKS.get())
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_square_bricks"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_TILE.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_TILE.get(), 4)
                 .pattern("BB").pattern("BB")
                 .define('B', ModBlocks.SEARED_STONE.get())
                 .unlockedBy("has_seared_stone", this.has(ModBlocks.SEARED_STONE.get()))
                 .save(this.output, rk("seared_tile"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_FANCY_BRICKS.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_FANCY_BRICKS.get(), 4)
                 .pattern("BB").pattern("BB")
                 .define('B', ModBlocks.SEARED_TILE.get())
                 .unlockedBy("has_seared_tile", this.has(ModBlocks.SEARED_TILE.get()))
                 .save(this.output, rk("seared_fancy_bricks"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_TRIANGLE_BRICKS.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_TRIANGLE_BRICKS.get(), 4)
                 .pattern("BS").pattern("SB")
                 .define('B', ModBlocks.SEARED_BRICKS.get()).define('S', ModBlocks.SEARED_STONE.get())
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_triangle_bricks"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_ROAD.get())
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_ROAD.get())
                 .pattern("B").pattern("B")
                 .define('B', ModBlocks.SEARED_BRICKS.get())
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
@@ -236,47 +226,47 @@ public class ModRecipeProvider extends RecipeProvider {
 
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(ModBlocks.SEARED_COBBLE.get()),
-                        RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS,
+                        RecipeCategory.MISC, CookingBookCategory.BLOCKS,
                         ModBlocks.SEARED_STONE.get(), 0.1f, 200)
                 .unlockedBy("has_seared_cobble", this.has(ModBlocks.SEARED_COBBLE.get()))
                 .save(this.output, rk("seared_stone_from_smelting"));
 
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(ModBlocks.SEARED_STONE.get()),
-                        RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS,
+                        RecipeCategory.MISC, CookingBookCategory.BLOCKS,
                         ModBlocks.SEARED_PAVER.get(), 0.1f, 200)
                 .unlockedBy("has_seared_stone", this.has(ModBlocks.SEARED_STONE.get()))
                 .save(this.output, rk("seared_paver_from_smelting"));
 
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(ModBlocks.SEARED_BRICKS.get()),
-                        RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS,
+                        RecipeCategory.MISC, CookingBookCategory.BLOCKS,
                         ModBlocks.SEARED_CRACKED_BRICKS.get(), 0.1f, 200)
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("seared_cracked_bricks_from_smelting"));
 
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(ModBlocks.SEARED_SMALL_BRICKS.get()),
-                        RecipeCategory.BUILDING_BLOCKS, CookingBookCategory.BLOCKS,
+                        RecipeCategory.MISC, CookingBookCategory.BLOCKS,
                         ModBlocks.SEARED_CREEPER.get(), 0.1f, 200)
                 .unlockedBy("has_seared_small_bricks", this.has(ModBlocks.SEARED_SMALL_BRICKS.get()))
                 .save(this.output, rk("seared_creeper_from_smelting"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_CHUTE.get(), 1)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_CHUTE.get(), 1)
                 .pattern("BGB").pattern("B B").pattern("BGB")
                 .define('B', ModItems.FORGE_BRICK.get())
                 .define('G', net.minecraft.tags.ItemTags.create(Identifier.fromNamespaceAndPath("c", "ingots/copper")))
                 .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
                 .save(this.output, rk("seared_chute"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_DRAIN.get(), 1)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_DRAIN.get(), 1)
                 .pattern("BBB").pattern("G G").pattern("BBB")
                 .define('B', ModItems.FORGE_BRICK.get())
                 .define('G', net.minecraft.tags.ItemTags.create(Identifier.fromNamespaceAndPath("c", "ingots/copper")))
                 .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
                 .save(this.output, rk("seared_drain"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SMELTERY_CONTROLLER.get(), 1)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SMELTERY_CONTROLLER.get(), 1)
                 .pattern("BBB").pattern("CSH").pattern("BTB")
                 .define('B', ModBlocks.SEARED_BRICKS.get())
                 .define('C', ModBlocks.SEARED_CHUTE.get())
@@ -286,7 +276,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
                 .save(this.output, rk("smeltery_controller"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_GLASS.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_GLASS.get(), 4)
                 .pattern("GGG")
                 .pattern("GBG")
                 .pattern("GGG")
@@ -295,7 +285,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
                 .save(this.output, rk("seared_glass"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_TINTED_GLASS.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_TINTED_GLASS.get(), 4)
                 .pattern("GGG")
                 .pattern("GBG")
                 .pattern("GGG")
@@ -304,14 +294,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
                 .save(this.output, rk("seared_tinted_glass"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CLEAR_GLASS.get(), 4)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.CLEAR_GLASS.get(), 4)
                 .pattern("GG")
                 .pattern("GG")
                 .define('G', Items.GLASS)
                 .unlockedBy("has_glass", this.has(Items.GLASS))
                 .save(this.output, rk("clear_glass"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CLEAR_STAINED_GLASS.get(), 8)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.CLEAR_STAINED_GLASS.get(), 8)
                 .pattern("GGG")
                 .pattern("GDG")
                 .pattern("GGG")
@@ -320,7 +310,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_clear_glass", this.has(ModBlocks.CLEAR_GLASS.get()))
                 .save(this.output, rk("clear_stained_glass"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CLEAR_TINTED_GLASS.get(), 2)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.CLEAR_TINTED_GLASS.get(), 2)
                 .pattern(" A ")
                 .pattern("AGA")
                 .pattern(" A ")
@@ -329,7 +319,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_clear_glass", this.has(ModBlocks.CLEAR_GLASS.get()))
                 .save(this.output, rk("clear_tinted_glass"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_LAMP.get(), 2)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_LAMP.get(), 2)
                 .pattern(" B ").pattern("BGB").pattern(" B ")
                 .define('B', ModBlocks.SEARED_BRICKS.get())
                 .define('G', net.minecraft.world.item.Items.GLOWSTONE)
@@ -337,7 +327,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(this.output, ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(TitamMods.MODID, "seared_lamp")));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, ModBlocks.SEARED_LADDER.get(), 3)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_LADDER.get(), 3)
                 .pattern("B B").pattern("BSB").pattern("B B")
                 .define('B', ModBlocks.SEARED_BRICKS.get())
                 .define('S', net.minecraft.world.item.Items.STICK)
@@ -700,21 +690,21 @@ public class ModRecipeProvider extends RecipeProvider {
         String baseName = BuiltInRegistries.BLOCK.getKey(baseBlock).getPath();
         String base = "has_" + baseName;
         if (slab != null)
-            ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, slab, 6)
+            ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, slab, 6)
                     .pattern("BBB").define('B', baseBlock)
                     .unlockedBy(base, has(baseBlock))
                     .save(this.output, ResourceKey.create(Registries.RECIPE,
                             Identifier.fromNamespaceAndPath(TitamMods.MODID,
                                     "decoration/" + BuiltInRegistries.BLOCK.getKey(slab).getPath())));
         if (stairs != null)
-            ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, stairs, 4)
+            ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, stairs, 4)
                     .pattern("B  ").pattern("BB ").pattern("BBB").define('B', baseBlock)
                     .unlockedBy(base, has(baseBlock))
                     .save(this.output, ResourceKey.create(Registries.RECIPE,
                             Identifier.fromNamespaceAndPath(TitamMods.MODID,
                                     "decoration/" + BuiltInRegistries.BLOCK.getKey(stairs).getPath())));
         if (wall != null)
-            ShapedRecipeBuilder.shaped(items, RecipeCategory.BUILDING_BLOCKS, wall, 6)
+            ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, wall, 6)
                     .pattern("BBB").pattern("BBB").define('B', baseBlock)
                     .unlockedBy(base, has(baseBlock))
                     .save(this.output, ResourceKey.create(Registries.RECIPE,
