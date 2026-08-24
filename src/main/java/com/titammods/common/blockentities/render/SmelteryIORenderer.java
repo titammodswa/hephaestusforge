@@ -1,4 +1,3 @@
-// ── SmelteryIORenderer.java ───────────────────────────────────────────────────
 package com.titammods.common.blockentities.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;

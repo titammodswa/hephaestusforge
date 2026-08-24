@@ -1,0 +1,15 @@
+{
+  "type": "hephaestus:melting",
+  "damageable": true,
+  "fuel": {
+    "amount": 50,
+    "id": "hephaestus:molten_blaze"
+  },
+  "ingredient": "minecraft:netherite_pickaxe",
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_netherite"
+  },
+  "temperature": 2000,
+  "time": 300
+}

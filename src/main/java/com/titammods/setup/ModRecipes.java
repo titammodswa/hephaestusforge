@@ -56,8 +56,27 @@ public class ModRecipes {
             Identifier fuelId,
             int fuelAmount,
             int temperature,
-            int time
+            int time,
+            boolean damageable
     ) implements Recipe<SingleRecipeInput> {
+
+        public MeltingRecipe(Ingredient input, Identifier resultId, int resultAmount,
+                             Identifier fuelId, int fuelAmount, int temperature, int time) {
+            this(input, resultId, resultAmount, fuelId, fuelAmount, temperature, time, false);
+        }
+
+        public FluidStack scaledOutput(ItemStack stack) {
+            FluidStack base = output();
+            if (!damageable || base.isEmpty() || !stack.isDamageableItem()) return base;
+            int maxDmg = stack.getMaxDamage();
+            if (maxDmg <= 0) return base;
+            int remaining = maxDmg - stack.getDamageValue();
+            int amount = base.getAmount() * remaining / maxDmg;
+            int unit = 10;
+            if (amount < unit) amount = unit;
+            else amount -= (amount % unit);
+            return new FluidStack(base.getFluid(), amount);
+        }
 
         public FluidStack output() {
             Fluid f = BuiltInRegistries.FLUID.getValue(resultId);
@@ -81,9 +100,10 @@ public class ModRecipes {
                 FluidRef.CODEC.fieldOf("result").forGetter(r -> new FluidRef(r.resultId(), r.resultAmount())),
                 FluidRef.CODEC.fieldOf("fuel").forGetter(r -> new FluidRef(r.fuelId(), r.fuelAmount())),
                 Codec.INT.fieldOf("temperature").forGetter(MeltingRecipe::temperature),
-                Codec.INT.fieldOf("time").forGetter(MeltingRecipe::time)
-        ).apply(inst, (ingredient, result, fuel, temp, t) ->
-                new MeltingRecipe(ingredient, result.id(), result.amount(), fuel.id(), fuel.amount(), temp, t)));
+                Codec.INT.fieldOf("time").forGetter(MeltingRecipe::time),
+                Codec.BOOL.optionalFieldOf("damageable", false).forGetter(MeltingRecipe::damageable)
+        ).apply(inst, (ingredient, result, fuel, temp, t, dmg) ->
+                new MeltingRecipe(ingredient, result.id(), result.amount(), fuel.id(), fuel.amount(), temp, t, dmg)));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, MeltingRecipe> STREAM_CODEC =
                 StreamCodec.of(
@@ -95,12 +115,13 @@ public class ModRecipes {
                             buf.writeVarInt(r.fuelAmount());
                             buf.writeVarInt(r.temperature());
                             buf.writeVarInt(r.time());
+                            buf.writeBoolean(r.damageable());
                         },
                         buf -> new MeltingRecipe(
                                 Ingredient.CONTENTS_STREAM_CODEC.decode(buf),
                                 Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()), buf.readVarInt(),
                                 Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()), buf.readVarInt(),
-                                buf.readVarInt(), buf.readVarInt())
+                                buf.readVarInt(), buf.readVarInt(), buf.readBoolean())
                 );
 
         @Override public boolean matches(SingleRecipeInput inv, Level level) { return input.test(inv.item()); }
@@ -341,21 +362,6 @@ public class ModRecipes {
         @Override public PlacementInfo placementInfo() { return PLACEMENT; }
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    // CastingBasinRecipe — DEFERRED (bloco não portado ainda)
-    // ════════════════════════════════════════════════════════════════════════
-
-    /*
-    public static final Supplier<RecipeType<CastingBasinRecipe>> CASTING_BASIN_TYPE = ...
-    public static final Supplier<RecipeSerializer<CastingBasinRecipe>> CASTING_BASIN_SERIALIZER = ...
-    public record CastingBasinRecipe(...) implements Recipe<SingleRecipeInput> { ... }
-    */
-
-    // ════════════════════════════════════════════════════════════════════════
-    // AlloyRecipe — usa Identifier+int (lazy) igual ao MeltingRecipe
-    // para evitar "Components not bound yet" no datagen
-    // ════════════════════════════════════════════════════════════════════════
-
     public static final Supplier<RecipeType<AlloyRecipe>> ALLOY_TYPE =
             TYPES.register("alloy", () -> new RecipeType<AlloyRecipe>() {
                 @Override public String toString() { return "alloy"; }
@@ -372,12 +378,10 @@ public class ModRecipes {
             int temperature
     ) implements Recipe<SingleRecipeInput> {
 
-        /** Resolve inputs para FluidStack em runtime (fora do datagen). */
         public List<net.neoforged.neoforge.fluids.FluidStack> inputFluids() {
             return inputs.stream().map(FluidRef::toStack).filter(s -> !s.isEmpty()).toList();
         }
 
-        /** Resolve output para FluidStack em runtime. */
         public net.neoforged.neoforge.fluids.FluidStack output() {
             net.minecraft.world.level.material.Fluid f = BuiltInRegistries.FLUID.getValue(resultId);
             return (f == null || f.isSame(net.minecraft.world.level.material.Fluids.EMPTY))

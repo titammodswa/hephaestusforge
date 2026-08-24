@@ -2,16 +2,16 @@
   "type": "hephaestus:alloy",
   "inputs": [
     {
-      "amount": 100,
+      "amount": 90,
       "id": "hephaestus:molten_gold"
     },
     {
-      "amount": 100,
+      "amount": 90,
       "id": "hephaestus:molten_silver"
     }
   ],
   "output": {
-    "amount": 200,
+    "amount": 180,
     "id": "hephaestus:molten_electrum"
   },
   "temperature": 760

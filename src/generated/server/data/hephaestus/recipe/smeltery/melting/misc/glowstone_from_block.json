@@ -1,0 +1,14 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": "minecraft:glowstone",
+  "result": {
+    "amount": 200,
+    "id": "hephaestus:molten_glowstone"
+  },
+  "temperature": 800,
+  "time": 120
+}

@@ -1,0 +1,14 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "hephaestus:molten_blaze"
+  },
+  "ingredient": "minecraft:obsidian",
+  "result": {
+    "amount": 288,
+    "id": "hephaestus:molten_obsidian"
+  },
+  "temperature": 1400,
+  "time": 200
+}

@@ -1,0 +1,14 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": "minecraft:rabbit",
+  "result": {
+    "amount": 40,
+    "id": "hephaestus:molten_meat"
+  },
+  "temperature": 200,
+  "time": 60
+}

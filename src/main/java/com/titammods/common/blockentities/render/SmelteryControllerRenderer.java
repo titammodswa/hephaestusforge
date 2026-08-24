@@ -155,57 +155,46 @@ public class SmelteryControllerRenderer
         float uvH = v1 - v0;
         float vTop = v0 + uvH * (1f - fill);
 
-        // Top — frente
         v(buf,m,x0,y1,z0, r,g,b,a, u0,v0, sky,block);
         v(buf,m,x0,y1,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x1,y1,z1, r,g,b,a, u1,v1, sky,block);
         v(buf,m,x1,y1,z0, r,g,b,a, u1,v0, sky,block);
-        // Top interno
         v(buf,m,x1,y1,z0, r,g,b,a, u1,v0, sky,block);
         v(buf,m,x1,y1,z1, r,g,b,a, u1,v1, sky,block);
         v(buf,m,x0,y1,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x0,y1,z0, r,g,b,a, u0,v0, sky,block);
-        // Bottom
         v(buf,m,x0,y0,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x0,y0,z0, r,g,b,a, u0,v0, sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u1,v0, sky,block);
         v(buf,m,x1,y0,z1, r,g,b,a, u1,v1, sky,block);
-        // North — frente
         v(buf,m,x1,y1,z0, r,g,b,a, u0,vTop, sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u0,v1,   sky,block);
         v(buf,m,x0,y0,z0, r,g,b,a, u1,v1,   sky,block);
         v(buf,m,x0,y1,z0, r,g,b,a, u1,vTop, sky,block);
-        // North — verso
         v(buf,m,x0,y1,z0, r,g,b,a, u1,vTop, sky,block);
         v(buf,m,x0,y0,z0, r,g,b,a, u1,v1,   sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u0,v1,   sky,block);
         v(buf,m,x1,y1,z0, r,g,b,a, u0,vTop, sky,block);
-        // South — frente
         v(buf,m,x0,y1,z1, r,g,b,a, u0,vTop, sky,block);
         v(buf,m,x0,y0,z1, r,g,b,a, u0,v1,   sky,block);
         v(buf,m,x1,y0,z1, r,g,b,a, u1,v1,   sky,block);
         v(buf,m,x1,y1,z1, r,g,b,a, u1,vTop, sky,block);
-        // South — verso
         v(buf,m,x1,y1,z1, r,g,b,a, u1,vTop, sky,block);
         v(buf,m,x1,y0,z1, r,g,b,a, u1,v1,   sky,block);
         v(buf,m,x0,y0,z1, r,g,b,a, u0,v1,   sky,block);
         v(buf,m,x0,y1,z1, r,g,b,a, u0,vTop, sky,block);
-        // West — frente
         v(buf,m,x0,y1,z0, r,g,b,a, u0,vTop, sky,block);
         v(buf,m,x0,y0,z0, r,g,b,a, u0,v1,   sky,block);
         v(buf,m,x0,y0,z1, r,g,b,a, u1,v1,   sky,block);
         v(buf,m,x0,y1,z1, r,g,b,a, u1,vTop, sky,block);
-        // West — verso
         v(buf,m,x0,y1,z1, r,g,b,a, u1,vTop, sky,block);
         v(buf,m,x0,y0,z1, r,g,b,a, u1,v1,   sky,block);
         v(buf,m,x0,y0,z0, r,g,b,a, u0,v1,   sky,block);
         v(buf,m,x0,y1,z0, r,g,b,a, u0,vTop, sky,block);
-        // East — frente
         v(buf,m,x1,y1,z1, r,g,b,a, u0,vTop, sky,block);
         v(buf,m,x1,y0,z1, r,g,b,a, u0,v1,   sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u1,v1,   sky,block);
         v(buf,m,x1,y1,z0, r,g,b,a, u1,vTop, sky,block);
-        // East — verso
         v(buf,m,x1,y1,z0, r,g,b,a, u1,vTop, sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u1,v1,   sky,block);
         v(buf,m,x1,y0,z1, r,g,b,a, u0,v1,   sky,block);

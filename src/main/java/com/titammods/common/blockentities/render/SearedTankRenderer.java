@@ -100,22 +100,16 @@ public class SearedTankRenderer implements BlockEntityRenderer<SearedTankBlockEn
 
         float vTop = v0 + uvH * (1f - fill);
 
-        // Top
         v(buf,m,x0,y1,z0, r,g,b,a, u0,v0, sky,block); v(buf,m,x0,y1,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x1,y1,z1, r,g,b,a, u1,v1, sky,block); v(buf,m,x1,y1,z0, r,g,b,a, u1,v0, sky,block);
-        // Bottom
         v(buf,m,x0,y0,z1, r,g,b,a, u0,v1, sky,block); v(buf,m,x0,y0,z0, r,g,b,a, u0,v0, sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u1,v0, sky,block); v(buf,m,x1,y0,z1, r,g,b,a, u1,v1, sky,block);
-        // North
         v(buf,m,x1,y1,z0, r,g,b,a, u0,vTop, sky,block); v(buf,m,x1,y0,z0, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x0,y0,z0, r,g,b,a, u1,v1,   sky,block); v(buf,m,x0,y1,z0, r,g,b,a, u1,vTop, sky,block);
-        // South
         v(buf,m,x0,y1,z1, r,g,b,a, u0,vTop, sky,block); v(buf,m,x0,y0,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x1,y0,z1, r,g,b,a, u1,v1,   sky,block); v(buf,m,x1,y1,z1, r,g,b,a, u1,vTop, sky,block);
-        // West
         v(buf,m,x0,y1,z0, r,g,b,a, u0,vTop, sky,block); v(buf,m,x0,y0,z0, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x0,y0,z1, r,g,b,a, u1,v1,   sky,block); v(buf,m,x0,y1,z1, r,g,b,a, u1,vTop, sky,block);
-        // East
         v(buf,m,x1,y1,z1, r,g,b,a, u0,vTop, sky,block); v(buf,m,x1,y0,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u1,v1,   sky,block); v(buf,m,x1,y1,z0, r,g,b,a, u1,vTop, sky,block);
     }

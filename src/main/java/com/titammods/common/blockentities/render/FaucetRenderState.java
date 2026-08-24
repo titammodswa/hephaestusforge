@@ -1,6 +1,6 @@
 package com.titammods.common.blockentities.render;
 
-import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState; // NOTA: subpacote .state.
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.fluids.FluidStack;
 

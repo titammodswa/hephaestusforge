@@ -388,7 +388,6 @@ public class ModModelProvider implements DataProvider {
         String inner = base + "_inner";
         String outer = base + "_outer";
         Object[][] table = {
-                // facing=east
                 {"east","bottom","inner_left",  inner, 0,   270, true },
                 {"east","bottom","inner_right", inner, 0,   0,   false},
                 {"east","bottom","outer_left",  outer, 0,   270, true },
@@ -399,7 +398,6 @@ public class ModModelProvider implements DataProvider {
                 {"east","top",   "outer_left",  outer, 180, 0,   true },
                 {"east","top",   "outer_right", outer, 180, 90,  true },
                 {"east","top",   "straight",    base,  180, 0,   true },
-                // facing=north
                 {"north","bottom","inner_left",  inner, 0,   180, true },
                 {"north","bottom","inner_right", inner, 0,   270, true },
                 {"north","bottom","outer_left",  outer, 0,   180, true },
@@ -410,7 +408,6 @@ public class ModModelProvider implements DataProvider {
                 {"north","top",   "outer_left",  outer, 180, 270, true },
                 {"north","top",   "outer_right", outer, 180, 0,   true },
                 {"north","top",   "straight",    base,  180, 270, true },
-                // facing=south
                 {"south","bottom","inner_left",  inner, 0,   0,   false},
                 {"south","bottom","inner_right", inner, 0,   90,  false},
                 {"south","bottom","outer_left",  outer, 0,   0,   false},
@@ -421,7 +418,6 @@ public class ModModelProvider implements DataProvider {
                 {"south","top",   "outer_left",  outer, 180, 90,  true },
                 {"south","top",   "outer_right", outer, 180, 180, true },
                 {"south","top",   "straight",    base,  180, 90,  true },
-                // facing=west
                 {"west","bottom","inner_left",  inner, 0,   90,  false},
                 {"west","bottom","inner_right", inner, 0,   180, true },
                 {"west","bottom","outer_left",  outer, 0,   90,  false},

@@ -111,32 +111,26 @@ public class BasinRenderer implements BlockEntityRenderer<BasinBlockEntity, Basi
                                      TextureAtlasSprite spr,
                                      int r, int g, int bv, int a,
                                      int sky, int block) {
-        // Topo
         v(buf,m, x0,y1,z1, u(spr,x0),v(spr,z1), r,g,bv,a, sky,block,  0, 1, 0);
         v(buf,m, x1,y1,z1, u(spr,x1),v(spr,z1), r,g,bv,a, sky,block,  0, 1, 0);
         v(buf,m, x1,y1,z0, u(spr,x1),v(spr,z0), r,g,bv,a, sky,block,  0, 1, 0);
         v(buf,m, x0,y1,z0, u(spr,x0),v(spr,z0), r,g,bv,a, sky,block,  0, 1, 0);
-        // Fundo
         v(buf,m, x0,y0,z0, u(spr,x0),v(spr,z0), r,g,bv,a, sky,block,  0,-1, 0);
         v(buf,m, x1,y0,z0, u(spr,x1),v(spr,z0), r,g,bv,a, sky,block,  0,-1, 0);
         v(buf,m, x1,y0,z1, u(spr,x1),v(spr,z1), r,g,bv,a, sky,block,  0,-1, 0);
         v(buf,m, x0,y0,z1, u(spr,x0),v(spr,z1), r,g,bv,a, sky,block,  0,-1, 0);
-        // Norte (z-)
         v(buf,m, x1,y0,z0, u(spr,x1),v(spr,1-y0), r,g,bv,a, sky,block,  0, 0,-1);
         v(buf,m, x0,y0,z0, u(spr,x0),v(spr,1-y0), r,g,bv,a, sky,block,  0, 0,-1);
         v(buf,m, x0,y1,z0, u(spr,x0),v(spr,1-y1), r,g,bv,a, sky,block,  0, 0,-1);
         v(buf,m, x1,y1,z0, u(spr,x1),v(spr,1-y1), r,g,bv,a, sky,block,  0, 0,-1);
-        // Sul (z+)
         v(buf,m, x0,y0,z1, u(spr,x0),v(spr,1-y0), r,g,bv,a, sky,block,  0, 0, 1);
         v(buf,m, x1,y0,z1, u(spr,x1),v(spr,1-y0), r,g,bv,a, sky,block,  0, 0, 1);
         v(buf,m, x1,y1,z1, u(spr,x1),v(spr,1-y1), r,g,bv,a, sky,block,  0, 0, 1);
         v(buf,m, x0,y1,z1, u(spr,x0),v(spr,1-y1), r,g,bv,a, sky,block,  0, 0, 1);
-        // Oeste (x-)
         v(buf,m, x0,y0,z0, u(spr,z0),v(spr,1-y0), r,g,bv,a, sky,block, -1, 0, 0);
         v(buf,m, x0,y0,z1, u(spr,z1),v(spr,1-y0), r,g,bv,a, sky,block, -1, 0, 0);
         v(buf,m, x0,y1,z1, u(spr,z1),v(spr,1-y1), r,g,bv,a, sky,block, -1, 0, 0);
         v(buf,m, x0,y1,z0, u(spr,z0),v(spr,1-y1), r,g,bv,a, sky,block, -1, 0, 0);
-        // Leste (x+)
         v(buf,m, x1,y0,z1, u(spr,z1),v(spr,1-y0), r,g,bv,a, sky,block,  1, 0, 0);
         v(buf,m, x1,y0,z0, u(spr,z0),v(spr,1-y0), r,g,bv,a, sky,block,  1, 0, 0);
         v(buf,m, x1,y1,z0, u(spr,z0),v(spr,1-y1), r,g,bv,a, sky,block,  1, 0, 0);

@@ -1,0 +1,15 @@
+{
+  "type": "hephaestus:melting",
+  "damageable": true,
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": "minecraft:golden_boots",
+  "result": {
+    "amount": 360,
+    "id": "hephaestus:molten_gold"
+  },
+  "temperature": 900,
+  "time": 200
+}

@@ -92,22 +92,16 @@ public class MelterRenderer implements BlockEntityRenderer<MelterBlockEntity, Me
         Matrix4f m = pose.pose();
         float u0 = spr.getU0(), u1 = spr.getU1();
         float v0 = spr.getV0(), v1 = spr.getV1();
-        // Top
         v(buf,m,x0,y1,z0, r,g,b,a, u0,v0, sky,block); v(buf,m,x0,y1,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x1,y1,z1, r,g,b,a, u1,v1, sky,block); v(buf,m,x1,y1,z0, r,g,b,a, u1,v0, sky,block);
-        // Bottom
         v(buf,m,x0,y0,z1, r,g,b,a, u0,v1, sky,block); v(buf,m,x0,y0,z0, r,g,b,a, u0,v0, sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u1,v0, sky,block); v(buf,m,x1,y0,z1, r,g,b,a, u1,v1, sky,block);
-        // North
         v(buf,m,x1,y1,z0, r,g,b,a, u0,v0, sky,block); v(buf,m,x1,y0,z0, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x0,y0,z0, r,g,b,a, u1,v1, sky,block); v(buf,m,x0,y1,z0, r,g,b,a, u1,v0, sky,block);
-        // South
         v(buf,m,x0,y1,z1, r,g,b,a, u0,v0, sky,block); v(buf,m,x0,y0,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x1,y0,z1, r,g,b,a, u1,v1, sky,block); v(buf,m,x1,y1,z1, r,g,b,a, u1,v0, sky,block);
-        // West
         v(buf,m,x0,y1,z0, r,g,b,a, u0,v0, sky,block); v(buf,m,x0,y0,z0, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x0,y0,z1, r,g,b,a, u1,v1, sky,block); v(buf,m,x0,y1,z1, r,g,b,a, u1,v0, sky,block);
-        // East
         v(buf,m,x1,y1,z1, r,g,b,a, u0,v0, sky,block); v(buf,m,x1,y0,z1, r,g,b,a, u0,v1, sky,block);
         v(buf,m,x1,y0,z0, r,g,b,a, u1,v1, sky,block); v(buf,m,x1,y1,z0, r,g,b,a, u1,v0, sky,block);
     }

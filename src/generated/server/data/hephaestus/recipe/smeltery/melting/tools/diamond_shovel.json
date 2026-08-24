@@ -1,0 +1,15 @@
+{
+  "type": "hephaestus:melting",
+  "damageable": true,
+  "fuel": {
+    "amount": 50,
+    "id": "hephaestus:molten_blaze"
+  },
+  "ingredient": "minecraft:diamond_shovel",
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_diamond"
+  },
+  "temperature": 1400,
+  "time": 100
+}

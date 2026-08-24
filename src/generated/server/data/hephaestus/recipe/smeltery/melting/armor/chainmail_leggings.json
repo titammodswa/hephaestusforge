@@ -1,0 +1,15 @@
+{
+  "type": "hephaestus:melting",
+  "damageable": true,
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": "minecraft:chainmail_leggings",
+  "result": {
+    "amount": 630,
+    "id": "hephaestus:molten_iron"
+  },
+  "temperature": 900,
+  "time": 300
+}

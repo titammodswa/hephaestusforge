@@ -108,37 +108,31 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity, Fa
         float u0 = spr.getU0(), u1 = spr.getU1();
         float v0 = spr.getV0(), v1 = spr.getV1();
 
-        // Top
         v(buf, m, x0, y1, z0,  r, g, b, a,  u0, v0,  sky, block);
         v(buf, m, x0, y1, z1,  r, g, b, a,  u0, v1,  sky, block);
         v(buf, m, x1, y1, z1,  r, g, b, a,  u1, v1,  sky, block);
         v(buf, m, x1, y1, z0,  r, g, b, a,  u1, v0,  sky, block);
 
-        // Bottom
         v(buf, m, x0, y0, z1,  r, g, b, a,  u0, v1,  sky, block);
         v(buf, m, x0, y0, z0,  r, g, b, a,  u0, v0,  sky, block);
         v(buf, m, x1, y0, z0,  r, g, b, a,  u1, v0,  sky, block);
         v(buf, m, x1, y0, z1,  r, g, b, a,  u1, v1,  sky, block);
 
-        // North (z-)
         v(buf, m, x1, y1, z0,  r, g, b, a,  u0, v0,  sky, block);
         v(buf, m, x1, y0, z0,  r, g, b, a,  u0, v1,  sky, block);
         v(buf, m, x0, y0, z0,  r, g, b, a,  u1, v1,  sky, block);
         v(buf, m, x0, y1, z0,  r, g, b, a,  u1, v0,  sky, block);
 
-        // South (z+)
         v(buf, m, x0, y1, z1,  r, g, b, a,  u0, v0,  sky, block);
         v(buf, m, x0, y0, z1,  r, g, b, a,  u0, v1,  sky, block);
         v(buf, m, x1, y0, z1,  r, g, b, a,  u1, v1,  sky, block);
         v(buf, m, x1, y1, z1,  r, g, b, a,  u1, v0,  sky, block);
 
-        // West (x-)
         v(buf, m, x0, y1, z0,  r, g, b, a,  u0, v0,  sky, block);
         v(buf, m, x0, y0, z0,  r, g, b, a,  u0, v1,  sky, block);
         v(buf, m, x0, y0, z1,  r, g, b, a,  u1, v1,  sky, block);
         v(buf, m, x0, y1, z1,  r, g, b, a,  u1, v0,  sky, block);
 
-        // East (x+)
         v(buf, m, x1, y1, z1,  r, g, b, a,  u0, v0,  sky, block);
         v(buf, m, x1, y0, z1,  r, g, b, a,  u0, v1,  sky, block);
         v(buf, m, x1, y0, z0,  r, g, b, a,  u1, v1,  sky, block);

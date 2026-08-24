@@ -10,7 +10,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TitamMods.MODID);
 
-    // MATERIAIS
     public static final DeferredItem<Item> RAW_COBALT    = registerItem("raw_cobalt");
     public static final DeferredItem<Item> COBALT_INGOT  = registerItem("cobalt_ingot");
     public static final DeferredItem<Item> COBALT_NUGGET = registerItem("cobalt_nugget");
@@ -20,10 +19,8 @@ public class ModItems {
     public static final DeferredItem<Item> STEEL_NUGGET  = registerItem("steel_nugget");
     public static final DeferredItem<Item> STEEL_POWDER  = registerItem("steel_powder");
 
-    // TIJOLOS
     public static final DeferredItem<Item> FORGE_BRICK  = registerItem("forge_brick");
 
-    // MOLDES (CASTS)
     public static final DeferredItem<Item> BLANK_CAST  = registerItem("blank_cast");
     public static final DeferredItem<Item> COIN_CAST   = registerItem("coin_cast");
     public static final DeferredItem<Item> GEAR_CAST   = registerItem("gear_cast");

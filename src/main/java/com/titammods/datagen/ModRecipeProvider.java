@@ -117,13 +117,14 @@ public class ModRecipeProvider extends RecipeProvider {
 
         addAlloyRecipes();
         addEntityMeltingRecipes();
+        addFixRecipes();
 
         createCastRecipe("ingots",   ModItems.INGOT_CAST.get(),  "ingot_cast");
         createCastRecipe("nuggets",  ModItems.NUGGET_CAST.get(), "nugget_cast");
         createCastRecipe("gems",     ModItems.GEM_CAST.get(),    "gem_cast");
         createCastRecipe("plates",   ModItems.PLATE_CAST.get(),  "plate_cast");
         createCastRecipe("gears",    ModItems.GEAR_CAST.get(),   "gear_cast");
-        createCastRecipe("rods",     ModItems.ROD_CAST.get(),    "rod_cast");
+        createRodCastRecipe();
 
     }
 
@@ -516,6 +517,18 @@ public class ModRecipeProvider extends RecipeProvider {
                 recipe, null);
     }
 
+    private void addMeltingDamageable(ItemLike item, Fluid fluid, int amount, int temperature,
+                                      int time, String savePath, ICondition... conditions) {
+        Ingredient ingredient = Ingredient.of(item);
+        ModRecipes.MeltingRecipe recipe = new ModRecipes.MeltingRecipe(
+                ingredient, fluidId(fluid), amount,
+                fuelId(temperature), 50, temperature, time, true);
+        this.output.withConditions(conditions).accept(
+                ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/melting/" + savePath)),
+                recipe, null);
+    }
+
     private void createCastRecipe(String tagPath, net.minecraft.world.level.ItemLike castResult, String savePath) {
         Ingredient tagIngredient = Ingredient.of(
                 this.registries.lookupOrThrow(Registries.ITEM).getOrThrow(
@@ -535,6 +548,27 @@ public class ModRecipeProvider extends RecipeProvider {
         this.output.accept(
                 net.minecraft.resources.ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/casts/" + savePath)),
+                recipe, null);
+    }
+
+    private void createRodCastRecipe() {
+        Ingredient rodOrStick = Ingredient.of(
+                net.minecraft.world.item.Items.STICK,
+                net.minecraft.world.item.Items.BLAZE_ROD
+        );
+        Identifier copperFluidId = fluidId(
+                com.titammods.registry.HephaestusFluids.SETS.get(
+                        com.titammods.registry.HephaestusFluids.Material.MOLTEN_COPPER).source.get()
+        );
+        Identifier resultId = BuiltInRegistries.ITEM.getKey(ModItems.ROD_CAST.get().asItem());
+        ModRecipes.CastingTableRecipe recipe = new ModRecipes.CastingTableRecipe(
+                java.util.Optional.of(rodOrStick), true,
+                copperFluidId, 90,
+                resultId, 1,
+                60);
+        this.output.accept(
+                net.minecraft.resources.ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/casts/rod_cast")),
                 recipe, null);
     }
 
@@ -635,6 +669,129 @@ public class ModRecipeProvider extends RecipeProvider {
         return item == Items.AIR ? null : item;
     }
 
+    private void addFixRecipes() {
+        addMeltingItem(net.minecraft.world.item.Items.COAL,
+                fluidOf("MOLTEN_CARBON"), 90, 600, 100, "misc/carbon_from_coal");
+        addMeltingItem(net.minecraft.world.item.Items.CHARCOAL,
+                fluidOf("MOLTEN_CARBON"), 90, 600, 100, "misc/carbon_from_charcoal");
+        addMeltingTag("storage_blocks/coal",
+                fluidOf("MOLTEN_CARBON"), 810, 600, 200, "misc/carbon_from_coal_block");
+        addMeltingItem(net.minecraft.world.item.Items.SLIME_BALL,
+                fluidOf("MOLTEN_SLIME"), 50, 300, 60, "misc/slime_from_ball");
+        addMeltingItem(net.minecraft.world.item.Items.SLIME_BLOCK,
+                fluidOf("MOLTEN_SLIME"), 450, 300, 120, "misc/slime_from_block");
+        addMeltingItem(net.minecraft.world.item.Items.MAGMA_CREAM,
+                fluidOf("MOLTEN_MAGMA_CREAM"), 90, 700, 80, "misc/magma_cream");
+        addMeltingItem(net.minecraft.world.item.Items.MAGMA_BLOCK,
+                net.minecraft.world.level.material.Fluids.LAVA, 250, 700, 120, "misc/magma_block");
+        addMeltingItem(net.minecraft.world.item.Items.ENDER_PEARL,
+                fluidOf("MOLTEN_ENDER"), 90, 1000, 100, "misc/ender_from_pearl");
+        addMeltingItem(net.minecraft.world.item.Items.ENDER_EYE,
+                fluidOf("MOLTEN_ENDER"), 90, 1000, 100, "misc/ender_from_eye");
+        addMeltingItem(net.minecraft.world.item.Items.REDSTONE,
+                fluidOf("MOLTEN_REDSTONE"), 10, 600, 40, "misc/redstone_from_dust");
+        addMeltingTag("storage_blocks/redstone",
+                fluidOf("MOLTEN_REDSTONE"), 90, 600, 120, "misc/redstone_from_block");
+        addMeltingItem(net.minecraft.world.item.Items.GLOWSTONE_DUST,
+                fluidOf("MOLTEN_GLOWSTONE"), 50, 800, 60, "misc/glowstone_from_dust");
+        addMeltingItem(net.minecraft.world.item.Items.GLOWSTONE,
+                fluidOf("MOLTEN_GLOWSTONE"), 200, 800, 120, "misc/glowstone_from_block");
+        addMeltingItem(net.minecraft.world.item.Items.GLASS,
+                fluidOf("MOLTEN_GLASS"), 250, 1000, 100, "misc/glass_from_block");
+        addMeltingItem(net.minecraft.world.item.Items.GLASS_PANE,
+                fluidOf("MOLTEN_GLASS"), 90, 1000, 60, "misc/glass_from_pane");
+        addMeltingItem(net.minecraft.world.item.Items.SAND,
+                fluidOf("MOLTEN_GLASS"), 250, 1000, 100, "misc/glass_from_sand");
+        addMeltingItem(net.minecraft.world.item.Items.LAPIS_LAZULI,
+                fluidOf("MOLTEN_LAPIS"), 10, 900, 40, "misc/lapis_from_gem");
+        addMeltingTag("storage_blocks/lapis",
+                fluidOf("MOLTEN_LAPIS"), 90, 900, 120, "misc/lapis_from_block");
+        addMeltingItem(net.minecraft.world.item.Items.OBSIDIAN,
+                fluidOf("MOLTEN_OBSIDIAN"), 288, 1400, 200, "misc/obsidian");
+        addMeltingItem(net.minecraft.world.item.Items.ANCIENT_DEBRIS,
+                fluidOf("MOLTEN_ANCIENT_DEBRIS"), 90, 2000, 300, "misc/ancient_debris");
+        addMeltingItem(net.minecraft.world.item.Items.NETHERITE_SCRAP,
+                fluidOf("MOLTEN_ANCIENT_DEBRIS"), 90, 2000, 200, "misc/ancient_debris_from_scrap");
+        addMeltingItem(net.minecraft.world.item.Items.NETHERITE_INGOT,
+                fluidOf("MOLTEN_NETHERITE"), 90, 2000, 200, "misc/netherite_from_ingot");
+        addMeltingItem(net.minecraft.world.item.Items.SHULKER_SHELL,
+                fluidOf("MOLTEN_SHULKER_SHELL"), 90, 1200, 120, "misc/shulker_shell");
+        addMeltingItem(net.minecraft.world.item.Items.HONEYCOMB,
+                fluidOf("MOLTEN_WAX"), 50, 320, 60, "misc/wax_from_honeycomb");
+        addMeltingItem(net.minecraft.world.item.Items.HONEYCOMB_BLOCK,
+                fluidOf("MOLTEN_WAX"), 200, 320, 120, "misc/wax_from_block");
+        addMeltingItem(net.minecraft.world.item.Items.PORKCHOP,
+                fluidOf("LIQUID_MEAT"), 40, 200, 60, "misc/meat_from_porkchop");
+        addMeltingItem(net.minecraft.world.item.Items.BEEF,
+                fluidOf("LIQUID_MEAT"), 40, 200, 60, "misc/meat_from_beef");
+        addMeltingItem(net.minecraft.world.item.Items.CHICKEN,
+                fluidOf("LIQUID_MEAT"), 40, 200, 60, "misc/meat_from_chicken");
+        addMeltingItem(net.minecraft.world.item.Items.MUTTON,
+                fluidOf("LIQUID_MEAT"), 40, 200, 60, "misc/meat_from_mutton");
+        addMeltingItem(net.minecraft.world.item.Items.RABBIT,
+                fluidOf("LIQUID_MEAT"), 40, 200, 60, "misc/meat_from_rabbit");
+        addMeltingItem(net.minecraft.world.item.Items.ROTTEN_FLESH,
+                fluidOf("LIQUID_MEAT"), 20, 200, 40, "misc/meat_from_rotten_flesh");
+
+        addToolArmorMelting();
+    }
+
+    private void addToolArmorMelting() {
+        Fluid iron = fluidOf("MOLTEN_IRON");
+        Fluid gold = fluidOf("MOLTEN_GOLD");
+        Fluid netherite = fluidOf("MOLTEN_NETHERITE");
+
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_PICKAXE, iron, 270, 900, 200, "tools/iron_pickaxe");
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_AXE,     iron, 270, 900, 200, "tools/iron_axe");
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_SWORD,   iron, 180, 900, 150, "tools/iron_sword");
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_SHOVEL,  iron,  90, 900, 100, "tools/iron_shovel");
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_HOE,     iron, 180, 900, 150, "tools/iron_hoe");
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_HELMET,     iron, 450, 900, 250, "armor/iron_helmet");
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_CHESTPLATE, iron, 720, 900, 350, "armor/iron_chestplate");
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_LEGGINGS,   iron, 630, 900, 300, "armor/iron_leggings");
+        addMeltingDamageable(net.minecraft.world.item.Items.IRON_BOOTS,      iron, 360, 900, 200, "armor/iron_boots");
+        addMeltingDamageable(net.minecraft.world.item.Items.CHAINMAIL_HELMET,     iron, 450, 900, 250, "armor/chainmail_helmet");
+        addMeltingDamageable(net.minecraft.world.item.Items.CHAINMAIL_CHESTPLATE, iron, 720, 900, 350, "armor/chainmail_chestplate");
+        addMeltingDamageable(net.minecraft.world.item.Items.CHAINMAIL_LEGGINGS,   iron, 630, 900, 300, "armor/chainmail_leggings");
+        addMeltingDamageable(net.minecraft.world.item.Items.CHAINMAIL_BOOTS,      iron, 360, 900, 200, "armor/chainmail_boots");
+
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_PICKAXE, gold, 270, 900, 200, "tools/golden_pickaxe");
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_AXE,     gold, 270, 900, 200, "tools/golden_axe");
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_SWORD,   gold, 180, 900, 150, "tools/golden_sword");
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_SHOVEL,  gold,  90, 900, 100, "tools/golden_shovel");
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_HOE,     gold, 180, 900, 150, "tools/golden_hoe");
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_HELMET,     gold, 450, 900, 250, "armor/golden_helmet");
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_CHESTPLATE, gold, 720, 900, 350, "armor/golden_chestplate");
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_LEGGINGS,   gold, 630, 900, 300, "armor/golden_leggings");
+        addMeltingDamageable(net.minecraft.world.item.Items.GOLDEN_BOOTS,      gold, 360, 900, 200, "armor/golden_boots");
+
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_PICKAXE, netherite, 90, 2000, 300, "tools/netherite_pickaxe");
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_AXE,     netherite, 90, 2000, 300, "tools/netherite_axe");
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_SWORD,   netherite, 90, 2000, 300, "tools/netherite_sword");
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_SHOVEL,  netherite, 90, 2000, 300, "tools/netherite_shovel");
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_HOE,     netherite, 90, 2000, 300, "tools/netherite_hoe");
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_HELMET,     netherite, 90, 2000, 350, "armor/netherite_helmet");
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_CHESTPLATE, netherite, 90, 2000, 350, "armor/netherite_chestplate");
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_LEGGINGS,   netherite, 90, 2000, 350, "armor/netherite_leggings");
+        addMeltingDamageable(net.minecraft.world.item.Items.NETHERITE_BOOTS,      netherite, 90, 2000, 350, "armor/netherite_boots");
+
+        Fluid diamond = com.titammods.setup.ModFluids.MOLTEN_DIAMOND.source.get();
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_PICKAXE, diamond, 270, 1400, 200, "tools/diamond_pickaxe");
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_AXE,     diamond, 270, 1400, 200, "tools/diamond_axe");
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_SWORD,   diamond, 180, 1400, 150, "tools/diamond_sword");
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_SHOVEL,  diamond,  90, 1400, 100, "tools/diamond_shovel");
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_HOE,     diamond, 180, 1400, 150, "tools/diamond_hoe");
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_HELMET,     diamond, 450, 1400, 250, "armor/diamond_helmet");
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_CHESTPLATE, diamond, 720, 1400, 350, "armor/diamond_chestplate");
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_LEGGINGS,   diamond, 630, 1400, 300, "armor/diamond_leggings");
+        addMeltingDamageable(net.minecraft.world.item.Items.DIAMOND_BOOTS,      diamond, 360, 1400, 200, "armor/diamond_boots");
+    }
+
+    private Fluid fluidOf(String materialName) {
+        return com.titammods.registry.HephaestusFluids.SETS.get(
+                com.titammods.registry.HephaestusFluids.Material.valueOf(materialName)).source.get();
+    }
+
     private void addMeltingMiscRecipes() {
         addMeltingItem(net.minecraft.world.item.Items.BLAZE_ROD,
                 com.titammods.setup.ModFluids.MOLTEN_BLAZE.source.get(),
@@ -655,17 +812,25 @@ public class ModRecipeProvider extends RecipeProvider {
         Identifier electrum  = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_ELECTRUM).source.get());
         Identifier invar     = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_INVAR).source.get());
         Identifier constantan= fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_CONSTANTAN).source.get());
+        Identifier steel     = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_STEEL).source.get());
+        Identifier carbon    = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_CARBON).source.get());
+        Identifier netherite = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_NETHERITE).source.get());
+        Identifier ancientDebris = fluidId(com.titammods.registry.HephaestusFluids.SETS.get(com.titammods.registry.HephaestusFluids.Material.MOLTEN_ANCIENT_DEBRIS).source.get());
 
-        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 100), new FluidEntry(zinc, 100)),
-                brass, 200, 650, "brass");
-        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 300), new FluidEntry(tin, 100)),
-                bronze, 400, 700, "bronze");
-        addAlloyRecipe(java.util.List.of(new FluidEntry(gold, 100), new FluidEntry(silver, 100)),
-                electrum, 200, 760, "electrum");
-        addAlloyRecipe(java.util.List.of(new FluidEntry(iron, 200), new FluidEntry(nickel, 100)),
-                invar, 300, 900, "invar");
-        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 100), new FluidEntry(nickel, 100)),
-                constantan, 200, 920, "constantan");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 90), new FluidEntry(zinc, 90)),
+                brass, 180, 650, "brass");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 270), new FluidEntry(tin, 90)),
+                bronze, 360, 700, "bronze");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(gold, 90), new FluidEntry(silver, 90)),
+                electrum, 180, 760, "electrum");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(iron, 180), new FluidEntry(nickel, 90)),
+                invar, 270, 900, "invar");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(copper, 90), new FluidEntry(nickel, 90)),
+                constantan, 180, 920, "constantan");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(iron, 90), new FluidEntry(carbon, 90)),
+                steel, 90, 1000, "steel");
+        addAlloyRecipe(java.util.List.of(new FluidEntry(gold, 270), new FluidEntry(ancientDebris, 270)),
+                netherite, 360, 2000, "netherite");
     }
 
     private record FluidEntry(Identifier id, int amount) {}

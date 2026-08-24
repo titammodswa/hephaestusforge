@@ -1,0 +1,14 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": "minecraft:magma_cream",
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_magma_cream"
+  },
+  "temperature": 700,
+  "time": 80
+}

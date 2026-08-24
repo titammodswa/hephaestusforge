@@ -332,7 +332,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                         .findFirst().orElse(null);
 
                 if (holder != null) {
-                    FluidStack out = holder.value().output().copy();
+                    FluidStack out = holder.value().scaledOutput(stack).copy();
                     fluidTank.fill(out, IFluidHandler.FluidAction.EXECUTE);
                     itemHandler.extractItem(i, 1, false);
                 }

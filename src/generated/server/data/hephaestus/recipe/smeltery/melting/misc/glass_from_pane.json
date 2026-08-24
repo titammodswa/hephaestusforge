@@ -1,0 +1,14 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": "minecraft:glass_pane",
+  "result": {
+    "amount": 90,
+    "id": "hephaestus:molten_glass"
+  },
+  "temperature": 1000,
+  "time": 60
+}
