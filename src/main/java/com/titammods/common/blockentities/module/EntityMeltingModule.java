@@ -113,7 +113,9 @@ public class EntityMeltingModule {
                     fluid  = recipe.output();
                     damage = recipe.damage();
                 } else {
-                    fluid  = new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, 50);
+                    fluid  = new FluidStack(
+                            com.titammods.registry.HephaestusFluids.SETS.get(
+                                    com.titammods.registry.HephaestusFluids.Material.LIQUID_MEAT).source.get(), 50);
                     damage = 2;
                 }
 
