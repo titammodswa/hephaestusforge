@@ -327,5 +327,9 @@
   "block.hephaestus.molten_refined_glowstone_block": "Pedra Luminosa Refinada Derretida",
   "fluid_type.hephaestus.molten_refined_obsidian": "Obsidiana Refinada Derretida",
   "item.hephaestus.molten_refined_obsidian_bucket": "Balde de Obsidiana Refinada Derretida",
-  "block.hephaestus.molten_refined_obsidian_block": "Obsidiana Refinada Derretida"
+  "block.hephaestus.molten_refined_obsidian_block": "Obsidiana Refinada Derretida",
+  "jade.hephaestus.melting_entry": "%s %s%%",
+  "jade.hephaestus.melting_more": "+%s mais…",
+  "config.jade.plugin_hephaestus.smeltery_progress": "Progresso da Fundição (Smeltery)",
+  "config.jade.plugin_hephaestus.melter_progress": "Progresso da Fundição (Melter)"
 }

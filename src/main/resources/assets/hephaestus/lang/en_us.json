@@ -327,5 +327,9 @@
   "block.hephaestus.molten_refined_glowstone_block": "Molten Refined Glowstone",
   "fluid_type.hephaestus.molten_refined_obsidian": "Molten Refined Obsidian",
   "item.hephaestus.molten_refined_obsidian_bucket": "Molten Refined Obsidian Bucket",
-  "block.hephaestus.molten_refined_obsidian_block": "Molten Refined Obsidian"
+  "block.hephaestus.molten_refined_obsidian_block": "Molten Refined Obsidian",
+  "jade.hephaestus.melting_entry": "%s %s%%",
+  "jade.hephaestus.melting_more": "+%s more…",
+  "config.jade.plugin_hephaestus.smeltery_progress": "Smeltery Melting Progress",
+  "config.jade.plugin_hephaestus.melter_progress": "Melter Melting Progress"
 }

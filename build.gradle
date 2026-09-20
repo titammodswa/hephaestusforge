@@ -103,6 +103,7 @@ dependencies {
     runtimeOnly "mezz.jei:jei-26.1.2-neoforge:${jei_version}"
 
     implementation "curse.maven:athena-841890:7970442"
+    implementation "curse.maven:jade-324717:8651070"
     implementation "curse.maven:ato-405593:8023670"
 }
 
