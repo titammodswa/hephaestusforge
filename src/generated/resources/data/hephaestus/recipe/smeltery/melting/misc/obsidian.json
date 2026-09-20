@@ -8,9 +8,9 @@
     "item": "minecraft:obsidian"
   },
   "result": {
-    "amount": 810,
+    "amount": 288,
     "id": "hephaestus:molten_obsidian"
   },
   "temperature": 1400,
-  "time": 120
+  "time": 200
 }

@@ -90,6 +90,7 @@ dependencies {
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
     implementation("earth.terrarium.athena:athena-neoforge-1.21:${athena_version}")
+    implementation "curse.maven:jade-324717:8591319"
     implementation("curse.maven:ato-405593:7825464")
     runtimeOnly("curse.maven:mekanism-268560:7621971")
 }

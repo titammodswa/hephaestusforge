@@ -43,14 +43,31 @@ public class ModRecipes {
         @Override public StreamCodec<RegistryFriendlyByteBuf, MeltingRecipe> streamCodec() { return MeltingRecipe.STREAM_CODEC; }
     });
 
-    public record MeltingRecipe(Ingredient input, FluidStack output, FluidStack fuel, int temperature, int time) implements Recipe<SingleRecipeInput> {
+    public record MeltingRecipe(Ingredient input, FluidStack output, FluidStack fuel, int temperature, int time, boolean damageable) implements Recipe<SingleRecipeInput> {
+
+        public MeltingRecipe(Ingredient input, FluidStack output, FluidStack fuel, int temperature, int time) {
+            this(input, output, fuel, temperature, time, false);
+        }
+
+        public FluidStack scaledOutput(ItemStack stack) {
+            if (!damageable || output.isEmpty() || !stack.isDamageableItem()) return output;
+            int maxDmg = stack.getMaxDamage();
+            if (maxDmg <= 0) return output;
+            int remaining = maxDmg - stack.getDamageValue();
+            int amount = output.getAmount() * remaining / maxDmg;
+            int unit = 10;
+            if (amount < unit) amount = unit;
+            else amount -= (amount % unit);
+            return new FluidStack(output.getFluid(), amount);
+        }
 
         public static final MapCodec<MeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(MeltingRecipe::input),
                 FluidStack.CODEC.fieldOf("result").forGetter(MeltingRecipe::output),
                 FluidStack.CODEC.fieldOf("fuel").forGetter(MeltingRecipe::fuel),
                 Codec.INT.fieldOf("temperature").forGetter(MeltingRecipe::temperature),
-                Codec.INT.fieldOf("time").forGetter(MeltingRecipe::time)
+                Codec.INT.fieldOf("time").forGetter(MeltingRecipe::time),
+                Codec.BOOL.optionalFieldOf("damageable", false).forGetter(MeltingRecipe::damageable)
         ).apply(inst, MeltingRecipe::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, MeltingRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -59,6 +76,7 @@ public class ModRecipes {
                 FluidStack.STREAM_CODEC, MeltingRecipe::fuel,
                 ByteBufCodecs.INT, MeltingRecipe::temperature,
                 ByteBufCodecs.INT, MeltingRecipe::time,
+                ByteBufCodecs.BOOL, MeltingRecipe::damageable,
                 MeltingRecipe::new
         );
 

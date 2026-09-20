@@ -456,7 +456,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 ).orElse(null);
 
                 if (recipeHolder != null) {
-                    FluidStack output = recipeHolder.value().output().copy();
+                    FluidStack output = recipeHolder.value().scaledOutput(stack).copy();
                     fluidTank.fill(output, IFluidHandler.FluidAction.EXECUTE);
 
                     itemHandler.extractItem(i, 1, false);

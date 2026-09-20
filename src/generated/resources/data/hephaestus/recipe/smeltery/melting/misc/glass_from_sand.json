@@ -5,12 +5,12 @@
     "id": "minecraft:lava"
   },
   "ingredient": {
-    "item": "minecraft:glass"
+    "item": "minecraft:sand"
   },
   "result": {
-    "amount": 810,
+    "amount": 250,
     "id": "hephaestus:molten_glass"
   },
   "temperature": 1000,
-  "time": 60
+  "time": 100
 }

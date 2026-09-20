@@ -1,9 +1,9 @@
 {
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 810,
+    "amount": 288,
     "id": "hephaestus:molten_obsidian"
   },
   "result": "minecraft:obsidian",
-  "time": 120
+  "time": 200
 }

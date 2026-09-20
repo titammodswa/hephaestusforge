@@ -1,0 +1,16 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": {
+    "item": "minecraft:magma_block"
+  },
+  "result": {
+    "amount": 250,
+    "id": "minecraft:lava"
+  },
+  "temperature": 700,
+  "time": 120
+}

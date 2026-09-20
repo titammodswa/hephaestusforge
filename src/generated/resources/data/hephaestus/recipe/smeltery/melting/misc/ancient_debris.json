@@ -8,9 +8,9 @@
     "item": "minecraft:ancient_debris"
   },
   "result": {
-    "amount": 180,
+    "amount": 90,
     "id": "hephaestus:molten_ancient_debris"
   },
   "temperature": 2000,
-  "time": 180
+  "time": 300
 }

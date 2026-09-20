@@ -8,9 +8,9 @@
     "item": "minecraft:slime_ball"
   },
   "result": {
-    "amount": 90,
+    "amount": 50,
     "id": "hephaestus:molten_slime"
   },
   "temperature": 300,
-  "time": 30
+  "time": 60
 }

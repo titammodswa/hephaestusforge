@@ -321,5 +321,13 @@
   "gui.hephaestus.unit.ingots": "Ingots",
   "gui.hephaestus.unit.nuggets": "Nuggets",
   "gui.hephaestus.melter.tank_empty": "Capacity: %s mB",
-  "gui.hephaestus.smeltery.incomplete": "§cThe Smeltery is incomplete!"
+  "gui.hephaestus.smeltery.incomplete": "§cThe Smeltery is incomplete!",
+
+  "jade.hephaestus.melting_entry": "%s %s%%",
+  "jade.hephaestus.melting_full_tank": "%s Tank Full",
+  "jade.hephaestus.melting_too_cold": "%s Too Cold",
+  "jade.hephaestus.melting_more": "+%s more…",
+  "config.jade.plugin_hephaestus.smeltery_progress": "Smeltery Melting Progress",
+  "config.jade.plugin_hephaestus.melter_progress": "Melter Melting Progress",
+  "config.jade.plugin_hephaestus.hidden_items": "Hide Default Inventory"
 }

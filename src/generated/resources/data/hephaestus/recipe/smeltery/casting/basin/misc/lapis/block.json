@@ -1,7 +1,7 @@
 {
   "type": "hephaestus:casting_basin",
   "input": {
-    "amount": 810,
+    "amount": 90,
     "id": "hephaestus:molten_lapis"
   },
   "result": "minecraft:lapis_block",

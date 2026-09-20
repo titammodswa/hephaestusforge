@@ -8,9 +8,9 @@
     "item": "minecraft:redstone_block"
   },
   "result": {
-    "amount": 810,
+    "amount": 90,
     "id": "hephaestus:molten_redstone"
   },
   "temperature": 600,
-  "time": 60
+  "time": 120
 }

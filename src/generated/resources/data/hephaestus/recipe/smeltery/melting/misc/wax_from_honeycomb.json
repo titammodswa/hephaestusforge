@@ -1,0 +1,16 @@
+{
+  "type": "hephaestus:melting",
+  "fuel": {
+    "amount": 50,
+    "id": "minecraft:lava"
+  },
+  "ingredient": {
+    "item": "minecraft:honeycomb"
+  },
+  "result": {
+    "amount": 50,
+    "id": "hephaestus:molten_wax"
+  },
+  "temperature": 320,
+  "time": 60
+}

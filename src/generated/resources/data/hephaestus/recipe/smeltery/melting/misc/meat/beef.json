@@ -8,9 +8,9 @@
     "item": "minecraft:beef"
   },
   "result": {
-    "amount": 100,
+    "amount": 40,
     "id": "hephaestus:molten_meat"
   },
   "temperature": 200,
-  "time": 20
+  "time": 60
 }

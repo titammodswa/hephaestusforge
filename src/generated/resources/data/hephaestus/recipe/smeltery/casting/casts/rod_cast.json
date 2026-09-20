@@ -1,8 +1,13 @@
 {
   "type": "hephaestus:casting_table",
-  "cast": {
-    "tag": "c:rods"
-  },
+  "cast": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    }
+  ],
   "cast_consumed": true,
   "cooling_time": 60,
   "fluid": {

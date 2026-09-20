@@ -8,9 +8,9 @@
     "item": "minecraft:mutton"
   },
   "result": {
-    "amount": 80,
+    "amount": 40,
     "id": "hephaestus:molten_meat"
   },
   "temperature": 200,
-  "time": 20
+  "time": 60
 }

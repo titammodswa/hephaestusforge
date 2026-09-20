@@ -8,9 +8,9 @@
     "item": "minecraft:glowstone_dust"
   },
   "result": {
-    "amount": 90,
+    "amount": 50,
     "id": "hephaestus:molten_glowstone"
   },
   "temperature": 800,
-  "time": 30
+  "time": 60
 }

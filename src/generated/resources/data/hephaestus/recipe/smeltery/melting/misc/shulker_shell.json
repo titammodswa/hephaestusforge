@@ -8,9 +8,9 @@
     "item": "minecraft:shulker_shell"
   },
   "result": {
-    "amount": 200,
+    "amount": 90,
     "id": "hephaestus:molten_shulker_shell"
   },
   "temperature": 1200,
-  "time": 60
+  "time": 120
 }

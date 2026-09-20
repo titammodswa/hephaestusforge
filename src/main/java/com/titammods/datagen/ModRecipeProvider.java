@@ -35,7 +35,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(RecipeOutput output) {
-        //decoration
         generateDecorative(output, ModBlocks.SEARED_STONE.get(), ModBlocks.SEARED_STONE_SLAB.get(), ModBlocks.SEARED_STONE_STAIRS.get(), ModBlocks.SEARED_STONE_WALL.get());
         generateDecorative(output, ModBlocks.SEARED_COBBLE.get(), ModBlocks.SEARED_COBBLE_SLAB.get(), ModBlocks.SEARED_COBBLE_STAIRS.get(), ModBlocks.SEARED_COBBLE_WALL.get());
         generateDecorative(output, ModBlocks.SEARED_PAVER.get(), ModBlocks.SEARED_PAVER_SLAB.get(), ModBlocks.SEARED_PAVER_STAIRS.get(), ModBlocks.SEARED_PAVER_WALL.get());
@@ -49,71 +48,63 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         generateDecorative(output, ModBlocks.SEARED_SQUARE_BRICKS.get(), ModBlocks.SEARED_SQUARE_BRICKS_SLAB.get(), ModBlocks.SEARED_SQUARE_BRICKS_STAIRS.get(), ModBlocks.SEARED_SQUARE_BRICKS_WALL.get());
         generateDecorative(output, ModBlocks.SEARED_TILE.get(), ModBlocks.SEARED_TILE_SLAB.get(), ModBlocks.SEARED_TILE_STAIRS.get(), ModBlocks.SEARED_TILE_WALL.get());
 
-        //casts
         createCastRecipe(output, "ingots", ModItems.INGOT_CAST.get(), "ingot_cast");
         createCastRecipe(output, "nuggets", ModItems.NUGGET_CAST.get(), "nugget_cast");
         createCastRecipe(output, "gems", ModItems.GEM_CAST.get(), "gem_cast");
         createCastRecipe(output, "plates", ModItems.PLATE_CAST.get(), "plate_cast");
         createCastRecipe(output, "gears", ModItems.GEAR_CAST.get(), "gear_cast");
-        createCastRecipe(output, "rods", ModItems.ROD_CAST.get(), "rod_cast");
+        createRodCastRecipe(output);
 
-        //molten vanilla
         registerMetal(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_IRON).source.get(), 900, "iron", Items.IRON_BLOCK, Items.IRON_INGOT, Items.RAW_IRON, Items.IRON_NUGGET, null, null, null, null, "");
         registerMetal(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GOLD).source.get(), 900, "gold", Items.GOLD_BLOCK, Items.GOLD_INGOT, Items.RAW_GOLD, Items.GOLD_NUGGET, null, null, null, null, "");
         registerMetal(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_COPPER).source.get(), 900, "copper", Items.COPPER_BLOCK, Items.COPPER_INGOT, Items.RAW_COPPER, null, null, null, null, null, "");
         registerMetal(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_STEEL).source.get(), 900, "steel", ModBlocks.STEEL_BLOCK.get(), ModItems.STEEL_INGOT.get(), ModItems.RAW_STEEL.get(), ModItems.STEEL_NUGGET.get(), ModItems.STEEL_POWDER.get(), null, null, null, "");
         registerMetal(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_NETHERITE).source.get(), 1500, "netherite", Items.NETHERITE_BLOCK, Items.NETHERITE_INGOT, null, null, null, null, null, null, "");
 
-        //molten mod
         registerMetal(output, ModFluids.MOLTEN_COBALT.source.get(), 1100, "cobalt", ModBlocks.COBALT_BLOCK.get(), ModItems.COBALT_INGOT.get(), ModItems.RAW_COBALT.get(), ModItems.COBALT_NUGGET.get(), ModItems.COBALT_POWDER.get(), null, null, null, "");
 
-        //gems
         registerGem(output, ModFluids.MOLTEN_DIAMOND.source.get(), 1400, "diamond", "storage_blocks/diamond", "gems/diamond", Items.DIAMOND_BLOCK, Items.DIAMOND);
         registerGem(output, ModFluids.MOLTEN_EMERALD.source.get(), 1200, "emerald", "storage_blocks/emerald", "gems/emerald", Items.EMERALD_BLOCK, Items.EMERALD);
         registerGem(output, ModFluids.MOLTEN_AMETHYST.source.get(), 1000, "amethyst", "", "gems/amethyst", Items.AMETHYST_BLOCK, Items.AMETHYST_SHARD, 360);
         registerGem(output, ModFluids.MOLTEN_QUARTZ.source.get(), 800, "quartz", "", "gems/quartz", Items.QUARTZ_BLOCK, Items.QUARTZ, 360);
 
-        // Glowstone
-        addMeltingItem(output, Items.GLOWSTONE,       HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLOWSTONE).source.get(), 360, 800,  60,  "misc/glowstone/block");
-        addMeltingItem(output, Items.GLOWSTONE_DUST,  HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLOWSTONE).source.get(),  90, 800,  30,  "misc/glowstone/dust");
-        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLOWSTONE).source.get(), 360, Items.GLOWSTONE,     60, "misc/glowstone/block");
-        // Redstone
-        addMeltingItem(output, Items.REDSTONE_BLOCK, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REDSTONE).source.get(), 810, 600, 60, "misc/redstone/block");
-        addMeltingItem(output, Items.REDSTONE,       HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REDSTONE).source.get(), 90, 600, 20, "misc/redstone/dust");
-        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REDSTONE).source.get(), 810, Items.REDSTONE_BLOCK, 60, "misc/redstone/block");
-        // Obsidian
-        addMeltingItem(output, Items.OBSIDIAN, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_OBSIDIAN).source.get(), 810, 1400, 120, "misc/obsidian");
-        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_OBSIDIAN).source.get(), 810, Items.OBSIDIAN, 120, "misc/obsidian");
-        // Glass
-        addMeltingItem(output, Items.GLASS, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLASS).source.get(), 810, 1000, 60, "misc/glass");
-        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLASS).source.get(), 810, ModBlocks.CLEAR_GLASS.get(), 60, "misc/glass");
-        // Lapis
-        addMeltingTag(output, "storage_blocks/lapis",    HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LAPIS).source.get(), 810, 900, 120, "misc/lapis/block");
-        addMeltingTag(output, "gems/lapis",              HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LAPIS).source.get(),  90, 900,  60, "misc/lapis/gem");
-        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LAPIS).source.get(), 810, Items.LAPIS_BLOCK, 120, "misc/lapis/block");
-        // Ender Pearl
-        addMeltingItem(output, Items.ENDER_PEARL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ENDER).source.get(), 90, 1000, 60, "misc/ender/pearl");
+        addMeltingItem(output, Items.GLOWSTONE,       HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLOWSTONE).source.get(), 200, 800,  120, "misc/glowstone/block");
+        addMeltingItem(output, Items.GLOWSTONE_DUST,  HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLOWSTONE).source.get(),  50, 800,  60,  "misc/glowstone/dust");
+        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLOWSTONE).source.get(), 200, Items.GLOWSTONE,     120, "misc/glowstone/block");
+        addMeltingItem(output, Items.REDSTONE_BLOCK, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REDSTONE).source.get(), 90, 600, 120, "misc/redstone/block");
+        addMeltingItem(output, Items.REDSTONE,       HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REDSTONE).source.get(), 10, 600, 40, "misc/redstone/dust");
+        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REDSTONE).source.get(), 90, Items.REDSTONE_BLOCK, 120, "misc/redstone/block");
+        addMeltingItem(output, Items.OBSIDIAN, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_OBSIDIAN).source.get(), 288, 1400, 200, "misc/obsidian");
+        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_OBSIDIAN).source.get(), 288, Items.OBSIDIAN, 200, "misc/obsidian");
+        addMeltingItem(output, Items.GLASS, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLASS).source.get(), 250, 1000, 100, "misc/glass_from_block");
+        addMeltingItem(output, Items.GLASS_PANE, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLASS).source.get(), 90, 1000, 60, "misc/glass_from_pane");
+        addMeltingItem(output, Items.SAND, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLASS).source.get(), 250, 1000, 100, "misc/glass_from_sand");
+        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GLASS).source.get(), 250, ModBlocks.CLEAR_GLASS.get(), 100, "misc/glass");
+        addMeltingItem(output, Items.LAPIS_LAZULI, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LAPIS).source.get(), 10, 900, 40, "misc/lapis/gem");
+        addMeltingTag(output, "storage_blocks/lapis", HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LAPIS).source.get(), 90, 900, 120, "misc/lapis/block");
+        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LAPIS).source.get(), 90, Items.LAPIS_BLOCK, 120, "misc/lapis/block");
+        addMeltingItem(output, Items.ENDER_PEARL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ENDER).source.get(), 90, 1000, 100, "misc/ender/pearl");
+        addMeltingItem(output, Items.ENDER_EYE, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ENDER).source.get(), 90, 1000, 100, "misc/ender/eye");
         addCastingTable(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ENDER).source.get(), 90, ModItems.GEM_CAST.get(), false, Items.ENDER_PEARL, 60, "misc/ender/pearl");
-        // Ancient Debris
-        addMeltingItem(output, Items.ANCIENT_DEBRIS, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ANCIENT_DEBRIS).source.get(), 180, 2000, 180, "misc/ancient_debris");
-        // Shulker Shell
-        addMeltingItem(output, Items.SHULKER_SHELL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SHULKER_SHELL).source.get(), 200, 1200, 60, "misc/shulker_shell");
-        addCastingTable(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SHULKER_SHELL).source.get(), 200, null, false, Items.SHULKER_SHELL, 60, "misc/shulker_shell");
-        // Slime Ball
-        addMeltingItem(output, Items.SLIME_BALL,  HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SLIME).source.get(), 90,  300, 30, "misc/slime/ball");
-        addMeltingItem(output, Items.SLIME_BLOCK, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SLIME).source.get(), 810, 300, 60, "misc/slime/block");
-        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SLIME).source.get(), 810, Items.SLIME_BLOCK, 60, "misc/slime/block");
-        // Magma Cream
-        addMeltingItem(output, Items.MAGMA_CREAM, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_MAGMA_CREAM).source.get(), 90, 700, 30, "misc/magma_cream");
+        addMeltingItem(output, Items.ANCIENT_DEBRIS, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ANCIENT_DEBRIS).source.get(), 90, 2000, 300, "misc/ancient_debris");
+        addMeltingItem(output, Items.NETHERITE_SCRAP, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ANCIENT_DEBRIS).source.get(), 90, 2000, 200, "misc/ancient_debris_from_scrap");
+        addMeltingItem(output, Items.NETHERITE_INGOT, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_NETHERITE).source.get(), 90, 2000, 200, "misc/netherite_from_ingot");
+        addMeltingItem(output, Items.SHULKER_SHELL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SHULKER_SHELL).source.get(), 90, 1200, 120, "misc/shulker_shell");
+        addCastingTable(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SHULKER_SHELL).source.get(), 90, null, false, Items.SHULKER_SHELL, 120, "misc/shulker_shell");
+        addMeltingItem(output, Items.SLIME_BALL,  HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SLIME).source.get(), 50,  300, 60, "misc/slime/ball");
+        addMeltingItem(output, Items.SLIME_BLOCK, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SLIME).source.get(), 450, 300, 120, "misc/slime/block");
+        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_SLIME).source.get(), 450, Items.SLIME_BLOCK, 120, "misc/slime/block");
+        addMeltingItem(output, Items.MAGMA_CREAM, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_MAGMA_CREAM).source.get(), 90, 700, 80, "misc/magma_cream");
+        addMeltingItem(output, Items.MAGMA_BLOCK, net.minecraft.world.level.material.Fluids.LAVA, 250, 700, 120, "misc/magma_block");
         addCastingTable(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_MAGMA_CREAM).source.get(), 90, ModItems.GEM_CAST.get(), false, Items.MAGMA_CREAM, 30, "misc/magma_cream");
-        // Heavy Core
         addMeltingItem(output, Items.HEAVY_CORE, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_HEAVY_CORE).source.get(), 810, 2000, 180, "misc/heavy_core");
         addCastingTable(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_HEAVY_CORE).source.get(), 810, null, false, Items.HEAVY_CORE, 180, "misc/heavy_core");
-        // Carbon
-        addMeltingItem(output, Items.CHARCOAL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 90, 600, 30, "misc/carbon/charcoal");
-        addMeltingItem(output, Items.COAL,     HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 90, 600, 30, "misc/carbon/coal");
-        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 810, Items.COAL_BLOCK, 60, "misc/carbon/coal_block");
-        // Refined Glowstone / Refined Obsidian
+        addMeltingItem(output, Items.CHARCOAL, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 90, 600, 100, "misc/carbon/charcoal");
+        addMeltingItem(output, Items.COAL,     HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 90, 600, 100, "misc/carbon/coal");
+        addMeltingTag(output, "storage_blocks/coal", HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 810, 600, 200, "misc/carbon/coal_block");
+        addCastingBasin(output, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_CARBON).source.get(), 810, Items.COAL_BLOCK, 200, "misc/carbon/coal_block");
+        addMeltingItem(output, Items.HONEYCOMB, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_WAX).source.get(), 50, 320, 60, "misc/wax_from_honeycomb");
+        addMeltingItem(output, Items.HONEYCOMB_BLOCK, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_WAX).source.get(), 200, 320, 120, "misc/wax_from_block");
         RecipeOutput mekOutput = output.withConditions(modLoaded("mekanism"));
         addMeltingTag(mekOutput, "storage_blocks/refined_glowstone", HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_GLOWSTONE).source.get(), 810,  900, 120, "misc/refined_glowstone/block");
         addMeltingTag(mekOutput, "ingots/refined_glowstone",         HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_GLOWSTONE).source.get(),  90,  900,  60, "misc/refined_glowstone/ingot");
@@ -123,14 +114,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         addMeltingTag(mekOutput, "ingots/refined_obsidian",          HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_OBSIDIAN).source.get(),   90, 1400,  60, "misc/refined_obsidian/ingot");
         addCastingTableById(mekOutput, net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_OBSIDIAN).source.get()),  90, ModItems.INGOT_CAST.get(), false, ResourceLocation.fromNamespaceAndPath("mekanism", "ingot_refined_obsidian"),  60, "misc/refined_obsidian/ingot_cast");
         addCastingBasinById(mekOutput, net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_REFINED_OBSIDIAN).source.get()), 810, ResourceLocation.fromNamespaceAndPath("mekanism", "block_refined_obsidian"), 120, "misc/refined_obsidian/block_cast");
-        // Meat
-        addMeltingItem(output, Items.BEEF,     HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 100, 200, 20, "misc/meat/beef");
-        addMeltingItem(output, Items.PORKCHOP, HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 100, 200, 20, "misc/meat/porkchop");
-        addMeltingItem(output, Items.CHICKEN,  HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(),  80, 200, 20, "misc/meat/chicken");
-        addMeltingItem(output, Items.MUTTON,   HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(),  80, 200, 20, "misc/meat/mutton");
-        addMeltingItem(output, Items.RABBIT,   HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(),  80, 200, 20, "misc/meat/rabbit");
+        addMeltingItem(output, Items.PORKCHOP, HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 40, 200, 60, "misc/meat/porkchop");
+        addMeltingItem(output, Items.BEEF,     HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 40, 200, 60, "misc/meat/beef");
+        addMeltingItem(output, Items.CHICKEN,  HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 40, 200, 60, "misc/meat/chicken");
+        addMeltingItem(output, Items.MUTTON,   HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 40, 200, 60, "misc/meat/mutton");
+        addMeltingItem(output, Items.RABBIT,   HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 40, 200, 60, "misc/meat/rabbit");
+        addMeltingItem(output, Items.ROTTEN_FLESH, HephaestusFluids.SETS.get(HephaestusFluids.Material.LIQUID_MEAT).source.get(), 20, 200, 40, "misc/meat/rotten_flesh");
 
-        //alltheores compat
+        addToolArmorMelting(output);
+
         RecipeOutput atoOutput = output.withConditions(modLoaded("alltheores"));
         registerExternalMetal(atoOutput, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ALUMINUM).source.get(), 660, "aluminum", "alltheores", "alltheores_compat/");
         registerExternalMetal(atoOutput, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_BRASS).source.get(), 930, "brass", "alltheores", "alltheores_compat/");
@@ -151,7 +143,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         registerExternalMetal(atoOutput, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_URANIUM).source.get(), 1130, "uranium", "alltheores", "alltheores_compat/");
         registerExternalMetal(atoOutput, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ZINC).source.get(), 419, "zinc", "alltheores", "alltheores_compat/");
 
-        //ftb materials compat
         RecipeOutput ftbOutput = output.withConditions(modLoaded("ftbmaterials"));
         registerFtbMetalById(ftbOutput, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_ALUMINUM).source.get(),  660,  "aluminum",   true);
         registerFtbMetalById(ftbOutput, HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_BRASS).source.get(),     930,  "brass",      false);
@@ -370,6 +361,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         output.accept(ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/casts/" + savePath), recipe, null);
     }
 
+    private void createRodCastRecipe(RecipeOutput output) {
+        Ingredient rodOrStick = Ingredient.of(Items.STICK, Items.BLAZE_ROD);
+        ModRecipes.CastingTableRecipe recipe = new ModRecipes.CastingTableRecipe(
+                rodOrStick, true,
+                new FluidStack(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_COPPER).source.get(), 90),
+                new ItemStack(ModItems.ROD_CAST.get()), 60);
+        output.accept(ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/casts/rod_cast"), recipe, null);
+    }
+
     private void addMeltingTag(RecipeOutput output, String tagPath, Fluid fluid, int amount, int temperature, int time, String savePath) {
         Ingredient ingredient = Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", tagPath)));
         FluidStack fuel = fuelForTemp(temperature);
@@ -382,6 +382,61 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         FluidStack fuel = fuelForTemp(temperature);
         ModRecipes.MeltingRecipe recipe = new ModRecipes.MeltingRecipe(ingredient, new FluidStack(fluid, amount), fuel, temperature, time);
         output.accept(ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "smeltery/melting/" + savePath), recipe, null);
+    }
+
+    private void addMeltingDamageable(RecipeOutput output, ItemLike item, Fluid fluid, int amount, int temperature, int time, String savePath) {
+        Ingredient ingredient = Ingredient.of(item);
+        FluidStack fuel = fuelForTemp(temperature);
+        ModRecipes.MeltingRecipe recipe = new ModRecipes.MeltingRecipe(ingredient, new FluidStack(fluid, amount), fuel, temperature, time, true);
+        output.accept(ResourceLocation.fromNamespaceAndPath(TitamMods.MODID, "smeltery/melting/" + savePath), recipe, null);
+    }
+
+    private void addToolArmorMelting(RecipeOutput output) {
+        Fluid iron = HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_IRON).source.get();
+        Fluid gold = HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_GOLD).source.get();
+        Fluid netherite = HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_NETHERITE).source.get();
+        Fluid diamond = ModFluids.MOLTEN_DIAMOND.source.get();
+
+        addMeltingDamageable(output, Items.IRON_PICKAXE, iron, 270, 900, 200, "tools/iron_pickaxe");
+        addMeltingDamageable(output, Items.IRON_AXE,     iron, 270, 900, 200, "tools/iron_axe");
+        addMeltingDamageable(output, Items.IRON_SWORD,   iron, 180, 900, 150, "tools/iron_sword");
+        addMeltingDamageable(output, Items.IRON_SHOVEL,  iron,  90, 900, 100, "tools/iron_shovel");
+        addMeltingDamageable(output, Items.IRON_HOE,     iron, 180, 900, 150, "tools/iron_hoe");
+        addMeltingDamageable(output, Items.IRON_HELMET,     iron, 450, 900, 250, "armor/iron_helmet");
+        addMeltingDamageable(output, Items.IRON_CHESTPLATE, iron, 720, 900, 350, "armor/iron_chestplate");
+        addMeltingDamageable(output, Items.IRON_LEGGINGS,   iron, 630, 900, 300, "armor/iron_leggings");
+        addMeltingDamageable(output, Items.IRON_BOOTS,      iron, 360, 900, 200, "armor/iron_boots");
+        addMeltingDamageable(output, Items.CHAINMAIL_HELMET,     iron, 450, 900, 250, "armor/chainmail_helmet");
+        addMeltingDamageable(output, Items.CHAINMAIL_CHESTPLATE, iron, 720, 900, 350, "armor/chainmail_chestplate");
+        addMeltingDamageable(output, Items.CHAINMAIL_LEGGINGS,   iron, 630, 900, 300, "armor/chainmail_leggings");
+        addMeltingDamageable(output, Items.CHAINMAIL_BOOTS,      iron, 360, 900, 200, "armor/chainmail_boots");
+        addMeltingDamageable(output, Items.GOLDEN_PICKAXE, gold, 270, 900, 200, "tools/golden_pickaxe");
+        addMeltingDamageable(output, Items.GOLDEN_AXE,     gold, 270, 900, 200, "tools/golden_axe");
+        addMeltingDamageable(output, Items.GOLDEN_SWORD,   gold, 180, 900, 150, "tools/golden_sword");
+        addMeltingDamageable(output, Items.GOLDEN_SHOVEL,  gold,  90, 900, 100, "tools/golden_shovel");
+        addMeltingDamageable(output, Items.GOLDEN_HOE,     gold, 180, 900, 150, "tools/golden_hoe");
+        addMeltingDamageable(output, Items.GOLDEN_HELMET,     gold, 450, 900, 250, "armor/golden_helmet");
+        addMeltingDamageable(output, Items.GOLDEN_CHESTPLATE, gold, 720, 900, 350, "armor/golden_chestplate");
+        addMeltingDamageable(output, Items.GOLDEN_LEGGINGS,   gold, 630, 900, 300, "armor/golden_leggings");
+        addMeltingDamageable(output, Items.GOLDEN_BOOTS,      gold, 360, 900, 200, "armor/golden_boots");
+        addMeltingDamageable(output, Items.DIAMOND_PICKAXE, diamond, 270, 1400, 200, "tools/diamond_pickaxe");
+        addMeltingDamageable(output, Items.DIAMOND_AXE,     diamond, 270, 1400, 200, "tools/diamond_axe");
+        addMeltingDamageable(output, Items.DIAMOND_SWORD,   diamond, 180, 1400, 150, "tools/diamond_sword");
+        addMeltingDamageable(output, Items.DIAMOND_SHOVEL,  diamond,  90, 1400, 100, "tools/diamond_shovel");
+        addMeltingDamageable(output, Items.DIAMOND_HOE,     diamond, 180, 1400, 150, "tools/diamond_hoe");
+        addMeltingDamageable(output, Items.DIAMOND_HELMET,     diamond, 450, 1400, 250, "armor/diamond_helmet");
+        addMeltingDamageable(output, Items.DIAMOND_CHESTPLATE, diamond, 720, 1400, 350, "armor/diamond_chestplate");
+        addMeltingDamageable(output, Items.DIAMOND_LEGGINGS,   diamond, 630, 1400, 300, "armor/diamond_leggings");
+        addMeltingDamageable(output, Items.DIAMOND_BOOTS,      diamond, 360, 1400, 200, "armor/diamond_boots");
+        addMeltingDamageable(output, Items.NETHERITE_PICKAXE, netherite, 90, 2000, 300, "tools/netherite_pickaxe");
+        addMeltingDamageable(output, Items.NETHERITE_AXE,     netherite, 90, 2000, 300, "tools/netherite_axe");
+        addMeltingDamageable(output, Items.NETHERITE_SWORD,   netherite, 90, 2000, 300, "tools/netherite_sword");
+        addMeltingDamageable(output, Items.NETHERITE_SHOVEL,  netherite, 90, 2000, 300, "tools/netherite_shovel");
+        addMeltingDamageable(output, Items.NETHERITE_HOE,     netherite, 90, 2000, 300, "tools/netherite_hoe");
+        addMeltingDamageable(output, Items.NETHERITE_HELMET,     netherite, 90, 2000, 350, "armor/netherite_helmet");
+        addMeltingDamageable(output, Items.NETHERITE_CHESTPLATE, netherite, 90, 2000, 350, "armor/netherite_chestplate");
+        addMeltingDamageable(output, Items.NETHERITE_LEGGINGS,   netherite, 90, 2000, 350, "armor/netherite_leggings");
+        addMeltingDamageable(output, Items.NETHERITE_BOOTS,      netherite, 90, 2000, 350, "armor/netherite_boots");
     }
 
     private void addCastingBasin(RecipeOutput output, Fluid fluid, int amount, ItemLike result, int time, String savePath) {

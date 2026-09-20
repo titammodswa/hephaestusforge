@@ -5,12 +5,12 @@
     "id": "minecraft:lava"
   },
   "ingredient": {
-    "tag": "c:gems/lapis"
+    "item": "minecraft:lapis_lazuli"
   },
   "result": {
-    "amount": 90,
+    "amount": 10,
     "id": "hephaestus:molten_lapis"
   },
   "temperature": 900,
-  "time": 60
+  "time": 40
 }
