@@ -40,6 +40,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
     public int renderTimer   = 0;
 
     public int ejectCooldown = 0;
+    public int fillTarget    = 0;
 
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
@@ -83,6 +84,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
             ItemStack mold = inventory.getStackInSlot(0);
             ModRecipes.@Nullable CastingTableRecipe recipe = findRecipeByType(mold, resource.getFluid());
             if (recipe == null) return 0;
+            fillTarget = recipe.fluidAmount();
 
             int spaceLeft = recipe.fluidAmount() - fluid.getAmount();
             if (spaceLeft <= 0) return 0;
@@ -262,6 +264,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
         output.putInt("coolingTime",   coolingTime);
         output.putInt("renderTimer",    renderTimer);
         output.putInt("ejectCooldown",  ejectCooldown);
+        output.putInt("fillTarget",     fillTarget);
         output.store("slot0",         ItemStack.OPTIONAL_CODEC, inventory.getStackInSlot(0));
         output.store("slot1",         ItemStack.OPTIONAL_CODEC, inventory.getStackInSlot(1));
         output.store("tank",          FluidStack.OPTIONAL_CODEC, tank.getFluid());
@@ -274,6 +277,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
         coolingTime   = input.getIntOr("coolingTime",  0);
         renderTimer   = input.getIntOr("renderTimer",   0);
         ejectCooldown = input.getIntOr("ejectCooldown", 0);
+        fillTarget    = input.getIntOr("fillTarget",    0);
         inventory.setStackInSlot(0, input.read("slot0", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
         inventory.setStackInSlot(1, input.read("slot1", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
         tank.setFluid(input.read("tank", FluidStack.OPTIONAL_CODEC).orElse(FluidStack.EMPTY));
