@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -64,7 +65,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         @Override public boolean isItemValid(int slot, @Nonnull ItemStack stack) { return inventory.isItemValid(slot, stack); }
     };
     @SuppressWarnings("removal")
-    public final FluidTank tank = new FluidTank(2700) {
+    public final FluidTank tank = new TransactionalFluidTank(2700, false, true) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -76,6 +77,8 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
     };
+
+    public TransactionalFluidTank getFluidResourceHandler() { return (TransactionalFluidTank) tank; }
 
     protected final ContainerData data = new ContainerData() {
         @Override public int get(int i) {
@@ -100,6 +103,16 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
 
     public MelterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MELTER.get(), pos, state);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level != null && !level.isClientSide()) {
+            for (int slot = 0; slot < inventory.getSlots(); slot++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), inventory.getStackInSlot(slot));
+            }
+        }
     }
 
     @Override public Component getDisplayName() { return Component.translatable("block.hephaestus.seared_melter"); }
@@ -227,7 +240,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 continue;
             }
 
-            FluidStack output = recipe.output().copy();
+            FluidStack output = recipe.scaledOutput(stack).copy();
             boolean canOutput = tank.fill(output, IFluidHandler.FluidAction.SIMULATE) == output.getAmount();
 
             if (canOutput) {
@@ -263,8 +276,10 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 if (!sim.isEmpty()) {
                     int heat = getTemperatureForFuel(sim, level);
                     if (heat > 0) {
-                        fuelTankBelow.drain(50, IFluidHandler.FluidAction.EXECUTE);
-                        this.fuel = 200; this.maxFuel = 200; this.temperature = heat; dirty = true;
+                        FluidStack consumed = fuelTankBelow.drain(50, IFluidHandler.FluidAction.EXECUTE);
+                        this.fuel = consumed.getAmount() * 4;
+                        this.maxFuel = this.fuel;
+                        this.temperature = heat; dirty = true;
                     }
                 }
             }

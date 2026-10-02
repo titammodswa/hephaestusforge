@@ -1,6 +1,5 @@
 package com.titammods.network;
 
-import com.titammods.common.blockentities.SmelteryControllerBlockEntity;
 import com.titammods.menu.SmelteryMenu;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -16,7 +15,12 @@ public class ModNetworking {
 
     public static void handleFluidClick(FluidClickPayload payload, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
-            if (ctx.player().level().getBlockEntity(payload.pos()) instanceof SmelteryControllerBlockEntity c) {
+            var player = ctx.player();
+            if (player.containerMenu instanceof SmelteryMenu menu
+                    && menu.blockEntity.getBlockPos().equals(payload.pos())
+                    && menu.stillValid(player)) {
+                var c = menu.blockEntity;
+                if (payload.fluidIndex() < 0 || payload.fluidIndex() >= c.fluidTank.getFluids().size()) return;
                 c.fluidTank.moveFluidToBottom(payload.fluidIndex());
                 c.setChanged();
                 c.getLevel().sendBlockUpdated(c.getBlockPos(), c.getBlockState(), c.getBlockState(), 3);

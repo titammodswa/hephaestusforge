@@ -1,6 +1,7 @@
 package com.titammods.compat.jei;
 
 import com.titammods.TitamMods;
+import com.titammods.client.ClientRecipes;
 import com.titammods.setup.ModBlocks;
 import com.titammods.setup.ModRecipes;
 import mezz.jei.api.IModPlugin;
@@ -9,12 +10,10 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 
 import java.util.List;
 
@@ -65,32 +64,30 @@ public class TitamModsJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
-        if (server == null) return;
-        RecipeManager rm = server.getRecipeManager();
+        RecipeMap recipes = ClientRecipes.getRecipes();
 
-        List<ModRecipes.MeltingRecipe> melting = rm.recipeMap()
+        List<ModRecipes.MeltingRecipe> melting = recipes
                 .byType(ModRecipes.MELTING_TYPE.get())
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(MELTING_TYPE, melting);
 
-        List<ModRecipes.CastingTableRecipe> table = rm.recipeMap()
+        List<ModRecipes.CastingTableRecipe> table = recipes
                 .byType(ModRecipes.CASTING_TABLE_TYPE.get())
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(CASTING_TABLE_TYPE, table);
 
-        List<ModRecipes.CastingBasinRecipe> basin = rm.recipeMap()
+        List<ModRecipes.CastingBasinRecipe> basin = recipes
                 .byType(ModRecipes.CASTING_BASIN_TYPE.get())
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(CASTING_BASIN_TYPE, basin);
 
-        List<ModRecipes.AlloyRecipe> alloy = rm.recipeMap()
+        List<ModRecipes.AlloyRecipe> alloy = recipes
                 .byType(ModRecipes.ALLOY_TYPE.get())
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(ALLOY_TYPE, alloy);
         registration.addRecipes(SMELTERY_TYPE, melting);
 
-        List<ModRecipes.EntityMeltingRecipe> entityMelting = rm.recipeMap()
+        List<ModRecipes.EntityMeltingRecipe> entityMelting = recipes
                 .byType(ModRecipes.ENTITY_MELTING_TYPE.get())
                 .stream().map(RecipeHolder::value).toList();
         registration.addRecipes(ENTITY_MELTING_TYPE, entityMelting);

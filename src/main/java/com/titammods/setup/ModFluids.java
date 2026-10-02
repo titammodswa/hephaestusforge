@@ -96,6 +96,7 @@ public class ModFluids {
             @Override public com.titammods.registry.fluids.MoltenFluidType getFluidType() { return type.get(); }
             @Override public Fluid getFlowing()       { return flowing.get(); }
             @Override public Fluid getSource()        { return source.get(); }
+            @Override public BucketItem getBucket()   { return bucket.get(); }
             @Override public boolean isSame(Fluid f) {
                 return f == source.get() || f == flowing.get();
             }

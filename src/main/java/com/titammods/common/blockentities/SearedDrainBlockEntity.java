@@ -1,6 +1,8 @@
 package com.titammods.common.blockentities;
 
 import com.titammods.common.blockentities.multiblock.IDisplayFluidListener;
+import com.titammods.common.blockentities.multiblock.SmelteryFluidHandler;
+import com.titammods.common.blocks.SmelteryControllerBlock;
 import com.titammods.setup.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,6 +24,8 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Objects;
+
 public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluidListener {
 
     private @Nullable BlockPos controllerPos;
@@ -31,8 +35,22 @@ public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluid
         super(ModBlockEntities.SEARED_DRAIN.get(), pos, state);
     }
 
-    public void setControllerPos(@Nullable BlockPos pos) { this.controllerPos = pos; setChanged(); }
+    public void setControllerPos(@Nullable BlockPos pos) {
+        if (Objects.equals(controllerPos, pos)) return;
+        this.controllerPos = pos;
+        setChanged();
+        invalidateCapabilities();
+    }
     public @Nullable BlockPos getControllerPos()         { return controllerPos; }
+
+    public @Nullable SmelteryFluidHandler getFluidResourceHandler() {
+        if (controllerPos == null || level == null || !level.hasChunkAt(controllerPos)) return null;
+        if (level.getBlockEntity(controllerPos) instanceof SmelteryControllerBlockEntity controller
+                && controller.getBlockState().getValue(SmelteryControllerBlock.IN_STRUCTURE)) {
+            return controller.fluidTank;
+        }
+        return null;
+    }
 
     @Override public FluidStack getDisplayFluid() { return displayFluid; }
 
@@ -92,6 +110,8 @@ public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluid
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
+        controllerPos = null;
+        displayFluid = FluidStack.EMPTY;
         if (input.getIntOr("cy", Integer.MIN_VALUE) != Integer.MIN_VALUE)
             controllerPos = new BlockPos(input.getIntOr("cx", 0), input.getIntOr("cy", 0), input.getIntOr("cz", 0));
         String id = input.getStringOr("display_fluid", "");

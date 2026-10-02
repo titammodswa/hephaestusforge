@@ -8,15 +8,70 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.TransferPreconditions;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("removal")
-public class SmelteryFluidHandler implements IFluidHandler {
+public class SmelteryFluidHandler extends SnapshotJournal<List<FluidStack>> implements IFluidHandler, ResourceHandler<FluidResource> {
 
     private final List<FluidStack> fluids = new ArrayList<>();
     private int capacity = 0;
+    private final Runnable onChanged;
+
+    public SmelteryFluidHandler() { this(() -> {}); }
+
+    public SmelteryFluidHandler(Runnable onChanged) { this.onChanged = onChanged; }
+
+    @Override protected List<FluidStack> createSnapshot() {
+        return fluids.stream().map(FluidStack::copy).toList();
+    }
+
+    @Override protected void revertToSnapshot(List<FluidStack> snapshot) {
+        fluids.clear();
+        fluids.addAll(snapshot);
+    }
+
+    @Override protected void onRootCommit(List<FluidStack> original) { onChanged.run(); }
+
+    @Override public int size() { return fluids.size(); }
+    @Override public FluidResource getResource(int index) { return FluidResource.of(getFluidInTank(index)); }
+    @Override public long getAmountAsLong(int index) { return getFluidInTank(index).getAmount(); }
+    @Override public long getCapacityAsLong(int index, FluidResource resource) { return capacity; }
+    @Override public boolean isValid(int index, FluidResource resource) { return true; }
+
+    // Smeltery drains expose extraction only; internal processing uses the legacy methods below.
+    @Override
+    public int insert(int index, FluidResource resource, int amount, TransactionContext transaction) {
+        TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
+        return 0;
+    }
+
+    @Override
+    public int extract(int index, FluidResource resource, int amount, TransactionContext transaction) {
+        TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
+        FluidStack stored = getFluidInTank(index);
+        if (!resource.matches(stored) || amount == 0) return 0;
+        int extracted = Math.min(amount, stored.getAmount());
+        updateSnapshots(transaction);
+        stored.shrink(extracted);
+        if (stored.isEmpty()) fluids.remove(index);
+        return extracted;
+    }
+
+    @Override
+    public int extract(FluidResource resource, int amount, TransactionContext transaction) {
+        TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
+        for (int index = 0; index < fluids.size(); index++) {
+            if (resource.matches(fluids.get(index))) return extract(index, resource, amount, transaction);
+        }
+        return 0;
+    }
 
     public void setCapacity(int newCapacity) { this.capacity = newCapacity; }
     public int getCapacity()                 { return capacity; }
@@ -99,16 +154,16 @@ public class SmelteryFluidHandler implements IFluidHandler {
     }
 
     public void save(ValueOutput output) {
-        output.putInt("fluid_count", fluids.size());
-        for (int i = 0; i < fluids.size(); i++) {
-            FluidStack f = fluids.get(i);
-            output.putString("fluid_id_"    + i, BuiltInRegistries.FLUID.getKey(f.getFluid()).toString());
-            output.putInt(   "fluid_amount_" + i, f.getAmount());
-        }
+        output.store("fluids", FluidStack.CODEC.listOf(), fluids);
     }
 
     public void load(ValueInput input) {
         fluids.clear();
+        var stored = input.read("fluids", FluidStack.CODEC.listOf());
+        if (stored.isPresent()) {
+            fluids.addAll(stored.get());
+            return;
+        }
         int count = input.getIntOr("fluid_count", 0);
         for (int i = 0; i < count; i++) {
             String idStr = input.getStringOr("fluid_id_" + i, "");

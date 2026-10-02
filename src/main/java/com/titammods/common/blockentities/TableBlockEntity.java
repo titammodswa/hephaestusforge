@@ -13,6 +13,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -39,6 +40,17 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
     public int renderTimer   = 0;
 
     public int ejectCooldown = 0;
+    public int fillTarget    = 0;
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level != null && !level.isClientSide() && !renderResult.isEmpty()) {
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), renderResult);
+            renderResult = ItemStack.EMPTY;
+        }
+    }
+
     @SuppressWarnings("removal")
     public final ItemStackHandler inventory = new ItemStackHandler(2) {
         @Override
@@ -63,7 +75,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
         @Override public boolean isItemValid(int slot, ItemStack stack) { return false; }
     };
     @SuppressWarnings("removal")
-    public final FluidTank tank = new FluidTank(10000) {
+    public final FluidTank tank = new TransactionalFluidTank(10000, true, false) {
         @Override
         public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
             if (!inventory.getStackInSlot(1).isEmpty() || renderTimer > 0) return 0;
@@ -72,6 +84,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
             ItemStack mold = inventory.getStackInSlot(0);
             ModRecipes.@Nullable CastingTableRecipe recipe = findRecipeByType(mold, resource.getFluid());
             if (recipe == null) return 0;
+            fillTarget = recipe.fluidAmount();
 
             int spaceLeft = recipe.fluidAmount() - fluid.getAmount();
             if (spaceLeft <= 0) return 0;
@@ -99,6 +112,8 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
         @Override public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) { return FluidStack.EMPTY; }
         @Override public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) { return FluidStack.EMPTY; }
     };
+
+    public TransactionalFluidTank getFluidResourceHandler() { return (TransactionalFluidTank) tank; }
 
     private static final int[] SLOTS_NONE   = new int[0];
     private static final int[] SLOTS_OUTPUT = new int[]{1};
@@ -249,6 +264,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
         output.putInt("coolingTime",   coolingTime);
         output.putInt("renderTimer",    renderTimer);
         output.putInt("ejectCooldown",  ejectCooldown);
+        output.putInt("fillTarget",     fillTarget);
         output.store("slot0",         ItemStack.OPTIONAL_CODEC, inventory.getStackInSlot(0));
         output.store("slot1",         ItemStack.OPTIONAL_CODEC, inventory.getStackInSlot(1));
         output.store("tank",          FluidStack.OPTIONAL_CODEC, tank.getFluid());
@@ -261,6 +277,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
         coolingTime   = input.getIntOr("coolingTime",  0);
         renderTimer   = input.getIntOr("renderTimer",   0);
         ejectCooldown = input.getIntOr("ejectCooldown", 0);
+        fillTarget    = input.getIntOr("fillTarget",    0);
         inventory.setStackInSlot(0, input.read("slot0", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
         inventory.setStackInSlot(1, input.read("slot1", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
         tank.setFluid(input.read("tank", FluidStack.OPTIONAL_CODEC).orElse(FluidStack.EMPTY));

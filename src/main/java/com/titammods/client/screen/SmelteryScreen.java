@@ -243,7 +243,7 @@ public class SmelteryScreen extends AbstractContainerScreen<SmelteryMenu> {
                     tips.add(Component.translatable("gui.hephaestus.tank_capacity", total, cap)
                             .withStyle(ChatFormatting.GRAY));
                     if (shiftHeld) {
-                        tips.add(fluidBreakdown(free).withStyle(ChatFormatting.DARK_GRAY));
+                        tips.add(FluidUnits.breakdown(free).withStyle(ChatFormatting.DARK_GRAY));
                         tips.add(Component.translatable("gui.hephaestus.tank_free", free)
                                 .withStyle(ChatFormatting.DARK_GRAY));
                     } else {
@@ -427,7 +427,7 @@ public class SmelteryScreen extends AbstractContainerScreen<SmelteryMenu> {
         tips.add(Component.translatable(fluid.getDescriptionId()).withStyle(ChatFormatting.GOLD));
         int amt = fluid.getAmount();
         if (shift) {
-            tips.add(fluidBreakdown(amt).withStyle(ChatFormatting.GRAY));
+            tips.add(FluidUnits.breakdown(amt).withStyle(ChatFormatting.GRAY));
             tips.add(Component.translatable("gui.hephaestus.fluid_amount", amt, totalCap)
                     .withStyle(ChatFormatting.DARK_GRAY));
         } else {
@@ -437,22 +437,6 @@ public class SmelteryScreen extends AbstractContainerScreen<SmelteryMenu> {
                     .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         }
         return tips;
-    }
-
-    private net.minecraft.network.chat.MutableComponent fluidBreakdown(int mb) {
-        int blocks  = mb / 1296;
-        int ingots  = (mb % 1296) / 144;
-        int nuggets = (mb % 144) / 16;
-        int rem     = mb % 16;
-        var sb = new StringBuilder();
-        if (blocks  > 0) sb.append(blocks).append(" ")
-                .append(Component.translatable("gui.hephaestus.unit.blocks").getString()).append("  ");
-        if (ingots  > 0) sb.append(ingots).append(" ")
-                .append(Component.translatable("gui.hephaestus.unit.ingots").getString()).append("  ");
-        if (nuggets > 0) sb.append(nuggets).append(" ")
-                .append(Component.translatable("gui.hephaestus.unit.nuggets").getString()).append("  ");
-        if (rem > 0 || sb.isEmpty()) sb.append(rem).append(" mB");
-        return Component.literal(sb.toString().trim());
     }
 
     private int[] calcLiquidHeights(List<FluidStack> fluids, int cap, int height, int min) {

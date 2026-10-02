@@ -40,9 +40,14 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jspecify.annotations.Nullable;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 public class SmelteryControllerBlockEntity extends BlockEntity implements MenuProvider, IDisplayFluidListener {
 
     private SmelteryMultiblock multiblock;
+    private final Set<BlockPos> linkedPositions = new HashSet<>();
 
     public SmelteryMultiblock getMultiblock() { return multiblock; }
     public BlockPos syncedMinInner = null;
@@ -50,7 +55,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     private int  tickCounter = 0;
     private boolean isFormed = false;
 
-    public final SmelteryFluidHandler fluidTank = new SmelteryFluidHandler();
+    public final SmelteryFluidHandler fluidTank = new SmelteryFluidHandler(this::setChanged);
 
     private EntityMeltingModule entityMeltingModule;
 
@@ -94,6 +99,18 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     }
 
     @Override public FluidStack getDisplayFluid() { return displayFluid; }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level != null && !level.isClientSide()) {
+            for (BlockPos linked : linkedPositions) updateIOBlock(linked, false);
+            linkedPositions.clear();
+            for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), itemHandler.getStackInSlot(slot));
+            }
+        }
+    }
 
     @Override
     public void notifyDisplayFluidUpdated(FluidStack fluid) {
@@ -294,7 +311,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                     if (availTemp < recipe.temperature()) {
                         state = 2;
                     } else {
-                        FluidStack out = recipe.output().copy();
+                        FluidStack out = recipe.scaledOutput(stack).copy();
                         if (fluidTank.fill(out, IFluidHandler.FluidAction.SIMULATE) < out.getAmount())
                             state = 3;
                     }
@@ -333,6 +350,12 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
                 if (holder != null) {
                     FluidStack out = holder.value().scaledOutput(stack).copy();
+                    if (fluidTank.fill(out, IFluidHandler.FluidAction.SIMULATE) < out.getAmount()) {
+                        meltingProgress[i] = meltingTime[i];
+                        meltingState[i] = 3;
+                        changed = true;
+                        continue;
+                    }
                     fluidTank.fill(out, IFluidHandler.FluidAction.EXECUTE);
                     itemHandler.extractItem(i, 1, false);
                 }
@@ -354,14 +377,20 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             int availTemp = temperature > 0 ? temperature : getTemperatureForFuel(currentFuel);
             if (availTemp < recipe.temperature()) continue;
 
+            SmelteryFluidHandler simulated = new SmelteryFluidHandler();
+            simulated.setCapacity(fluidTank.getCapacity());
+            for (FluidStack fluid : fluidTank.getFluids()) simulated.getFluids().add(fluid.copy());
             boolean hasAll = true;
             for (var input : recipe.inputFluids()) {
-                if (!hasFluid(input)) { hasAll = false; break; }
+                if (simulated.drain(input, IFluidHandler.FluidAction.EXECUTE).getAmount() < input.getAmount()) {
+                    hasAll = false;
+                    break;
+                }
             }
             if (!hasAll) continue;
 
             FluidStack out    = recipe.output().copy();
-            int filled        = fluidTank.fill(out, IFluidHandler.FluidAction.SIMULATE);
+            int filled        = simulated.fill(out, IFluidHandler.FluidAction.SIMULATE);
             if (filled < out.getAmount()) continue;
 
             for (var input : recipe.inputFluids()) drainFluid(input);
@@ -374,13 +403,6 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             updateDisplayFluidSync();
             setChanged();
         }
-    }
-
-    private boolean hasFluid(FluidStack req) {
-        int found = 0;
-        for (FluidStack f : fluidTank.getFluids())
-            if (FluidStack.isSameFluidSameComponents(f, req)) found += f.getAmount();
-        return found >= req.getAmount();
     }
 
     private void drainFluid(FluidStack req) {
@@ -415,7 +437,6 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 setChanged();
                 level.setBlockAndUpdate(worldPosition, cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, true));
                 level.sendBlockUpdated(worldPosition, cur, cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, true), Block.UPDATE_ALL);
-                linkIOBlocks(true);
             }
         } else if (isFormed) {
             isFormed       = false;
@@ -431,14 +452,23 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             level.setBlockAndUpdate(worldPosition,
                     cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, false)
                             .setValue(SmelteryControllerBlock.ACTIVE, false));
-            linkIOBlocks(false);
         }
+        linkIOBlocks(multiblock.isValid);
     }
 
     private void linkIOBlocks(boolean link) {
         if (multiblock == null || level == null) return;
-        for (BlockPos pos : multiblock.walls) updateIOBlock(pos, link);
-        for (BlockPos pos : multiblock.floor) updateIOBlock(pos, link);
+        Set<BlockPos> currentPositions = new HashSet<>();
+        if (link) {
+            currentPositions.addAll(multiblock.walls);
+            currentPositions.addAll(multiblock.floor);
+        }
+        for (BlockPos pos : linkedPositions) {
+            if (!currentPositions.contains(pos)) updateIOBlock(pos, false);
+        }
+        for (BlockPos pos : currentPositions) updateIOBlock(pos, true);
+        linkedPositions.clear();
+        linkedPositions.addAll(currentPositions);
     }
 
     @SuppressWarnings("unchecked")
@@ -450,8 +480,11 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 level.setBlock(pos, st.setValue(bp, link), Block.UPDATE_ALL);
         }
         BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof SearedDrainBlockEntity drain) drain.setControllerPos(link ? worldPosition : null);
-        if (be instanceof SearedChuteBlockEntity chute) chute.setControllerPos(link ? worldPosition : null);
+        BlockPos target = link ? worldPosition : null;
+        if (be instanceof SearedDrainBlockEntity drain && !Objects.equals(drain.getControllerPos(), target))
+            drain.setControllerPos(target);
+        if (be instanceof SearedChuteBlockEntity chute && !Objects.equals(chute.getControllerPos(), target))
+            chute.setControllerPos(target);
     }
 
     @SuppressWarnings("removal")
@@ -555,6 +588,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
         }
 
         String fuelId = input.getStringOr("fuel_fluid", "");
+        currentFuel = FluidStack.EMPTY;
         if (!fuelId.isEmpty()) {
             Fluid f = BuiltInRegistries.FLUID.getValue(Identifier.parse(fuelId));
             currentFuel = (f != null && !f.isSame(Fluids.EMPTY))
@@ -564,7 +598,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
         fluidTank.load(input);
 
-        if (isFormed) fluidTank.setCapacity(itemHandler.getSlots() * 8000);
+        fluidTank.setCapacity(isFormed ? itemHandler.getSlots() * 8000 : 0);
 
         int mbMinY = input.getIntOr("mb_minY", Integer.MIN_VALUE);
         if (mbMinY != Integer.MIN_VALUE) {
@@ -576,6 +610,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
         } else { syncedMinInner = null; syncedMaxInner = null; }
 
         String displayId = input.getStringOr("display_fluid", "");
+        displayFluid = FluidStack.EMPTY;
         if (!displayId.isEmpty()) {
             Fluid f = BuiltInRegistries.FLUID.getValue(Identifier.parse(displayId));
             displayFluid = (f != null && !f.isSame(Fluids.EMPTY)) ? new FluidStack(f, 1000) : FluidStack.EMPTY;

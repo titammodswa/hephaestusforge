@@ -28,7 +28,6 @@ public class EntityMeltingModule {
     @SuppressWarnings("removal")
     private final IFluidHandler tank;
     private final Function<ItemStack, ItemStack> insertItem;
-    private ModRecipes.@Nullable EntityMeltingRecipe lastRecipe;
 
     public interface SmelteryParent {
         Level getLevel();
@@ -49,7 +48,6 @@ public class EntityMeltingModule {
     }
 
     private ModRecipes.@Nullable EntityMeltingRecipe findRecipe(EntityType<?> type) {
-        if (lastRecipe != null && lastRecipe.matches(type)) return lastRecipe;
         if (RECIPE_CACHE.containsKey(type)) return RECIPE_CACHE.get(type);
 
         Level level = parent.getLevel();
@@ -60,7 +58,6 @@ public class EntityMeltingModule {
             var recipe = holder.value();
             if (recipe.matches(type)) {
                 RECIPE_CACHE.put(type, recipe);
-                lastRecipe = recipe;
                 return recipe;
             }
         }
@@ -79,7 +76,7 @@ public class EntityMeltingModule {
         if (innerBounds == null || !parent.isFormed()) return false;
 
         Level level = parent.getLevel();
-        if (level == null || level.isClientSide()) return false;
+        if (!(level instanceof ServerLevel serverLevel)) return false;
 
         boolean melted = false;
         Boolean canMelt = null;
@@ -123,7 +120,7 @@ public class EntityMeltingModule {
                         ? level.damageSources().magic()
                         : level.damageSources().inFire();
 
-                living.hurt(source, damage);
+                if (!living.hurtServer(serverLevel, source, damage)) continue;
                 if (!fluid.isEmpty()) {
                     tank.fill(fluid, IFluidHandler.FluidAction.EXECUTE);
                 }

@@ -1,6 +1,7 @@
 package com.titammods;
 
 import com.titammods.client.ClientModEvents;
+import com.titammods.common.blockentities.module.EntityMeltingModule;
 import com.titammods.datagen.DataGenerators;
 import com.titammods.registry.HephaestusFluids;
 import com.titammods.setup.*;
@@ -9,6 +10,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
 @Mod(TitamMods.MODID)
 public class TitamMods {
@@ -46,9 +49,13 @@ public class TitamMods {
 
         DataGenerators.register(modEventBus);
 
-        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(
-                (net.neoforged.neoforge.event.OnDatapackSyncEvent e) ->
-                        com.titammods.common.blockentities.module.EntityMeltingModule.invalidateCache());
+        NeoForge.EVENT_BUS.addListener(
+                (OnDatapackSyncEvent e) -> {
+                    EntityMeltingModule.invalidateCache();
+                    e.sendRecipes(ModRecipes.MELTING_TYPE.get(), ModRecipes.ALLOY_TYPE.get(),
+                            ModRecipes.CASTING_TABLE_TYPE.get(), ModRecipes.CASTING_BASIN_TYPE.get(),
+                            ModRecipes.ENTITY_MELTING_TYPE.get());
+                });
     }
 
 }

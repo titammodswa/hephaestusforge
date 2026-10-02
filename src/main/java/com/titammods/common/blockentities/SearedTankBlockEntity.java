@@ -25,7 +25,7 @@ public class SearedTankBlockEntity extends BlockEntity {
 
     public static final int CAPACITY = FluidType.BUCKET_VOLUME * 4;
     @SuppressWarnings("removal")
-    private final FluidTank fluidTank = new FluidTank(CAPACITY) {
+    private final TransactionalFluidTank fluidTank = new TransactionalFluidTank(CAPACITY, true, true) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -50,6 +50,8 @@ public class SearedTankBlockEntity extends BlockEntity {
     }
     @SuppressWarnings("removal")
     public FluidTank getFluidTank() { return fluidTank; }
+
+    public TransactionalFluidTank getFluidResourceHandler() { return fluidTank; }
     @SuppressWarnings("removal")
     private void updateLightBlockState(ServerLevel serverLevel) {
         BlockState current = getBlockState();

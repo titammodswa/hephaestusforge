@@ -49,7 +49,7 @@ public class TableRenderer implements BlockEntityRenderer<TableBlockEntity, Tabl
         state.hasMold      = !mold.isEmpty();
         state.hasOutput    = !output.isEmpty() || !renderResult.isEmpty();
         state.fluid        = blockEntity.tank.getFluid().copy();
-        state.tankCapacity = blockEntity.tank.getCapacity();
+        state.tankCapacity = blockEntity.fillTarget > 0 ? blockEntity.fillTarget : blockEntity.tank.getCapacity();
 
         itemModelResolver.updateForTopItem(state.moldRS,   mold,         ItemDisplayContext.FIXED, level, null, 0);
         itemModelResolver.updateForTopItem(state.outputRS, output,       ItemDisplayContext.FIXED, level, null, 0);
@@ -111,9 +111,9 @@ public class TableRenderer implements BlockEntityRenderer<TableBlockEntity, Tabl
         int fluidLight = fluid.getFluidType().getLightLevel(fluid);
         final int finalBlock = (fluidLight * 16 > block) ? fluidLight * 16 : block;
 
-        float minX = 0.008f, maxX = 1.0f, minZ = 0.001f, maxZ = 1.0f;
-        float baseY = TABLE_HEIGHT + 0.001f, topY = TABLE_HEIGHT + 0.005f;
-        float fillPct = (float) fluid.getAmount() / state.tankCapacity;
+        float minX = 0.0625f, maxX = 0.9375f, minZ = 0.0625f, maxZ = 0.9375f;
+        float baseY = TABLE_HEIGHT + 0.003f, topY = TABLE_HEIGHT + 0.0475f;
+        float fillPct = Math.min(1.0f, (float) fluid.getAmount() / state.tankCapacity);
         final float height = baseY + (fillPct * (topY - baseY));
         final TextureAtlasSprite spr = sprite;
 

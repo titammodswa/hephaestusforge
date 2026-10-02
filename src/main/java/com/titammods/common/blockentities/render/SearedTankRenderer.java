@@ -70,7 +70,7 @@ public class SearedTankRenderer implements BlockEntityRenderer<SearedTankBlockEn
         float z0 = d*2,  z1 = 1f - d*2;
         float y0 = d*2,  y1 = y0 + (d*13) * fill;
 
-        collector.submitCustomGeometry(poseStack, RenderTypes.translucentMovingBlock(),
+        collector.submitCustomGeometry(poseStack, RenderTypes.cutoutMovingBlock(),
                 (pose, buf) -> renderBox(buf, pose, sprite, r, g, b, alpha,
                         sky, finalBlock, x0, y0, z0, x1, y1, z1, fill));
 
