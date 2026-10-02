@@ -274,8 +274,10 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 if (!sim.isEmpty()) {
                     int heat = getTemperatureForFuel(sim, level);
                     if (heat > 0) {
-                        fuelTankBelow.drain(50, IFluidHandler.FluidAction.EXECUTE);
-                        this.fuel = 200; this.maxFuel = 200; this.temperature = heat; dirty = true;
+                        FluidStack consumed = fuelTankBelow.drain(50, IFluidHandler.FluidAction.EXECUTE);
+                        this.fuel = consumed.getAmount() * 4;
+                        this.maxFuel = this.fuel;
+                        this.temperature = heat; dirty = true;
                     }
                 }
             }
