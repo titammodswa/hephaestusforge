@@ -1,12 +1,14 @@
 package com.titammods.menu;
 
 import com.titammods.common.blockentities.MelterBlockEntity;
+import com.titammods.setup.ModBlocks;
 import com.titammods.setup.ModMenus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +19,7 @@ public class MelterMenu extends AbstractContainerMenu {
 
     private final MelterBlockEntity blockEntity;
     private final ContainerData data;
+    private final ContainerLevelAccess levelAccess;
 
     public MelterMenu(int id, Inventory playerInventory, FriendlyByteBuf buf) {
         this(id, playerInventory,
@@ -29,6 +32,7 @@ public class MelterMenu extends AbstractContainerMenu {
         checkContainerDataCount(data, 12);
         this.blockEntity = entity;
         this.data        = data;
+        this.levelAccess = ContainerLevelAccess.create(playerInventory.player.level(), entity.getBlockPos());
 
         this.addSlot(new SlotItemHandler(entity.inventory, 0, 22, 16));
         this.addSlot(new SlotItemHandler(entity.inventory, 1, 22, 34));
@@ -56,7 +60,9 @@ public class MelterMenu extends AbstractContainerMenu {
     public int getScaledProgress(int i) { return data.get(3 + i) * 16 / Math.max(1, data.get(6 + i)); }
     public int getState(int i)          { return data.get(9 + i); }
 
-    @Override public boolean stillValid(Player p) { return true; }
+    @Override public boolean stillValid(Player p) {
+        return !blockEntity.isRemoved() && stillValid(levelAccess, p, ModBlocks.SEARED_MELTER.get());
+    }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
