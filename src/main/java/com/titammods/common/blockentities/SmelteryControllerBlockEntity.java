@@ -304,7 +304,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                     if (availTemp < recipe.temperature()) {
                         state = 2;
                     } else {
-                        FluidStack out = recipe.output().copy();
+                        FluidStack out = recipe.scaledOutput(stack).copy();
                         if (fluidTank.fill(out, IFluidHandler.FluidAction.SIMULATE) < out.getAmount())
                             state = 3;
                     }
@@ -343,6 +343,12 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
                 if (holder != null) {
                     FluidStack out = holder.value().scaledOutput(stack).copy();
+                    if (fluidTank.fill(out, IFluidHandler.FluidAction.SIMULATE) < out.getAmount()) {
+                        meltingProgress[i] = meltingTime[i];
+                        meltingState[i] = 3;
+                        changed = true;
+                        continue;
+                    }
                     fluidTank.fill(out, IFluidHandler.FluidAction.EXECUTE);
                     itemHandler.extractItem(i, 1, false);
                 }
