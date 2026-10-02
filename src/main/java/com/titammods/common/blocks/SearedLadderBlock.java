@@ -2,10 +2,12 @@ package com.titammods.common.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -85,6 +87,18 @@ public class SearedLadderBlock extends Block {
         boolean isBottom = !(below.getBlock() instanceof SearedLadderBlock)
                 || below.getValue(FACING) != dir;
         return this.defaultBlockState().setValue(FACING, dir).setValue(BOTTOM, isBottom);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks,
+                                     BlockPos pos, Direction direction, BlockPos neighborPos,
+                                     BlockState neighborState, RandomSource random) {
+        if (direction == Direction.DOWN) {
+            boolean isBottom = !(neighborState.getBlock() instanceof SearedLadderBlock)
+                    || neighborState.getValue(FACING) != state.getValue(FACING);
+            return state.setValue(BOTTOM, isBottom);
+        }
+        return super.updateShape(state, level, ticks, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
