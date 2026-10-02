@@ -238,7 +238,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 continue;
             }
 
-            FluidStack output = recipe.output().copy();
+            FluidStack output = recipe.scaledOutput(stack).copy();
             boolean canOutput = tank.fill(output, IFluidHandler.FluidAction.SIMULATE) == output.getAmount();
 
             if (canOutput) {
