@@ -40,9 +40,14 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jspecify.annotations.Nullable;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 public class SmelteryControllerBlockEntity extends BlockEntity implements MenuProvider, IDisplayFluidListener {
 
     private SmelteryMultiblock multiblock;
+    private final Set<BlockPos> linkedPositions = new HashSet<>();
 
     public SmelteryMultiblock getMultiblock() { return multiblock; }
     public BlockPos syncedMinInner = null;
@@ -99,6 +104,8 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
         super.preRemoveSideEffects(pos, state);
         if (level != null && !level.isClientSide()) {
+            for (BlockPos linked : linkedPositions) updateIOBlock(linked, false);
+            linkedPositions.clear();
             for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
                 Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), itemHandler.getStackInSlot(slot));
             }
@@ -430,7 +437,6 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 setChanged();
                 level.setBlockAndUpdate(worldPosition, cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, true));
                 level.sendBlockUpdated(worldPosition, cur, cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, true), Block.UPDATE_ALL);
-                linkIOBlocks(true);
             }
         } else if (isFormed) {
             isFormed       = false;
@@ -446,14 +452,23 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             level.setBlockAndUpdate(worldPosition,
                     cur.setValue(SmelteryControllerBlock.IN_STRUCTURE, false)
                             .setValue(SmelteryControllerBlock.ACTIVE, false));
-            linkIOBlocks(false);
         }
+        linkIOBlocks(multiblock.isValid);
     }
 
     private void linkIOBlocks(boolean link) {
         if (multiblock == null || level == null) return;
-        for (BlockPos pos : multiblock.walls) updateIOBlock(pos, link);
-        for (BlockPos pos : multiblock.floor) updateIOBlock(pos, link);
+        Set<BlockPos> currentPositions = new HashSet<>();
+        if (link) {
+            currentPositions.addAll(multiblock.walls);
+            currentPositions.addAll(multiblock.floor);
+        }
+        for (BlockPos pos : linkedPositions) {
+            if (!currentPositions.contains(pos)) updateIOBlock(pos, false);
+        }
+        for (BlockPos pos : currentPositions) updateIOBlock(pos, true);
+        linkedPositions.clear();
+        linkedPositions.addAll(currentPositions);
     }
 
     @SuppressWarnings("unchecked")
@@ -465,8 +480,11 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
                 level.setBlock(pos, st.setValue(bp, link), Block.UPDATE_ALL);
         }
         BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof SearedDrainBlockEntity drain) drain.setControllerPos(link ? worldPosition : null);
-        if (be instanceof SearedChuteBlockEntity chute) chute.setControllerPos(link ? worldPosition : null);
+        BlockPos target = link ? worldPosition : null;
+        if (be instanceof SearedDrainBlockEntity drain && !Objects.equals(drain.getControllerPos(), target))
+            drain.setControllerPos(target);
+        if (be instanceof SearedChuteBlockEntity chute && !Objects.equals(chute.getControllerPos(), target))
+            chute.setControllerPos(target);
     }
 
     @SuppressWarnings("removal")
