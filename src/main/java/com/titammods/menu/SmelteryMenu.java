@@ -242,7 +242,7 @@ public class SmelteryMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return hasCurrentInventory(player)
+        return !blockEntity.isRemoved() && hasCurrentInventory(player)
                 && stillValid(levelAccess, player, ModBlocks.SMELTERY_CONTROLLER.get());
     }
 
