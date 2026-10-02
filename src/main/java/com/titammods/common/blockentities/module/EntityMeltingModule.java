@@ -79,7 +79,7 @@ public class EntityMeltingModule {
         if (innerBounds == null || !parent.isFormed()) return false;
 
         Level level = parent.getLevel();
-        if (level == null || level.isClientSide()) return false;
+        if (!(level instanceof ServerLevel serverLevel)) return false;
 
         boolean melted = false;
         Boolean canMelt = null;
@@ -123,7 +123,7 @@ public class EntityMeltingModule {
                         ? level.damageSources().magic()
                         : level.damageSources().inFire();
 
-                living.hurt(source, damage);
+                if (!living.hurtServer(serverLevel, source, damage)) continue;
                 if (!fluid.isEmpty()) {
                     tank.fill(fluid, IFluidHandler.FluidAction.EXECUTE);
                 }
