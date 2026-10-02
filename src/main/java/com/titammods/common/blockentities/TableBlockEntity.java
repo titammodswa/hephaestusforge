@@ -13,6 +13,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -39,6 +40,16 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
     public int renderTimer   = 0;
 
     public int ejectCooldown = 0;
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level != null && !level.isClientSide() && !renderResult.isEmpty()) {
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), renderResult);
+            renderResult = ItemStack.EMPTY;
+        }
+    }
+
     @SuppressWarnings("removal")
     public final ItemStackHandler inventory = new ItemStackHandler(2) {
         @Override
