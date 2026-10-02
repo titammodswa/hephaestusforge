@@ -96,6 +96,16 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     @Override public FluidStack getDisplayFluid() { return displayFluid; }
 
     @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level != null && !level.isClientSide()) {
+            for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), itemHandler.getStackInSlot(slot));
+            }
+        }
+    }
+
+    @Override
     public void notifyDisplayFluidUpdated(FluidStack fluid) {
         if (!FluidStack.isSameFluidSameComponents(this.displayFluid, fluid)
                 || this.displayFluid.isEmpty() != fluid.isEmpty()) {

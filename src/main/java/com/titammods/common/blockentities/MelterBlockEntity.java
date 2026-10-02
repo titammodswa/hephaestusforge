@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -100,6 +101,16 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
 
     public MelterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MELTER.get(), pos, state);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level != null && !level.isClientSide()) {
+            for (int slot = 0; slot < inventory.getSlots(); slot++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), inventory.getStackInSlot(slot));
+            }
+        }
     }
 
     @Override public Component getDisplayName() { return Component.translatable("block.hephaestus.seared_melter"); }
