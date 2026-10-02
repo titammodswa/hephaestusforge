@@ -92,6 +92,8 @@ public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluid
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
+        controllerPos = null;
+        displayFluid = FluidStack.EMPTY;
         if (input.getIntOr("cy", Integer.MIN_VALUE) != Integer.MIN_VALUE)
             controllerPos = new BlockPos(input.getIntOr("cx", 0), input.getIntOr("cy", 0), input.getIntOr("cz", 0));
         String id = input.getStringOr("display_fluid", "");

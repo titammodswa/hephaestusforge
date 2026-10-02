@@ -570,6 +570,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
         }
 
         String fuelId = input.getStringOr("fuel_fluid", "");
+        currentFuel = FluidStack.EMPTY;
         if (!fuelId.isEmpty()) {
             Fluid f = BuiltInRegistries.FLUID.getValue(Identifier.parse(fuelId));
             currentFuel = (f != null && !f.isSame(Fluids.EMPTY))
@@ -579,7 +580,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
 
         fluidTank.load(input);
 
-        if (isFormed) fluidTank.setCapacity(itemHandler.getSlots() * 8000);
+        fluidTank.setCapacity(isFormed ? itemHandler.getSlots() * 8000 : 0);
 
         int mbMinY = input.getIntOr("mb_minY", Integer.MIN_VALUE);
         if (mbMinY != Integer.MIN_VALUE) {
@@ -591,6 +592,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
         } else { syncedMinInner = null; syncedMaxInner = null; }
 
         String displayId = input.getStringOr("display_fluid", "");
+        displayFluid = FluidStack.EMPTY;
         if (!displayId.isEmpty()) {
             Fluid f = BuiltInRegistries.FLUID.getValue(Identifier.parse(displayId));
             displayFluid = (f != null && !f.isSame(Fluids.EMPTY)) ? new FluidStack(f, 1000) : FluidStack.EMPTY;
