@@ -115,7 +115,7 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
                 tooltip.add(Component.translatable("gui.hephaestus.fluid_amount", amount, cap)
                         .withStyle(ChatFormatting.GRAY));
                 if (shiftHeld) {
-                    tooltip.add(fluidBreakdown(amount).withStyle(ChatFormatting.DARK_GRAY));
+                    tooltip.add(FluidUnits.breakdown(amount).withStyle(ChatFormatting.DARK_GRAY));
                     int free = cap - amount;
                     tooltip.add(Component.translatable("gui.hephaestus.tank_free", free)
                             .withStyle(ChatFormatting.DARK_GRAY));
@@ -157,19 +157,6 @@ public class MelterScreen extends AbstractContainerScreen<MelterMenu> {
                 }
             }
         }
-    }
-
-    private net.minecraft.network.chat.MutableComponent fluidBreakdown(int amount) {
-        int blocks  = amount / 900;
-        int ingots  = (amount % 900) / 90;
-        int nuggets = (amount % 90) / 10;
-        int mb      = amount % 10;
-        StringBuilder sb = new StringBuilder();
-        if (blocks  > 0) sb.append(blocks).append(" ").append(Component.translatable("gui.hephaestus.unit.blocks").getString()).append(" ");
-        if (ingots  > 0) sb.append(ingots).append(" ").append(Component.translatable("gui.hephaestus.unit.ingots").getString()).append(" ");
-        if (nuggets > 0) sb.append(nuggets).append(" ").append(Component.translatable("gui.hephaestus.unit.nuggets").getString()).append(" ");
-        if (mb > 0 || sb.isEmpty()) sb.append(mb).append(" mB");
-        return Component.literal(sb.toString().trim());
     }
 
     @Override
