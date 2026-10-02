@@ -370,14 +370,20 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             int availTemp = temperature > 0 ? temperature : getTemperatureForFuel(currentFuel);
             if (availTemp < recipe.temperature()) continue;
 
+            SmelteryFluidHandler simulated = new SmelteryFluidHandler();
+            simulated.setCapacity(fluidTank.getCapacity());
+            for (FluidStack fluid : fluidTank.getFluids()) simulated.getFluids().add(fluid.copy());
             boolean hasAll = true;
             for (var input : recipe.inputFluids()) {
-                if (!hasFluid(input)) { hasAll = false; break; }
+                if (simulated.drain(input, IFluidHandler.FluidAction.EXECUTE).getAmount() < input.getAmount()) {
+                    hasAll = false;
+                    break;
+                }
             }
             if (!hasAll) continue;
 
             FluidStack out    = recipe.output().copy();
-            int filled        = fluidTank.fill(out, IFluidHandler.FluidAction.SIMULATE);
+            int filled        = simulated.fill(out, IFluidHandler.FluidAction.SIMULATE);
             if (filled < out.getAmount()) continue;
 
             for (var input : recipe.inputFluids()) drainFluid(input);
@@ -390,13 +396,6 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
             updateDisplayFluidSync();
             setChanged();
         }
-    }
-
-    private boolean hasFluid(FluidStack req) {
-        int found = 0;
-        for (FluidStack f : fluidTank.getFluids())
-            if (FluidStack.isSameFluidSameComponents(f, req)) found += f.getAmount();
-        return found >= req.getAmount();
     }
 
     private void drainFluid(FluidStack req) {
