@@ -99,16 +99,16 @@ public class SmelteryFluidHandler implements IFluidHandler {
     }
 
     public void save(ValueOutput output) {
-        output.putInt("fluid_count", fluids.size());
-        for (int i = 0; i < fluids.size(); i++) {
-            FluidStack f = fluids.get(i);
-            output.putString("fluid_id_"    + i, BuiltInRegistries.FLUID.getKey(f.getFluid()).toString());
-            output.putInt(   "fluid_amount_" + i, f.getAmount());
-        }
+        output.store("fluids", FluidStack.CODEC.listOf(), fluids);
     }
 
     public void load(ValueInput input) {
         fluids.clear();
+        var stored = input.read("fluids", FluidStack.CODEC.listOf());
+        if (stored.isPresent()) {
+            fluids.addAll(stored.get());
+            return;
+        }
         int count = input.getIntOr("fluid_count", 0);
         for (int i = 0; i < count; i++) {
             String idStr = input.getStringOr("fluid_id_" + i, "");
