@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +24,7 @@ public class SmelteryMenu extends AbstractContainerMenu {
 
     public final SmelteryControllerBlockEntity blockEntity;
     private final ContainerLevelAccess levelAccess;
+    private final IItemHandler inventoryAtOpen;
 
     private int currentRowOffset    = 0;
     private boolean isProcessingBucket = false;
@@ -123,6 +125,7 @@ public class SmelteryMenu extends AbstractContainerMenu {
     public SmelteryMenu(int id, Inventory inv, BlockEntity entity) {
         super(ModMenus.SMELTERY_MENU.get(), id);
         this.blockEntity = (SmelteryControllerBlockEntity) entity;
+        this.inventoryAtOpen = blockEntity.itemHandler;
         this.levelAccess = ContainerLevelAccess.create(inv.player.level(), entity.getBlockPos());
 
         createSmelteryInventory();
@@ -239,7 +242,17 @@ public class SmelteryMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(levelAccess, player, ModBlocks.SMELTERY_CONTROLLER.get());
+        return hasCurrentInventory(player)
+                && stillValid(levelAccess, player, ModBlocks.SMELTERY_CONTROLLER.get());
+    }
+
+    private boolean hasCurrentInventory(Player player) {
+        return player.level().isClientSide() || blockEntity.itemHandler == inventoryAtOpen;
+    }
+
+    @Override
+    public void clicked(int slotIndex, int button, ContainerInput input, Player player) {
+        if (hasCurrentInventory(player)) super.clicked(slotIndex, button, input, player);
     }
 
     @SuppressWarnings("removal")
@@ -256,6 +269,7 @@ public class SmelteryMenu extends AbstractContainerMenu {
     @SuppressWarnings("removal")
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
+        if (!hasCurrentInventory(player)) return ItemStack.EMPTY;
         ItemStack result = ItemStack.EMPTY;
         Slot slot = slots.get(index);
         if (slot == null || !slot.hasItem()) return result;
@@ -263,7 +277,7 @@ public class SmelteryMenu extends AbstractContainerMenu {
         ItemStack stack = slot.getItem();
         result = stack.copy();
 
-        int total       = blockEntity != null ? blockEntity.itemHandler.getSlots() : 0;
+        int total       = inventoryAtOpen.getSlots();
         int visSlots    = MAX_COLS * MAX_VIS_ROWS;
         int extraStart  = visSlots;
         int extraEnd    = extraStart + total;
