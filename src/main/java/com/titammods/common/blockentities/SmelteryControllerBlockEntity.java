@@ -55,7 +55,7 @@ public class SmelteryControllerBlockEntity extends BlockEntity implements MenuPr
     private int  tickCounter = 0;
     private boolean isFormed = false;
 
-    public final SmelteryFluidHandler fluidTank = new SmelteryFluidHandler();
+    public final SmelteryFluidHandler fluidTank = new SmelteryFluidHandler(this::setChanged);
 
     private EntityMeltingModule entityMeltingModule;
 

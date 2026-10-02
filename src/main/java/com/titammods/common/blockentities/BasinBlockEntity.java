@@ -48,7 +48,7 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
     };
 
     @SuppressWarnings("removal")
-    public final FluidTank tank = new FluidTank(900) {
+    public final FluidTank tank = new TransactionalFluidTank(900, true, false) {
 
         @Override
         public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
@@ -85,6 +85,8 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
         @Override public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) { return FluidStack.EMPTY; }
         @Override public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) { return FluidStack.EMPTY; }
     };
+
+    public TransactionalFluidTank getFluidResourceHandler() { return (TransactionalFluidTank) tank; }
 
     public BasinBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.BASIN.get(), pos, state);

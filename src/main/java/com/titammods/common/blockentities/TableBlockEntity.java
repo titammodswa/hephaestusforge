@@ -74,7 +74,7 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
         @Override public boolean isItemValid(int slot, ItemStack stack) { return false; }
     };
     @SuppressWarnings("removal")
-    public final FluidTank tank = new FluidTank(10000) {
+    public final FluidTank tank = new TransactionalFluidTank(10000, true, false) {
         @Override
         public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
             if (!inventory.getStackInSlot(1).isEmpty() || renderTimer > 0) return 0;
@@ -110,6 +110,8 @@ public class TableBlockEntity extends BlockEntity implements net.minecraft.world
         @Override public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) { return FluidStack.EMPTY; }
         @Override public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) { return FluidStack.EMPTY; }
     };
+
+    public TransactionalFluidTank getFluidResourceHandler() { return (TransactionalFluidTank) tank; }
 
     private static final int[] SLOTS_NONE   = new int[0];
     private static final int[] SLOTS_OUTPUT = new int[]{1};

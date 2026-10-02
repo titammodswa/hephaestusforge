@@ -65,7 +65,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
         @Override public boolean isItemValid(int slot, @Nonnull ItemStack stack) { return inventory.isItemValid(slot, stack); }
     };
     @SuppressWarnings("removal")
-    public final FluidTank tank = new FluidTank(2700) {
+    public final FluidTank tank = new TransactionalFluidTank(2700, false, true) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -77,6 +77,8 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
     };
+
+    public TransactionalFluidTank getFluidResourceHandler() { return (TransactionalFluidTank) tank; }
 
     protected final ContainerData data = new ContainerData() {
         @Override public int get(int i) {
