@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -103,6 +104,13 @@ public class BasinBlockEntity extends BlockEntity {
                 @Override public FluidStack drain(FluidStack resource, FluidAction action) { return FluidStack.EMPTY; }
                 @Override public FluidStack drain(int maxDrain, FluidAction action) { return FluidStack.EMPTY; }
             };
+
+    public void dropContents() {
+        if (level == null || level.isClientSide) return;
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {
+            Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), inventory.getStackInSlot(slot));
+        }
+    }
 
     public void extractItem(Player player) {
         if (renderTimer > 0) return;
