@@ -77,8 +77,6 @@ public class TitamMods {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.TABLE.get(), (be, side) -> be.externalHandler);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.MELTER.get(), (be, side) -> be.tank);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.MELTER.get(), (be, side) -> be.externalItemHandler);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SMELTERY_CONTROLLER.get(), (be, side) -> be.fluidTank);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.SMELTERY_CONTROLLER.get(), (be, side) -> be.itemHandler);
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SEARED_DRAIN.get(), (be, side) -> be.getFluidHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.SEARED_CHUTE.get(), (be, side) -> {
