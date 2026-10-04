@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -127,6 +128,13 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
 
     public MelterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MELTER.get(), pos, state);
+    }
+
+    public void dropContents() {
+        if (level == null || level.isClientSide) return;
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {
+            Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), inventory.getStackInSlot(slot));
+        }
     }
 
     @Override
@@ -275,7 +283,7 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 continue;
             }
 
-            FluidStack output = recipe.output().copy();
+            FluidStack output = recipe.scaledOutput(stack).copy();
             boolean canOutput = tank.fill(output, IFluidHandler.FluidAction.SIMULATE) == output.getAmount();
 
             if (canOutput) {
@@ -328,9 +336,9 @@ public class MelterBlockEntity extends BlockEntity implements MenuProvider {
                 if (!sim.isEmpty()) {
                     int heat = getTemperatureForFuel(sim, level);
                     if (heat > 0) {
-                        tankBelow.drain(50, IFluidHandler.FluidAction.EXECUTE);
-                        this.fuel = 200;
-                        this.maxFuel = 200;
+                        FluidStack consumed = tankBelow.drain(50, IFluidHandler.FluidAction.EXECUTE);
+                        this.fuel = consumed.getAmount() * 4;
+                        this.maxFuel = this.fuel;
                         this.temperature = heat;
                         isDirty = true;
                     }

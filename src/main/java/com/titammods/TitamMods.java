@@ -11,7 +11,6 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import com.titammods.block.SmelteryControllerBlockEntity;
-import com.titammods.block.SearedDrainBlockEntity;
 import com.titammods.block.SearedChuteBlockEntity;
 import com.titammods.network.ModNetworking;
 import net.neoforged.fml.ModList;
@@ -81,14 +80,7 @@ public class TitamMods {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SMELTERY_CONTROLLER.get(), (be, side) -> be.fluidTank);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.SMELTERY_CONTROLLER.get(), (be, side) -> be.itemHandler);
 
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SEARED_DRAIN.get(), (be, side) -> {
-            if (be instanceof SearedDrainBlockEntity drain && drain.getControllerPos() != null) {
-                if (drain.getLevel().getBlockEntity(drain.getControllerPos()) instanceof SmelteryControllerBlockEntity controller) {
-                    return controller.fluidTank;
-                }
-            }
-            return null;
-        });
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.SEARED_DRAIN.get(), (be, side) -> be.getFluidHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.SEARED_CHUTE.get(), (be, side) -> {
             if (be instanceof SearedChuteBlockEntity chute && chute.getControllerPos() != null) {
                 if (chute.getLevel().getBlockEntity(chute.getControllerPos()) instanceof SmelteryControllerBlockEntity controller) {

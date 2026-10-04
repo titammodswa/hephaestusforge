@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -29,6 +30,7 @@ public class TableBlockEntity extends BlockEntity {
     public int coolingTime = 0;
     public ItemStack renderResult = ItemStack.EMPTY;
     public int renderTimer = 0;
+    public int fillTarget = 0;
 
     public final ItemStackHandler inventory = new ItemStackHandler(2) {
         @Override
@@ -76,6 +78,7 @@ public class TableBlockEntity extends BlockEntity {
             if (matchedRecipe == null) return 0;
 
             int requiredAmount = matchedRecipe.fluid().getAmount();
+            fillTarget = requiredAmount;
             int spaceLeft = requiredAmount - fluid.getAmount();
             if (spaceLeft <= 0) return 0;
 
@@ -110,6 +113,17 @@ public class TableBlockEntity extends BlockEntity {
 
     public TableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.TABLE.get(), pos, state);
+    }
+
+    public void dropContents() {
+        if (level == null || level.isClientSide) return;
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {
+            Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), inventory.getStackInSlot(slot));
+        }
+        if (!renderResult.isEmpty()) {
+            Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), renderResult);
+            renderResult = ItemStack.EMPTY;
+        }
     }
 
     public void interact(Player player) {
@@ -207,6 +221,7 @@ public class TableBlockEntity extends BlockEntity {
         tag.put("tank", tank.writeToNBT(registries, new CompoundTag()));
         if (!renderResult.isEmpty()) tag.put("renderResult", renderResult.saveOptional(registries));
         tag.putInt("renderTimer", renderTimer);
+        tag.putInt("fillTarget", fillTarget);
     }
 
     @Override
@@ -218,6 +233,7 @@ public class TableBlockEntity extends BlockEntity {
         if (tag.contains("renderResult")) renderResult = ItemStack.parseOptional(registries, tag.getCompound("renderResult"));
         else renderResult = ItemStack.EMPTY;
         renderTimer = tag.getInt("renderTimer");
+        fillTarget = tag.getInt("fillTarget");
     }
 
     @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { CompoundTag tag = new CompoundTag(); saveAdditional(tag, registries); return tag; }

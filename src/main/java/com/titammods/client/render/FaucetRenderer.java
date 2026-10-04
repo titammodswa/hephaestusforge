@@ -29,7 +29,9 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity> {
 
         FluidStack fluidStack = entity.getRenderFluid();
         IClientFluidTypeExtensions clientFluid = IClientFluidTypeExtensions.of(fluidStack.getFluid());
-        TextureAtlasSprite flowingSprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(clientFluid.getFlowingTexture(fluidStack));
+        var atlas = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS);
+        TextureAtlasSprite flowingSprite = atlas.apply(clientFluid.getFlowingTexture(fluidStack));
+        TextureAtlasSprite stillSprite = atlas.apply(clientFluid.getStillTexture(fluidStack));
 
         int color = clientFluid.getTintColor(fluidStack);
         float a = ((color >> 24) & 0xFF) / 255f;
@@ -58,7 +60,7 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity> {
             case WEST  -> hMaxX = 1.0f;
             case EAST  -> hMinX = 0.0f;
         }
-        renderCuboid(builder, matrix, hMinX, hMinY, hMinZ, hMaxX, hMaxY, hMaxZ, flowingSprite, r, g, b, a, light, true);
+        renderCuboid(builder, matrix, hMinX, hMinY, hMinZ, hMaxX, hMaxY, hMaxZ, flowingSprite, stillSprite, facing, r, g, b, a, light);
 
         float vMinX = 0.375f, vMaxX = 0.625f;
         float vMinZ = 0.375f, vMaxZ = 0.625f;
@@ -73,52 +75,82 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity> {
             }
         }
 
-        renderCuboid(builder, matrix, vMinX, vMinY, vMinZ, vMaxX, vMaxY, vMaxZ, flowingSprite, r, g, b, a, light, false);
+        renderCuboid(builder, matrix, vMinX, vMinY, vMinZ, vMaxX, vMaxY, vMaxZ, flowingSprite, stillSprite, Direction.DOWN, r, g, b, a, light);
     }
 
-    private void renderCuboid(VertexConsumer builder, Matrix4f matrix, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, TextureAtlasSprite sprite, float r, float g, float b, float a, int light, boolean isHorizontal) {
+    private static final float[][] FACE_NORMALS = {
+            {0, 1, 0}, {0, -1, 0},
+            {0, 0, -1}, {0, 0, 1},
+            {-1, 0, 0}, {1, 0, 0}
+    };
+    private static final Direction.Axis[] FACE_AXES = {
+            Direction.Axis.Y, Direction.Axis.Y,
+            Direction.Axis.Z, Direction.Axis.Z,
+            Direction.Axis.X, Direction.Axis.X
+    };
 
-        float u0 = sprite.getU0();
-        float u1 = sprite.getU1();
-        float v0 = sprite.getV0();
-        float v1 = sprite.getV1();
+    private void renderCuboid(VertexConsumer builder, Matrix4f matrix,
+                              float x0, float y0, float z0, float x1, float y1, float z1,
+                              TextureAtlasSprite flowing, TextureAtlasSprite still, Direction flow,
+                              float r, float g, float b, float a, int light) {
+        float[][][] faces = {
+                {{x0, y1, z0}, {x0, y1, z1}, {x1, y1, z1}, {x1, y1, z0}},
+                {{x0, y0, z1}, {x0, y0, z0}, {x1, y0, z0}, {x1, y0, z1}},
+                {{x1, y1, z0}, {x1, y0, z0}, {x0, y0, z0}, {x0, y1, z0}},
+                {{x0, y1, z1}, {x0, y0, z1}, {x1, y0, z1}, {x1, y1, z1}},
+                {{x0, y1, z0}, {x0, y0, z0}, {x0, y0, z1}, {x0, y1, z1}},
+                {{x1, y1, z1}, {x1, y0, z1}, {x1, y0, z0}, {x1, y1, z0}}
+        };
 
-        addVertex(builder, matrix, minX, maxY, maxZ, u(u0, u1, minX), v(v0, v1, maxZ), r, g, b, a, light, 0, 1, 0);
-        addVertex(builder, matrix, maxX, maxY, maxZ, u(u0, u1, maxX), v(v0, v1, maxZ), r, g, b, a, light, 0, 1, 0);
-        addVertex(builder, matrix, maxX, maxY, minZ, u(u0, u1, maxX), v(v0, v1, minZ), r, g, b, a, light, 0, 1, 0);
-        addVertex(builder, matrix, minX, maxY, minZ, u(u0, u1, minX), v(v0, v1, minZ), r, g, b, a, light, 0, 1, 0);
+        Direction.Axis flowAxis = flow.getAxis();
+        boolean positive = flow.getAxisDirection() == Direction.AxisDirection.POSITIVE;
 
-        addVertex(builder, matrix, minX, minY, minZ, u(u0, u1, minX), v(v0, v1, minZ), r, g, b, a, light, 0, -1, 0);
-        addVertex(builder, matrix, maxX, minY, minZ, u(u0, u1, maxX), v(v0, v1, minZ), r, g, b, a, light, 0, -1, 0);
-        addVertex(builder, matrix, maxX, minY, maxZ, u(u0, u1, maxX), v(v0, v1, maxZ), r, g, b, a, light, 0, -1, 0);
-        addVertex(builder, matrix, minX, minY, maxZ, u(u0, u1, minX), v(v0, v1, maxZ), r, g, b, a, light, 0, -1, 0);
-
-        float topV = v0;
-        float botV = v1;
-
-        addVertex(builder, matrix, maxX, minY, minZ, u(u0, u1, 1), botV, r, g, b, a, light, 0, 0, -1);
-        addVertex(builder, matrix, minX, minY, minZ, u(u0, u1, 0), botV, r, g, b, a, light, 0, 0, -1);
-        addVertex(builder, matrix, minX, maxY, minZ, u(u0, u1, 0), topV, r, g, b, a, light, 0, 0, -1);
-        addVertex(builder, matrix, maxX, maxY, minZ, u(u0, u1, 1), topV, r, g, b, a, light, 0, 0, -1);
-
-        addVertex(builder, matrix, minX, minY, maxZ, u(u0, u1, 0), botV, r, g, b, a, light, 0, 0, 1);
-        addVertex(builder, matrix, maxX, minY, maxZ, u(u0, u1, 1), botV, r, g, b, a, light, 0, 0, 1);
-        addVertex(builder, matrix, maxX, maxY, maxZ, u(u0, u1, 1), topV, r, g, b, a, light, 0, 0, 1);
-        addVertex(builder, matrix, minX, maxY, maxZ, u(u0, u1, 0), topV, r, g, b, a, light, 0, 0, 1);
-
-        addVertex(builder, matrix, minX, minY, minZ, u(u0, u1, 0), botV, r, g, b, a, light, -1, 0, 0);
-        addVertex(builder, matrix, minX, minY, maxZ, u(u0, u1, 1), botV, r, g, b, a, light, -1, 0, 0);
-        addVertex(builder, matrix, minX, maxY, maxZ, u(u0, u1, 1), topV, r, g, b, a, light, -1, 0, 0);
-        addVertex(builder, matrix, minX, maxY, minZ, u(u0, u1, 0), topV, r, g, b, a, light, -1, 0, 0);
-
-        addVertex(builder, matrix, maxX, minY, maxZ, u(u0, u1, 1), botV, r, g, b, a, light, 1, 0, 0);
-        addVertex(builder, matrix, maxX, minY, minZ, u(u0, u1, 0), botV, r, g, b, a, light, 1, 0, 0);
-        addVertex(builder, matrix, maxX, maxY, minZ, u(u0, u1, 0), topV, r, g, b, a, light, 1, 0, 0);
-        addVertex(builder, matrix, maxX, maxY, maxZ, u(u0, u1, 1), topV, r, g, b, a, light, 1, 0, 0);
+        for (int f = 0; f < faces.length; f++) {
+            Direction.Axis normal = FACE_AXES[f];
+            float[] n = FACE_NORMALS[f];
+            for (float[] p : faces[f]) {
+                float u, v;
+                if (normal == flowAxis) {
+                    float[] uv = inPlane(p, normal);
+                    u = lerp(still.getU0(), still.getU1(), uv[0]);
+                    v = lerp(still.getV0(), still.getV1(), uv[1]);
+                } else {
+                    float along = positive ? coord(p, flowAxis) : 1.0f - coord(p, flowAxis);
+                    float across = coord(p, otherAxis(normal, flowAxis));
+                    u = lerp(flowing.getU0(), flowing.getU1(), across * 0.5f);
+                    v = lerp(flowing.getV0(), flowing.getV1(), along * 0.5f);
+                }
+                addVertex(builder, matrix, p[0], p[1], p[2], u, v, r, g, b, a, light, n[0], n[1], n[2]);
+            }
+        }
     }
 
-    private float u(float u0, float u1, float percent) { return u0 + (u1 - u0) * percent; }
-    private float v(float v0, float v1, float percent) { return v0 + (v1 - v0) * percent; }
+    private static float coord(float[] p, Direction.Axis axis) {
+        return switch (axis) {
+            case X -> p[0];
+            case Y -> p[1];
+            case Z -> p[2];
+        };
+    }
+
+    private static Direction.Axis otherAxis(Direction.Axis a, Direction.Axis b) {
+        for (Direction.Axis axis : Direction.Axis.values()) {
+            if (axis != a && axis != b) return axis;
+        }
+        return a;
+    }
+
+    private static float[] inPlane(float[] p, Direction.Axis normal) {
+        return switch (normal) {
+            case X -> new float[]{p[2], 1.0f - p[1]};
+            case Y -> new float[]{p[0], p[2]};
+            case Z -> new float[]{p[0], 1.0f - p[1]};
+        };
+    }
+
+    private static float lerp(float a, float b, float t) {
+        return a + (b - a) * t;
+    }
 
     private void addVertex(VertexConsumer builder, Matrix4f matrix, float x, float y, float z, float u, float v, float r, float g, float b, float a, int light, float nx, float ny, float nz) {
         builder.addVertex(matrix, x, y, z).setColor(r, g, b, a).setUv(u, v).setLight(light).setNormal(nx, ny, nz);

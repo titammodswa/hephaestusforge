@@ -1,5 +1,6 @@
 package com.titammods.block.multiblock;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -16,6 +17,11 @@ import java.util.List;
 public class SmelteryFluidHandler implements IFluidHandler {
     private final List<FluidStack> fluids = new ArrayList<>();
     private int capacity = 0;
+    private final Runnable onChanged;
+
+    public SmelteryFluidHandler() { this(() -> {}); }
+
+    public SmelteryFluidHandler(Runnable onChanged) { this.onChanged = onChanged; }
 
     public void setCapacity(int newCapacity) {
         this.capacity = newCapacity;
@@ -71,12 +77,14 @@ public class SmelteryFluidHandler implements IFluidHandler {
             for (FluidStack fluid : fluids) {
                 if (FluidStack.isSameFluidSameComponents(fluid, resource)) {
                     fluid.grow(fillAmount);
+                    onChanged.run();
                     return fillAmount;
                 }
             }
             FluidStack newFluid = resource.copy();
             newFluid.setAmount(fillAmount);
             fluids.add(newFluid);
+            onChanged.run();
         }
         return fillAmount;
     }
@@ -95,6 +103,7 @@ public class SmelteryFluidHandler implements IFluidHandler {
                 if (action.execute()) {
                     fluid.shrink(drainAmount);
                     if (fluid.isEmpty()) fluids.remove(i);
+                    onChanged.run();
                 }
                 return drained;
             }
@@ -114,17 +123,19 @@ public class SmelteryFluidHandler implements IFluidHandler {
         if (action.execute()) {
             fluid.shrink(drainAmount);
             if (fluid.isEmpty()) fluids.remove(0);
+            onChanged.run();
         }
         return drained;
     }
 
-    public CompoundTag writeToNBT(CompoundTag tag) {
+    public CompoundTag writeToNBT(HolderLookup.Provider provider, CompoundTag tag) {
         ListTag list = new ListTag();
         for (FluidStack fluid : fluids) {
             if (!fluid.isEmpty()) {
                 CompoundTag fluidTag = new CompoundTag();
                 fluidTag.putString("FluidName", BuiltInRegistries.FLUID.getKey(fluid.getFluid()).toString());
                 fluidTag.putInt("Amount", fluid.getAmount());
+                if (!fluid.isComponentsPatchEmpty()) fluidTag.put("Stack", fluid.save(provider));
                 list.add(fluidTag);
             }
         }
@@ -132,12 +143,19 @@ public class SmelteryFluidHandler implements IFluidHandler {
         return tag;
     }
 
-    public void readFromNBT(CompoundTag tag) {
+    public void readFromNBT(HolderLookup.Provider provider, CompoundTag tag) {
         fluids.clear();
         if (tag.contains("Fluids")) {
             ListTag list = tag.getList("Fluids", Tag.TAG_COMPOUND);
             for (int i = 0; i < list.size(); i++) {
                 CompoundTag fluidTag = list.getCompound(i);
+                if (fluidTag.contains("Stack")) {
+                    FluidStack stored = FluidStack.parseOptional(provider, fluidTag.getCompound("Stack"));
+                    if (!stored.isEmpty()) {
+                        fluids.add(stored);
+                        continue;
+                    }
+                }
                 Fluid fluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidTag.getString("FluidName")));
                 if (fluid != Fluids.EMPTY) {
                     fluids.add(new FluidStack(fluid, fluidTag.getInt("Amount")));

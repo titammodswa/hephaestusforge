@@ -44,6 +44,14 @@ public class MelterBlock extends SearedMachineBlock implements EntityBlock {
         return super.getStateForPlacement(context).setValue(LIGHT, 0);
     }
 
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MelterBlockEntity melter) {
+            melter.dropContents();
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

@@ -1,6 +1,7 @@
 package com.titammods.block;
 
 import com.titammods.block.multiblock.IDisplayFluidListener;
+import com.titammods.block.multiblock.SmelteryFluidHandler;
 import com.titammods.client.model.ModelProperties;
 import com.titammods.setup.ModBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -18,6 +19,9 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.fluids.FluidStack;
 
+import javax.annotation.Nullable;
+import java.util.Objects;
+
 public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluidListener {
     private BlockPos controllerPos;
     public FluidStack displayFluid = FluidStack.EMPTY;
@@ -26,13 +30,25 @@ public class SearedDrainBlockEntity extends BlockEntity implements IDisplayFluid
         super(ModBlockEntities.SEARED_DRAIN.get(), pos, state);
     }
 
-    public void setControllerPos(BlockPos pos) {
+    public void setControllerPos(@Nullable BlockPos pos) {
+        if (Objects.equals(controllerPos, pos)) return;
         this.controllerPos = pos;
         this.setChanged();
+        invalidateCapabilities();
     }
 
     public BlockPos getControllerPos() {
         return controllerPos;
+    }
+
+    @Nullable
+    public SmelteryFluidHandler getFluidHandler() {
+        if (controllerPos == null || level == null || !level.isLoaded(controllerPos)) return null;
+        if (level.getBlockEntity(controllerPos) instanceof SmelteryControllerBlockEntity controller
+                && controller.getBlockState().getValue(SmelteryControllerBlock.IN_STRUCTURE)) {
+            return controller.fluidTank;
+        }
+        return null;
     }
 
     @Override

@@ -57,6 +57,14 @@ public class SmelteryControllerBlock extends Block implements EntityBlock {
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
 
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof SmelteryControllerBlockEntity controller) {
+            controller.onControllerRemoved();
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

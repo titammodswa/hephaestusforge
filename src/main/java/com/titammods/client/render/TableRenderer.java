@@ -46,14 +46,14 @@ public class TableRenderer implements BlockEntityRenderer<TableBlockEntity> {
             IClientFluidTypeExtensions clientFluid = IClientFluidTypeExtensions.of(fluidStack.getFluid());
             TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(clientFluid.getStillTexture(fluidStack));
 
-            float minX = 0.008f, maxX = 1.0f;
-            float minZ = 0.001f, maxZ = 1.0f;
+            float minX = 0.0625f, maxX = 0.9375f;
+            float minZ = 0.0625f, maxZ = 0.9375f;
 
-            float minY = tableHeight + 0.001f;
-            float maxY = tableHeight + 0.005f;
+            float minY = tableHeight + 0.003f;
+            float maxY = tableHeight + 0.0475f;
 
-            float capacity = entity.tank.getCapacity();
-            float fillPercentage = (float) fluidStack.getAmount() / capacity;
+            float capacity = entity.fillTarget > 0 ? entity.fillTarget : entity.tank.getCapacity();
+            float fillPercentage = Math.min(1.0f, (float) fluidStack.getAmount() / capacity);
             float height = minY + (fillPercentage * (maxY - minY));
 
             int color = clientFluid.getTintColor(fluidStack);

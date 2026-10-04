@@ -31,9 +31,4 @@ public class ModTanks {
                     .strength(3.0f)
                     .noOcclusion()));
 
-//    public static final DeferredBlock<SmelteryTankBlock> SEARED_CASTING_TANK = registerTankBlock("seared_casting_tank",
-//            () -> new SmelteryTankBlock(BlockBehaviour.Properties.of()
-//                    .mapColor(MapColor.COLOR_BLACK)
-//                    .strength(3.0f)
-//                    .noOcclusion()));
 }

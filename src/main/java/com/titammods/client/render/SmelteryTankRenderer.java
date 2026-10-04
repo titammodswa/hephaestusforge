@@ -50,7 +50,7 @@ public class SmelteryTankRenderer implements BlockEntityRenderer<SmelteryTankBlo
         BlockPos pos = entity.getBlockPos();
         int light = level != null ? LightTexture.pack(level.getBrightness(LightLayer.BLOCK, pos), level.getBrightness(LightLayer.SKY, pos)) : packedLight;
 
-        VertexConsumer builder = bufferSource.getBuffer(RenderType.translucent());
+        VertexConsumer builder = bufferSource.getBuffer(RenderType.cutout());
         Matrix4f matrix = poseStack.last().pose();
 
         float uMin = sprite.getU0();
