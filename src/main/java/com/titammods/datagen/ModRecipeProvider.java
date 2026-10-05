@@ -63,6 +63,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
         registerAllTheOresCompat();
         registerFtbMaterialsCompat();
+        registerFtbArmoryCompat();
         addVanillaRecipes();
         addMeltingMiscRecipes();
 
@@ -383,7 +384,28 @@ public class ModRecipeProvider extends RecipeProvider {
         //registerExternalMetalById(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_LUMIUM).source.get(),     1000, "lumium",     false, prefix, cond);
     }
 
+    private void registerFtbArmoryCompat() {
+        ICondition cond = new ModLoadedCondition("ftbarmory");
+        String prefix = "ftbarmory_compat/";
+
+        HephaestusFluids.Material[] metals = {
+                HephaestusFluids.Material.MOLTEN_AETERNIUM,
+                HephaestusFluids.Material.MOLTEN_ADAMANTITE,
+                HephaestusFluids.Material.MOLTEN_AURICHALCUM
+        };
+        for (HephaestusFluids.Material metal : metals) {
+            registerExternalMetalById(
+                    Identifier.fromNamespaceAndPath(TitamMods.MODID, "molten_" + metal.name),
+                    "ftbarmory", metal.temperature, metal.name, true, prefix, cond);
+        }
+    }
+
     private void registerExternalMetalById(Fluid fluid, int temp, String name,
+                                           boolean hasRaw, String prefix, ICondition cond) {
+        registerExternalMetalById(fluidId(fluid), "ftbmaterials", temp, name, hasRaw, prefix, cond);
+    }
+
+    private void registerExternalMetalById(Identifier fluid, String modid, int temp, String name,
                                            boolean hasRaw, String prefix, ICondition cond) {
         int bt = 100;
 
@@ -408,13 +430,13 @@ public class ModRecipeProvider extends RecipeProvider {
         addMeltingTag("rods/" + name,     fluid,  45, temp, bt / 2,
                 prefix + "metal/" + name + "/rod",    cond);
 
-        Identifier fluidId  = fluidId(fluid);
-        Identifier blockId  = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_block");
-        Identifier ingotId  = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_ingot");
-        Identifier nuggetId = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_nugget");
-        Identifier plateId  = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_plate");
-        Identifier gearId   = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_gear");
-        Identifier rodId    = Identifier.fromNamespaceAndPath("ftbmaterials", name + "_rod");
+        Identifier fluidId  = fluid;
+        Identifier blockId  = Identifier.fromNamespaceAndPath(modid, name + "_block");
+        Identifier ingotId  = Identifier.fromNamespaceAndPath(modid, name + "_ingot");
+        Identifier nuggetId = Identifier.fromNamespaceAndPath(modid, name + "_nugget");
+        Identifier plateId  = Identifier.fromNamespaceAndPath(modid, name + "_plate");
+        Identifier gearId   = Identifier.fromNamespaceAndPath(modid, name + "_gear");
+        Identifier rodId    = Identifier.fromNamespaceAndPath(modid, name + "_rod");
 
         var ingotCast  = java.util.Optional.of(net.minecraft.world.item.crafting.Ingredient.of(ModItems.INGOT_CAST.get()));
         var nuggetCast = java.util.Optional.of(net.minecraft.world.item.crafting.Ingredient.of(ModItems.NUGGET_CAST.get()));
@@ -485,6 +507,11 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private void addMeltingTag(String tagPath, Fluid fluid, int amount, int temperature,
                                int time, String savePath, ICondition... conditions) {
+        addMeltingTag(tagPath, fluidId(fluid), amount, temperature, time, savePath, conditions);
+    }
+
+    private void addMeltingTag(String tagPath, Identifier fluid, int amount, int temperature,
+                               int time, String savePath, ICondition... conditions) {
 
         Ingredient ingredient = Ingredient.of(
                 this.registries.lookupOrThrow(Registries.ITEM).getOrThrow(
@@ -493,7 +520,7 @@ public class ModRecipeProvider extends RecipeProvider {
         );
 
         ModRecipes.MeltingRecipe recipe = new ModRecipes.MeltingRecipe(
-                ingredient, fluidId(fluid), amount, fuelId(temperature), 50, temperature, time);
+                ingredient, fluid, amount, fuelId(temperature), 50, temperature, time);
 
         this.output.withConditions(conditions).accept(
                 ResourceKey.create(Registries.RECIPE,

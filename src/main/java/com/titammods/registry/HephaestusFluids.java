@@ -1,6 +1,7 @@
 package com.titammods.registry;
 
 import com.titammods.registry.fluids.MoltenFluidSet;
+import net.neoforged.fml.ModList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,9 @@ public class HephaestusFluids {
         MOLTEN_TIN     ("tin",             0xFF9EACBB,  230),
         MOLTEN_URANIUM ("uranium",         0xFF4A554A, 1130),
         MOLTEN_ZINC    ("zinc",            0xFFA1AC9E,  419),
+        MOLTEN_AETERNIUM  ("aeternium",    0xFF54133C, 2000, "ftbarmory"),
+        MOLTEN_ADAMANTITE ("adamantite",   0xFF696969, 2000, "ftbarmory"),
+        MOLTEN_AURICHALCUM("aurichalcum",  0xFFC47514, 2000, "ftbarmory"),
         MOLTEN_HEAVY_CORE      ("heavy_core",        0xFF636776, 2000),
         MOLTEN_GLOWSTONE       ("glowstone",         0xFFFBDA74,  800),
         MOLTEN_REDSTONE        ("redstone",          0xFFA41808,  600),
@@ -54,11 +58,21 @@ public class HephaestusFluids {
         public final String name;
         public final int    color;
         public final int    temperature;
+        public final String requiredMod;
 
         Material(String name, int color, int temperature) {
+            this(name, color, temperature, null);
+        }
+
+        Material(String name, int color, int temperature, String requiredMod) {
             this.name        = name;
             this.color       = color;
             this.temperature = temperature;
+            this.requiredMod = requiredMod;
+        }
+
+        public boolean isEnabled() {
+            return requiredMod == null || ModList.get().isLoaded(requiredMod);
         }
     }
 
@@ -66,6 +80,7 @@ public class HephaestusFluids {
 
     public static void registerFluids() {
         for (Material mat : Material.values()) {
+            if (!mat.isEnabled()) continue;
             SETS.put(mat, new MoltenFluidSet(mat.name, mat.color, mat.temperature));
         }
     }

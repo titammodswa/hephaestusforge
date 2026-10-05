@@ -50,6 +50,7 @@ public class ClientModEvents {
     private static void onRegisterFluidModels(RegisterFluidModelsEvent event) {
         for (HephaestusFluids.Material mat : HephaestusFluids.Material.values()) {
             MoltenFluidSet set = HephaestusFluids.SETS.get(mat);
+            if (set == null) continue;
             event.register(MOLTEN_METAL_MODEL, set.source, set.flowing);
         }
         registerModFluid(event, ModFluids.MOLTEN_COBALT,   "fluid/molten/ore/cobalt");
