@@ -18,6 +18,7 @@ public class HephaestusFluids {
         MOLTEN_ELECTRUM("electrum",        0xFFFFF07A, 1000),
         MOLTEN_ENDERIUM("enderium",        0xFF0B4D42, 1450),
         MOLTEN_GOLD    ("gold",            0xFFFCEE4B, 1060),
+        MOLTEN_IESNIUM ("iesnium",         0xFF3EDBD4,  930),
         MOLTEN_INVAR   ("invar",           0xFFA4ADAA, 1420),
         MOLTEN_IRIDIUM ("iridium",         0xFFDFE4E4, 2440),
         MOLTEN_IRON    ("iron",            0xFFD8D8D8, 1538),

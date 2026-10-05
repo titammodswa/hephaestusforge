@@ -1,4 +1,4 @@
-// 26.1.2	2026-08-06T20:48:29.421217	Hephaestus Models
+// 26.1.2	2026-10-04T22:05:12.8856028	Hephaestus Models
 89244cb748372077cdca2a38926f912044a7f4d9 assets/hephaestus/atlases/blocks.json
 862467bfa08d14270ad5f0b0dc0be2052eb5b011 assets/hephaestus/blockstates/clear_glass.json
 76be65be9b69ef15356fac9703e47c93f5fbb33f assets/hephaestus/blockstates/clear_stained_glass.json
@@ -23,6 +23,7 @@ acd2b0152d43236ae1030b902826b794ddd6c1d3 assets/hephaestus/blockstates/molten_gl
 19d7b591070f3eb7f40d367ca169bb2f17661188 assets/hephaestus/blockstates/molten_glowstone_block.json
 f696a84bc655b0815e52d9fd31218b3da067d8f7 assets/hephaestus/blockstates/molten_gold_block.json
 4b81a8637741c1e7d841623176840c7215168384 assets/hephaestus/blockstates/molten_heavy_core_block.json
+e5fdf4460f71a8a2b940b2841d29027a957e9076 assets/hephaestus/blockstates/molten_iesnium_block.json
 478fb5ccd4e1aa42f12702991ebcdbbdf01b5323 assets/hephaestus/blockstates/molten_invar_block.json
 718b64403bce322766af530df9fed9d6065d01ca assets/hephaestus/blockstates/molten_iridium_block.json
 0f10ea3bfa47b3b74b780896d861861ba84e0aec assets/hephaestus/blockstates/molten_iron_block.json
@@ -139,6 +140,7 @@ c316efeac2e5ee89fd08b01308bbc525dd03e0b0 assets/hephaestus/items/molten_enderium
 618def262bfe954ff51fbe1e86baaa355bc72535 assets/hephaestus/items/molten_glowstone_bucket.json
 0aceb0e891482523a698afe7add93244f36b170f assets/hephaestus/items/molten_gold_bucket.json
 c7db831c86110f908dcdc36ebdb87c22ad3377c5 assets/hephaestus/items/molten_heavy_core_bucket.json
+80aef1f9ed5e3ea20feec9a5dd2c371387d8a0b3 assets/hephaestus/items/molten_iesnium_bucket.json
 407e37f60e80f2b87ba40e1d84a11ab7784a1ebb assets/hephaestus/items/molten_invar_bucket.json
 87ada9621e9b371e86a09acad8c1db140d46a1d1 assets/hephaestus/items/molten_iridium_bucket.json
 9ffe6050d1d373ce389ee9c9533e3b6007b3c2fd assets/hephaestus/items/molten_iron_bucket.json
