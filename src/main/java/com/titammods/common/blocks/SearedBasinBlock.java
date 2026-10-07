@@ -84,7 +84,7 @@ public class SearedBasinBlock extends BaseEntityBlock {
                                                Player player, BlockHitResult hitResult) {
         if (!level.isClientSide()) {
             BlockEntity entity = level.getBlockEntity(pos);
-            if (entity instanceof BasinBlockEntity basin) basin.extractItem(player);
+            if (entity instanceof BasinBlockEntity basin) basin.interact(player);
         }
         return InteractionResult.SUCCESS;
     }

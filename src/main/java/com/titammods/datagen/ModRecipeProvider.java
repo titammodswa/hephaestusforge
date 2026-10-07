@@ -268,15 +268,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_forge_brick", this.has(ModItems.FORGE_BRICK.get()))
                 .save(this.output, rk("seared_drain"));
 
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SMELTERY_CONTROLLER.get(), 1)
-                .pattern("BBB").pattern("CSH").pattern("BTB")
-                .define('B', ModBlocks.SEARED_BRICKS.get())
-                .define('C', ModBlocks.SEARED_CHUTE.get())
-                .define('H', ModBlocks.SEARED_DRAIN.get())
-                .define('T', ModBlocks.SEARED_FUEL_TANK.get())
-                .define('S', Items.BLAST_FURNACE)
-                .unlockedBy("has_seared_bricks", this.has(ModBlocks.SEARED_BRICKS.get()))
-                .save(this.output, rk("smeltery_controller"));
+        addCastingBasin(HephaestusFluids.SETS.get(HephaestusFluids.Material.MOLTEN_COPPER).source.get(), 810,
+                ModBlocks.SEARED_BRICKS.get(), ModBlocks.SMELTERY_CONTROLLER.get(), 200,
+                "smeltery_controller");
 
         ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, ModBlocks.SEARED_GLASS.get(), 4)
                 .pattern("GGG")
@@ -626,6 +620,22 @@ public class ModRecipeProvider extends RecipeProvider {
         Identifier resultId = BuiltInRegistries.ITEM.getKey(resultItem.asItem());
 
         ModRecipes.CastingBasinRecipe recipe = new ModRecipes.CastingBasinRecipe(
+                fluidId, fluidAmount, resultId, 1, time);
+
+        this.output.withConditions(conditions).accept(
+                ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(TitamMods.MODID, "smeltery/casting/basin/" + savePath)),
+                recipe, null);
+    }
+
+    private void addCastingBasin(Fluid fluid, int fluidAmount,
+                                 ItemLike castItem, ItemLike resultItem, int time,
+                                 String savePath, ICondition... conditions) {
+        Identifier fluidId  = fluidId(fluid);
+        Identifier resultId = BuiltInRegistries.ITEM.getKey(resultItem.asItem());
+
+        ModRecipes.CastingBasinRecipe recipe = new ModRecipes.CastingBasinRecipe(
+                java.util.Optional.of(Ingredient.of(castItem)),
                 fluidId, fluidAmount, resultId, 1, time);
 
         this.output.withConditions(conditions).accept(

@@ -6,6 +6,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 public class BasinRenderState extends BlockEntityRenderState {
     public final ItemStackRenderState outputRS = new ItemStackRenderState();
+    public final ItemStackRenderState castRS   = new ItemStackRenderState();
     public FluidStack fluid    = FluidStack.EMPTY;
     public int tankCapacity    = 900;
     public boolean isAnimating = false;

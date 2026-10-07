@@ -25,6 +25,9 @@ public class BasinRenderer implements BlockEntityRenderer<BasinBlockEntity, Basi
     private static final float MIN_Z = 0.126f, MAX_Z = 0.874f;
     private static final float MIN_Y = 0.251f, MAX_Y = 0.95f;
 
+    private static final float OUTPUT_SCALE = 12.0f / 16.0f;
+    private static final float CAST_SCALE   = 11.95f / 16.0f;
+
     private final ItemModelResolver itemModelResolver;
 
     public BasinRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -42,13 +45,15 @@ public class BasinRenderer implements BlockEntityRenderer<BasinBlockEntity, Basi
                                    ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPosition, breakProgress);
 
-        ItemStack output = blockEntity.inventory.getStackInSlot(0);
+        ItemStack output = blockEntity.inventory.getStackInSlot(BasinBlockEntity.OUTPUT);
+        ItemStack cast   = blockEntity.inventory.getStackInSlot(BasinBlockEntity.CAST);
         state.fluid        = blockEntity.tank.getFluid().copy();
         state.tankCapacity = blockEntity.tank.getCapacity();
         state.isAnimating  = blockEntity.renderTimer > 0;
 
         var level = Minecraft.getInstance().level;
         itemModelResolver.updateForTopItem(state.outputRS, output, ItemDisplayContext.NONE, level, null, 0);
+        itemModelResolver.updateForTopItem(state.castRS,   cast,   ItemDisplayContext.NONE, level, null, 0);
     }
 
 
@@ -57,16 +62,24 @@ public class BasinRenderer implements BlockEntityRenderer<BasinBlockEntity, Basi
                        SubmitNodeCollector collector, CameraRenderState cameraState) {
 
         if (!state.outputRS.isEmpty()) {
-            poseStack.pushPose();
-            poseStack.translate(0.5, 0.625, 0.5);
-            poseStack.scale(0.75f, 0.75f, 0.75f);
-            state.outputRS.submit(poseStack, collector, 0x00F000F0, 0x00FF00FF, 0);
-            poseStack.popPose();
+            submitItem(state.outputRS, OUTPUT_SCALE, poseStack, collector);
             return;
         }
         if (!state.fluid.isEmpty() && !state.isAnimating) {
             renderFluid(state, poseStack, collector);
         }
+        if (!state.castRS.isEmpty()) {
+            submitItem(state.castRS, CAST_SCALE, poseStack, collector);
+        }
+    }
+
+    private static void submitItem(ItemStackRenderState item, float scale,
+                                   PoseStack poseStack, SubmitNodeCollector collector) {
+        poseStack.pushPose();
+        poseStack.translate(0.5, 0.625, 0.5);
+        poseStack.scale(scale, scale, scale);
+        item.submit(poseStack, collector, 0x00F000F0, 0x00FF00FF, 0);
+        poseStack.popPose();
     }
 
 

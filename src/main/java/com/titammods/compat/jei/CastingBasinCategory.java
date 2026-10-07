@@ -5,6 +5,7 @@ import com.titammods.setup.ModBlocks;
 import com.titammods.setup.ModRecipes;
 import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -32,6 +33,7 @@ public class CastingBasinCategory implements IRecipeCategory<ModRecipes.CastingB
     private final IDrawable icon;
     private final IDrawable tankOverlay;
     private final IDrawable blockIcon;
+    private final IDrawable castConsumed;
     private final IGuiHelper guiHelper;
 
     public CastingBasinCategory(IGuiHelper guiHelper) {
@@ -40,6 +42,7 @@ public class CastingBasinCategory implements IRecipeCategory<ModRecipes.CastingB
         this.icon         = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.SEARED_BASIN.get()));
         this.tankOverlay  = guiHelper.createDrawable(TEXTURE, 133, 0, 32, 32);
         this.blockIcon    = guiHelper.createDrawable(TEXTURE, 117, 16, 16, 16);
+        this.castConsumed = guiHelper.createDrawable(TEXTURE, 141, 32, 13, 11);
     }
 
     @SuppressWarnings("removal")
@@ -65,8 +68,15 @@ public class CastingBasinCategory implements IRecipeCategory<ModRecipes.CastingB
                         tooltip.add(Component.translatable("gui.hephaestus.fluid_mb", recipe.fluidAmount())
                                 .withStyle(ChatFormatting.GRAY)));
 
+        boolean hasCast = recipe.hasCast();
+        if (hasCast) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 38, 19)
+                    .addIngredients(recipe.cast().get());
+        }
+
+        int faucetHeight = hasCast ? 11 : 27;
         builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 43, 8)
-                .setFluidRenderer(1, false, 6, 27)
+                .setFluidRenderer(1, false, 6, faucetHeight)
                 .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.fluidStack());
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 93, 18)
@@ -88,9 +98,21 @@ public class CastingBasinCategory implements IRecipeCategory<ModRecipes.CastingB
 
         blockIcon.draw(graphics, 38, 35);
 
+        if (recipe.hasCast()) {
+            castConsumed.draw(graphics, 63, 39);
+        }
+
         String coolingString = Component.translatable("gui.hephaestus.time_seconds", coolingTicks / 20).getString();
         Font font = Minecraft.getInstance().font;
         int x = 72 - font.width(coolingString) / 2;
         graphics.text(font, Component.translatable("gui.hephaestus.time_seconds", coolingTicks / 20), x, 2, Color.GRAY.getRGB());
+    }
+
+    @Override
+    public void getTooltip(ITooltipBuilder tooltip, ModRecipes.CastingBasinRecipe recipe,
+                           IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        if (recipe.hasCast() && mouseX >= 63 && mouseX <= 76 && mouseY >= 39 && mouseY <= 50) {
+            tooltip.add(Component.translatable("gui.hephaestus.cast_consumed").withStyle(ChatFormatting.GRAY));
+        }
     }
 }

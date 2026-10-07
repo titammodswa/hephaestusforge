@@ -137,12 +137,26 @@ public class ModRecipes {
     }
 
     public record CastingBasinRecipe(
+            java.util.Optional<Ingredient> cast,
             Identifier fluidId,
             int fluidAmount,
             Identifier resultId,
             int resultCount,
             int coolingTime
     ) implements Recipe<SingleRecipeInput> {
+
+        public CastingBasinRecipe(Identifier fluidId, int fluidAmount,
+                                  Identifier resultId, int resultCount, int coolingTime) {
+            this(java.util.Optional.empty(), fluidId, fluidAmount, resultId, resultCount, coolingTime);
+        }
+
+        public boolean hasCast() {
+            return cast.isPresent();
+        }
+
+        public boolean matchesCast(ItemStack stack) {
+            return cast.isEmpty() ? stack.isEmpty() : cast.get().test(stack);
+        }
 
         public FluidStack fluidStack() {
             Fluid f = BuiltInRegistries.FLUID.getValue(fluidId);
@@ -170,25 +184,34 @@ public class ModRecipes {
         }
 
         public static final MapCodec<CastingBasinRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+                Ingredient.CODEC.optionalFieldOf("cast").forGetter(CastingBasinRecipe::cast),
                 FluidRef.CODEC.fieldOf("fluid").forGetter(r -> new FluidRef(r.fluidId(), r.fluidAmount())),
                 ItemRef.CODEC.fieldOf("result").forGetter(r -> new ItemRef(r.resultId(), r.resultCount())),
                 Codec.INT.fieldOf("cooling_time").forGetter(CastingBasinRecipe::coolingTime)
-        ).apply(inst, (fluid, result, time) ->
-                new CastingBasinRecipe(fluid.id(), fluid.amount(), result.id(), result.count(), time)));
+        ).apply(inst, (cast, fluid, result, time) ->
+                new CastingBasinRecipe(cast, fluid.id(), fluid.amount(), result.id(), result.count(), time)));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, CastingBasinRecipe> STREAM_CODEC =
                 StreamCodec.of(
                         (buf, r) -> {
+                            buf.writeBoolean(r.cast().isPresent());
+                            r.cast().ifPresent(ing -> Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ing));
                             buf.writeUtf(r.fluidId().getNamespace()); buf.writeUtf(r.fluidId().getPath());
                             buf.writeVarInt(r.fluidAmount());
                             buf.writeUtf(r.resultId().getNamespace()); buf.writeUtf(r.resultId().getPath());
                             buf.writeVarInt(r.resultCount());
                             buf.writeVarInt(r.coolingTime());
                         },
-                        buf -> new CastingBasinRecipe(
-                                Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()), buf.readVarInt(),
-                                Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()), buf.readVarInt(),
-                                buf.readVarInt())
+                        buf -> {
+                            java.util.Optional<Ingredient> cast = buf.readBoolean()
+                                    ? java.util.Optional.of(Ingredient.CONTENTS_STREAM_CODEC.decode(buf))
+                                    : java.util.Optional.empty();
+                            return new CastingBasinRecipe(
+                                    cast,
+                                    Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()), buf.readVarInt(),
+                                    Identifier.fromNamespaceAndPath(buf.readUtf(), buf.readUtf()), buf.readVarInt(),
+                                    buf.readVarInt());
+                        }
                 );
 
         @Override public boolean matches(SingleRecipeInput inv, Level level) { return false; }

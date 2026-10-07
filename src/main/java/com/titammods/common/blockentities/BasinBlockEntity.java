@@ -14,6 +14,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -32,11 +33,27 @@ import org.jspecify.annotations.Nullable;
 
 public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
 
+    public static final int OUTPUT = 0;
+    public static final int CAST   = 1;
+
     public int coolingTime  = 0;
     public int renderTimer  = 0;
     public int ejectCooldown = 0;
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level != null && !level.isClientSide()) {
+            ItemStack cast = inventory.getStackInSlot(CAST);
+            if (!cast.isEmpty()) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), cast);
+                inventory.setStackInSlot(CAST, ItemStack.EMPTY);
+            }
+        }
+    }
+
     @SuppressWarnings("removal")
-    public final ItemStackHandler inventory = new ItemStackHandler(1) {
+    public final ItemStackHandler inventory = new ItemStackHandler(2) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -52,11 +69,12 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
 
         @Override
         public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
-            if (!inventory.getStackInSlot(0).isEmpty() || renderTimer > 0) return 0;
+            if (!inventory.getStackInSlot(OUTPUT).isEmpty() || renderTimer > 0) return 0;
 
             if (!fluid.isEmpty() && !FluidStack.isSameFluidSameComponents(fluid, resource)) return 0;
 
-            ModRecipes.@Nullable CastingBasinRecipe recipe = findRecipeByType(resource.getFluid());
+            ModRecipes.@Nullable CastingBasinRecipe recipe =
+                    findRecipeByType(inventory.getStackInSlot(CAST), resource.getFluid());
             if (recipe == null) return 0;
 
             int spaceLeft = recipe.fluidAmount() - fluid.getAmount();
@@ -92,14 +110,31 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
         super(ModBlockEntities.BASIN.get(), pos, state);
     }
     @SuppressWarnings("removal")
-    public void extractItem(Player player) {
+    public void interact(Player player) {
         if (renderTimer > 0) return;
-        ItemStack output = inventory.getStackInSlot(0);
+
+        ItemStack output = inventory.getStackInSlot(OUTPUT);
         if (!output.isEmpty()) {
             ItemHandlerHelper.giveItemToPlayer(player, output, player.getInventory().getSelectedSlot());
-            inventory.setStackInSlot(0, ItemStack.EMPTY);
+            inventory.setStackInSlot(OUTPUT, ItemStack.EMPTY);
             tank.setFluid(FluidStack.EMPTY);
             ejectCooldown = 0;
+            setChanged();
+            if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+            return;
+        }
+
+        if (tank.isEmpty()) {
+            ItemStack cast = inventory.getStackInSlot(CAST);
+            if (!cast.isEmpty()) {
+                ItemHandlerHelper.giveItemToPlayer(player, cast, player.getInventory().getSelectedSlot());
+                inventory.setStackInSlot(CAST, ItemStack.EMPTY);
+            } else if (!player.getMainHandItem().isEmpty()) {
+                ItemStack handItem = player.getMainHandItem().copy();
+                handItem.setCount(1);
+                inventory.setStackInSlot(CAST, handItem);
+                if (!player.isCreative()) player.getMainHandItem().shrink(1);
+            }
             setChanged();
             if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
@@ -115,7 +150,7 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
             return;
         }
 
-        if (!inventory.getStackInSlot(0).isEmpty()) {
+        if (!inventory.getStackInSlot(OUTPUT).isEmpty()) {
             coolingTime = 0;
             return;
         }
@@ -127,14 +162,15 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
         }
 
         ModRecipes.@Nullable CastingBasinRecipe matchedRecipe =
-                findRecipe(currentFluid.getFluid(), currentFluid.getAmount());
+                findRecipe(inventory.getStackInSlot(CAST), currentFluid.getFluid(), currentFluid.getAmount());
 
         if (matchedRecipe != null) {
             coolingTime++;
             if (coolingTime >= matchedRecipe.coolingTime()) {
                 coolingTime = 0;
                 tank.drain(matchedRecipe.fluidAmount(), IFluidHandler.FluidAction.EXECUTE);
-                inventory.setStackInSlot(0, matchedRecipe.result().copy());
+                if (matchedRecipe.hasCast()) inventory.setStackInSlot(CAST, ItemStack.EMPTY);
+                inventory.setStackInSlot(OUTPUT, matchedRecipe.result().copy());
                 renderTimer   = 20;
                 ejectCooldown = 50;
                 level.playSound(null, worldPosition, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS,
@@ -147,23 +183,24 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
         }
     }
 
-    private ModRecipes.@Nullable CastingBasinRecipe findRecipeByType(Fluid fluid) {
-        if (!(level instanceof ServerLevel sl)) return null;
-        Identifier fid = BuiltInRegistries.FLUID.getKey(fluid);
-        for (var holder : sl.getServer().getRecipeManager()
-                .recipeMap().byType(ModRecipes.CASTING_BASIN_TYPE.get())) {
-            if (holder.value().fluidId().equals(fid)) return holder.value();
-        }
-        return null;
-    }
-
-    private ModRecipes.@Nullable CastingBasinRecipe findRecipe(Fluid fluid, int amount) {
+    private ModRecipes.@Nullable CastingBasinRecipe findRecipeByType(ItemStack cast, Fluid fluid) {
         if (!(level instanceof ServerLevel sl)) return null;
         Identifier fid = BuiltInRegistries.FLUID.getKey(fluid);
         for (var holder : sl.getServer().getRecipeManager()
                 .recipeMap().byType(ModRecipes.CASTING_BASIN_TYPE.get())) {
             ModRecipes.CastingBasinRecipe r = holder.value();
-            if (r.fluidId().equals(fid) && amount >= r.fluidAmount()) return r;
+            if (r.matchesCast(cast) && r.fluidId().equals(fid)) return r;
+        }
+        return null;
+    }
+
+    private ModRecipes.@Nullable CastingBasinRecipe findRecipe(ItemStack cast, Fluid fluid, int amount) {
+        if (!(level instanceof ServerLevel sl)) return null;
+        Identifier fid = BuiltInRegistries.FLUID.getKey(fluid);
+        for (var holder : sl.getServer().getRecipeManager()
+                .recipeMap().byType(ModRecipes.CASTING_BASIN_TYPE.get())) {
+            ModRecipes.CastingBasinRecipe r = holder.value();
+            if (r.matchesCast(cast) && r.fluidId().equals(fid) && amount >= r.fluidAmount()) return r;
         }
         return null;
     }
@@ -184,7 +221,7 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
     @Override public void   setItem(int slot, ItemStack stack) { inventory.setStackInSlot(0, stack); }
     @Override public boolean stillValid(Player p)              { return true; }
     @SuppressWarnings("removal")
-    @Override public void   clearContent()                     { inventory.setStackInSlot(0, ItemStack.EMPTY); }
+    @Override public void   clearContent()                     { inventory.setStackInSlot(OUTPUT, ItemStack.EMPTY); inventory.setStackInSlot(CAST, ItemStack.EMPTY); }
     @SuppressWarnings("removal")
     @Override
     public int[] getSlotsForFace(Direction side) {
@@ -208,7 +245,8 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
         output.putInt("coolingTime",   coolingTime);
         output.putInt("renderTimer",    renderTimer);
         output.putInt("ejectCooldown",  ejectCooldown);
-        output.store("slot0",          ItemStack.OPTIONAL_CODEC, inventory.getStackInSlot(0));
+        output.store("slot0",          ItemStack.OPTIONAL_CODEC, inventory.getStackInSlot(OUTPUT));
+        output.store("cast",           ItemStack.OPTIONAL_CODEC, inventory.getStackInSlot(CAST));
         output.store("tank",           FluidStack.OPTIONAL_CODEC, tank.getFluid());
     }
     @SuppressWarnings("removal")
@@ -218,7 +256,8 @@ public class BasinBlockEntity extends BlockEntity implements WorldlyContainer {
         coolingTime   = input.getIntOr("coolingTime",  0);
         renderTimer   = input.getIntOr("renderTimer",   0);
         ejectCooldown = input.getIntOr("ejectCooldown", 0);
-        inventory.setStackInSlot(0, input.read("slot0", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
+        inventory.setStackInSlot(OUTPUT, input.read("slot0", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
+        inventory.setStackInSlot(CAST, input.read("cast", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
         tank.setFluid(input.read("tank", FluidStack.OPTIONAL_CODEC).orElse(FluidStack.EMPTY));
     }
 

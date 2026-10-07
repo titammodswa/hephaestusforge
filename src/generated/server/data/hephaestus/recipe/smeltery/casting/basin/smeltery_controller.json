@@ -1,0 +1,12 @@
+{
+  "type": "hephaestus:casting_basin",
+  "cast": "hephaestus:seared_bricks",
+  "cooling_time": 200,
+  "fluid": {
+    "amount": 810,
+    "id": "hephaestus:molten_copper"
+  },
+  "result": {
+    "id": "hephaestus:smeltery_controller"
+  }
+}
