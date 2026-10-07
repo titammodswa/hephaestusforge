@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -87,7 +88,7 @@ public class TableRenderer implements BlockEntityRenderer<TableBlockEntity, Tabl
         poseStack.translate(0.5, height, 0.5);
         poseStack.mulPose(Axis.XP.rotationDegrees(90f));
         poseStack.scale(0.89f, 0.89f, 1.85f);
-        rs.submit(poseStack, collector, 0x00F000F0, 0x00FF00FF, 0);
+        rs.submit(poseStack, collector, 0x00F000F0, OverlayTexture.NO_OVERLAY, 0);
         poseStack.popPose();
     }
 

@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -78,7 +79,7 @@ public class BasinRenderer implements BlockEntityRenderer<BasinBlockEntity, Basi
         poseStack.pushPose();
         poseStack.translate(0.5, 0.625, 0.5);
         poseStack.scale(scale, scale, scale);
-        item.submit(poseStack, collector, 0x00F000F0, 0x00FF00FF, 0);
+        item.submit(poseStack, collector, 0x00F000F0, OverlayTexture.NO_OVERLAY, 0);
         poseStack.popPose();
     }
 
