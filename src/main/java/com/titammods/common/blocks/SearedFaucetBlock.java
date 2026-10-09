@@ -72,7 +72,9 @@ public class SearedFaucetBlock extends BaseEntityBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        Direction face = context.getClickedFace();
+        Direction facing = face.getAxis().isHorizontal() ? face : context.getHorizontalDirection().getOpposite();
+        return this.defaultBlockState().setValue(FACING, facing);
     }
 
     @Nullable
