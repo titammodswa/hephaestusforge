@@ -2,7 +2,7 @@
   "type": "hephaestus:casting_basin",
   "cooling_time": 240,
   "fluid": {
-    "amount": 810,
+    "amount": 360,
     "id": "hephaestus:molten_quartz"
   },
   "result": {

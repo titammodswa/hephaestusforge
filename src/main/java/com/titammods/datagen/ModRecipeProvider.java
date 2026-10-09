@@ -58,8 +58,8 @@ public class ModRecipeProvider extends RecipeProvider {
 
         registerGem(ModFluids.MOLTEN_DIAMOND.source.get(),  1400, "diamond", "storage_blocks/diamond", "gems/diamond",  Items.DIAMOND_BLOCK,  Items.DIAMOND);
         registerGem(ModFluids.MOLTEN_EMERALD.source.get(),  1200, "emerald", "storage_blocks/emerald", "gems/emerald",  Items.EMERALD_BLOCK,  Items.EMERALD);
-        registerGem(ModFluids.MOLTEN_AMETHYST.source.get(), 1000, "amethyst", "", "gems/amethyst", Items.AMETHYST_BLOCK, Items.AMETHYST_SHARD);
-        registerGem(ModFluids.MOLTEN_QUARTZ.source.get(),    800, "quartz", "", "gems/quartz",   Items.QUARTZ_BLOCK,   Items.QUARTZ);
+        registerGem(ModFluids.MOLTEN_AMETHYST.source.get(), 1000, "amethyst", "", "gems/amethyst", Items.AMETHYST_BLOCK, Items.AMETHYST_SHARD, 360);
+        registerGem(ModFluids.MOLTEN_QUARTZ.source.get(),    800, "quartz", "", "gems/quartz",   Items.QUARTZ_BLOCK,   Items.QUARTZ, 360);
 
         registerAllTheOresCompat();
         registerFtbMaterialsCompat();
@@ -672,12 +672,17 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private void registerGem(Fluid fluid, int temp, String name, String blockTag, String gemTag,
                              ItemLike block, ItemLike gem, ICondition... conditions) {
+        registerGem(fluid, temp, name, blockTag, gemTag, block, gem, 810, conditions);
+    }
+
+    private void registerGem(Fluid fluid, int temp, String name, String blockTag, String gemTag,
+                             ItemLike block, ItemLike gem, int blockAmount, ICondition... conditions) {
         int bt = 120;
 
         if (blockTag != null && !blockTag.isEmpty())
-            addMeltingTag(blockTag, fluid, 810, temp, bt * 2, "gem/" + name + "/block", conditions);
+            addMeltingTag(blockTag, fluid, blockAmount, temp, bt * 2, "gem/" + name + "/block", conditions);
         else if (block != null)
-            addMeltingItem(block, fluid, 810, temp, bt * 2, "gem/" + name + "/block", conditions);
+            addMeltingItem(block, fluid, blockAmount, temp, bt * 2, "gem/" + name + "/block", conditions);
 
         if (gemTag != null && !gemTag.isEmpty())
             addMeltingTag(gemTag, fluid, 90, temp, bt, "gem/" + name + "/gem", conditions);
@@ -685,7 +690,7 @@ public class ModRecipeProvider extends RecipeProvider {
             addMeltingItem(gem, fluid, 90, temp, bt, "gem/" + name + "/gem", conditions);
 
         if (gem   != null) addCastingTable(fluid, 90, ModItems.GEM_CAST.get(), false, gem,  bt,       "gem/" + name + "/gem_cast",   conditions);
-        if (block != null) addCastingBasin(fluid, 810, block, bt * 2, "gem/" + name + "/block_cast", conditions);
+        if (block != null) addCastingBasin(fluid, blockAmount, block, bt * 2, "gem/" + name + "/block_cast", conditions);
     }
 
     private void registerExternalMetal(Fluid fluid, int temp, String name,

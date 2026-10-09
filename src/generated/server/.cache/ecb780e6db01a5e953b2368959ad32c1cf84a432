@@ -1,4 +1,4 @@
-// 26.1.2	2026-10-07T00:57:08.4856917	hephaestus recipes
+// 26.1.2	2026-10-09T16:00:11.9375306	hephaestus recipes
 371560adf3887729d8033475aeece05cb5addb4a data/hephaestus/advancement/recipes/misc/clear_glass.json
 2be6223ab48b7588c625c7ff1e50f83ee9003ec4 data/hephaestus/advancement/recipes/misc/clear_stained_glass.json
 1f1cc550746b01526ba38f599f42ba000f895ee4 data/hephaestus/advancement/recipes/misc/clear_tinted_glass.json
@@ -168,10 +168,10 @@ b4344dfab5d2c42961d5a1eadf34573927b932d2 data/hephaestus/recipe/smeltery/casting
 4e42e46243aa01ccdd3b3d1f12206aa71aedf0f7 data/hephaestus/recipe/smeltery/casting/basin/ftbmaterials_compat/metal/silver/block_cast.json
 1534fdccd40a48526b98451cb8667301020bdcfc data/hephaestus/recipe/smeltery/casting/basin/ftbmaterials_compat/metal/tin/block_cast.json
 f0c8fdde24931b5399548657873ba5c13177144b data/hephaestus/recipe/smeltery/casting/basin/ftbmaterials_compat/metal/uranium/block_cast.json
-a5dd5257ef400cb66ab4c1e526741ac9d3faa1cc data/hephaestus/recipe/smeltery/casting/basin/gem/amethyst/block_cast.json
+d7ed501a3bcaa237900de2d6f3e1f7e24227f0cd data/hephaestus/recipe/smeltery/casting/basin/gem/amethyst/block_cast.json
 2e9a1e64124073099317527ba99d1bdeed9ad578 data/hephaestus/recipe/smeltery/casting/basin/gem/diamond/block_cast.json
 85d34dc00745ba6aaece6b70b50ddbfdecca741f data/hephaestus/recipe/smeltery/casting/basin/gem/emerald/block_cast.json
-b87000618083d06742f76251eea8b428053fc602 data/hephaestus/recipe/smeltery/casting/basin/gem/quartz/block_cast.json
+c7328d207557bbab5697b99261f5eddcc5d598fe data/hephaestus/recipe/smeltery/casting/basin/gem/quartz/block_cast.json
 8d828069bcf7d04c56d64a2e234ea9d040478342 data/hephaestus/recipe/smeltery/casting/basin/metal/cobalt/block_cast.json
 17887d4ccd596eb3f606b55ad92e57b6de7ba36c data/hephaestus/recipe/smeltery/casting/basin/metal/copper/block_cast.json
 79c4ce860ecd838632334f4009dc5c97189db729 data/hephaestus/recipe/smeltery/casting/basin/metal/gold/block_cast.json
@@ -647,13 +647,13 @@ fb5deeb4c42b8f2ec2c7c7b0855f9747b1237f8d data/hephaestus/recipe/smeltery/melting
 1784289067d8998b1afd3655b2847120f6b3e17f data/hephaestus/recipe/smeltery/melting/ftbmaterials_compat/metal/uranium/raw.json
 b8feac6df5db5d9cb946a95cf5b87b18f35465b2 data/hephaestus/recipe/smeltery/melting/ftbmaterials_compat/metal/uranium/raw_block.json
 f507e05bc4fcc6b066cd17d53c642aad6c4dcc47 data/hephaestus/recipe/smeltery/melting/ftbmaterials_compat/metal/uranium/rod.json
-78c7d3e99683a53a4b42d0262c5a7122f4eb4c37 data/hephaestus/recipe/smeltery/melting/gem/amethyst/block.json
+0a9b7fcd205630dd2ce5354eab26890d6d58d046 data/hephaestus/recipe/smeltery/melting/gem/amethyst/block.json
 4c730be00d7c29dd857657a5a5a5d670be7d133e data/hephaestus/recipe/smeltery/melting/gem/amethyst/gem.json
 c2e5dc56334e980359e1e1c16bb18fb8906b5336 data/hephaestus/recipe/smeltery/melting/gem/diamond/block.json
 b43c7ffe18ee7d4ab9a5ce90cdd129744a593391 data/hephaestus/recipe/smeltery/melting/gem/diamond/gem.json
 e483f5c23b1d872aefa301e985b5364e996e3e7f data/hephaestus/recipe/smeltery/melting/gem/emerald/block.json
 f5de3fde854858b4e7cf163cd71b8c50ed32fade data/hephaestus/recipe/smeltery/melting/gem/emerald/gem.json
-3d660e1ae8d9a90e9f8d281167d3229c9aa721b6 data/hephaestus/recipe/smeltery/melting/gem/quartz/block.json
+909cb518d2e16933d48fc922e60b70a120ba26f9 data/hephaestus/recipe/smeltery/melting/gem/quartz/block.json
 d62916b511778a83a409784b9704360c93aaaea5 data/hephaestus/recipe/smeltery/melting/gem/quartz/gem.json
 818de9e90768580d5a4bc6b5d6eb43c0c551126b data/hephaestus/recipe/smeltery/melting/metal/cobalt/block.json
 dc7974acc8e9bdbb413534389c27ace79a72cbf6 data/hephaestus/recipe/smeltery/melting/metal/cobalt/dust.json

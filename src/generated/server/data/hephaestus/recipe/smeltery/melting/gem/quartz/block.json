@@ -6,7 +6,7 @@
   },
   "ingredient": "minecraft:quartz_block",
   "result": {
-    "amount": 810,
+    "amount": 360,
     "id": "hephaestus:molten_quartz"
   },
   "temperature": 800,
