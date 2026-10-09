@@ -8,4 +8,5 @@ public class FaucetRenderState extends BlockEntityRenderState {
     public FluidStack fluid    = FluidStack.EMPTY;
     public boolean    isPouring = false;
     public Direction  facing   = Direction.NORTH;
+    public float      streamBottom = -0.75f;
 }

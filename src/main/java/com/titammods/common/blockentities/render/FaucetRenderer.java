@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.titammods.common.blockentities.FaucetBlockEntity;
 import com.titammods.common.blocks.SearedFaucetBlock;
+import com.titammods.common.blocks.SearedTableBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -22,6 +23,9 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity, Fa
     @SuppressWarnings("unused")
     public FaucetRenderer(BlockEntityRendererProvider.Context ctx) {}
 
+    private static final float BASIN_STREAM_BOTTOM = -1.0f + 4.0f / 16.0f;
+    private static final float TABLE_STREAM_BOTTOM = -1.0f + 15.0f / 16.0f;
+
 
     @Override
     public FaucetRenderState createRenderState() {
@@ -38,6 +42,11 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity, Fa
         state.fluid     = blockEntity.getRenderFluid().copy();
         state.isPouring = blockEntity.isPouring();
         state.facing    = blockEntity.getBlockState().getValue(SearedFaucetBlock.FACING);
+
+        var level = blockEntity.getLevel();
+        boolean tableBelow = level != null
+                && level.getBlockState(blockEntity.getBlockPos().below()).getBlock() instanceof SearedTableBlock;
+        state.streamBottom = tableBelow ? TABLE_STREAM_BOTTOM : BASIN_STREAM_BOTTOM;
     }
 
     @Override
@@ -80,7 +89,7 @@ public class FaucetRenderer implements BlockEntityRenderer<FaucetBlockEntity, Fa
         float vMinZ = 0.375f, vMaxZ = 0.625f;
         float vMaxY = 0.375f;
 
-        float vMinY = -0.75f;
+        float vMinY = state.streamBottom;
 
         poseStack.pushPose();
 
