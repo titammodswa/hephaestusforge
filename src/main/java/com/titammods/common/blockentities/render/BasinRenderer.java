@@ -63,23 +63,24 @@ public class BasinRenderer implements BlockEntityRenderer<BasinBlockEntity, Basi
                        SubmitNodeCollector collector, CameraRenderState cameraState) {
 
         if (!state.outputRS.isEmpty()) {
-            submitItem(state.outputRS, OUTPUT_SCALE, poseStack, collector);
+            submitItem(state.outputRS, OUTPUT_SCALE, poseStack, collector, state.lightCoords);
             return;
         }
         if (!state.fluid.isEmpty() && !state.isAnimating) {
             renderFluid(state, poseStack, collector);
         }
         if (!state.castRS.isEmpty()) {
-            submitItem(state.castRS, CAST_SCALE, poseStack, collector);
+            submitItem(state.castRS, CAST_SCALE, poseStack, collector, state.lightCoords);
         }
     }
 
     private static void submitItem(ItemStackRenderState item, float scale,
-                                   PoseStack poseStack, SubmitNodeCollector collector) {
+                                   PoseStack poseStack, SubmitNodeCollector collector,
+                                   int light) {
         poseStack.pushPose();
         poseStack.translate(0.5, 0.625, 0.5);
         poseStack.scale(scale, scale, scale);
-        item.submit(poseStack, collector, 0x00F000F0, OverlayTexture.NO_OVERLAY, 0);
+        item.submit(poseStack, collector, light, OverlayTexture.NO_OVERLAY, 0);
         poseStack.popPose();
     }
 

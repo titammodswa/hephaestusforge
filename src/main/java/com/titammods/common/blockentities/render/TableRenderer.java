@@ -64,9 +64,9 @@ public class TableRenderer implements BlockEntityRenderer<TableBlockEntity, Tabl
         if (state.hasOutput) {
             ItemStackRenderState itemToDraw = state.outputRS.isEmpty() ? state.resultRS : state.outputRS;
             float yPos = state.hasMold ? TABLE_HEIGHT + 0.01f : TABLE_HEIGHT;
-            submitItemFlat(itemToDraw, poseStack, collector, yPos);
+            submitItemFlat(itemToDraw, poseStack, collector, yPos, state.lightCoords);
             if (state.hasMold) {
-                submitItemFlat(state.moldRS, poseStack, collector, TABLE_HEIGHT);
+                submitItemFlat(state.moldRS, poseStack, collector, TABLE_HEIGHT, state.lightCoords);
             }
             return;
         }
@@ -76,19 +76,20 @@ public class TableRenderer implements BlockEntityRenderer<TableBlockEntity, Tabl
         }
 
         if (state.hasMold) {
-            submitItemFlat(state.moldRS, poseStack, collector, TABLE_HEIGHT);
+            submitItemFlat(state.moldRS, poseStack, collector, TABLE_HEIGHT, state.lightCoords);
         }
     }
 
     private static void submitItemFlat(ItemStackRenderState rs, PoseStack poseStack,
                                        SubmitNodeCollector collector,
-                                       float height) {
+                                       float height,
+                                       int light) {
         if (rs.isEmpty()) return;
         poseStack.pushPose();
         poseStack.translate(0.5, height, 0.5);
         poseStack.mulPose(Axis.XP.rotationDegrees(90f));
         poseStack.scale(0.89f, 0.89f, 1.85f);
-        rs.submit(poseStack, collector, 0x00F000F0, OverlayTexture.NO_OVERLAY, 0);
+        rs.submit(poseStack, collector, light, OverlayTexture.NO_OVERLAY, 0);
         poseStack.popPose();
     }
 
