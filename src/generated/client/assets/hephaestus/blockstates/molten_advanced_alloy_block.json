@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "hephaestus:block/molten_advanced_alloy_block"
+    }
+  }
+}
